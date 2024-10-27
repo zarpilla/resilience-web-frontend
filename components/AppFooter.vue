@@ -18,9 +18,9 @@ const setLocaleLanguage = async (lang: string) => {
 <template>
   <footer>
     <h1>Footer</h1>
-    <pre
+    <!-- <pre
       >{{ footer }}
       </pre
-    >
+    > -->
   </footer>
 </template>

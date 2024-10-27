@@ -73,3 +73,16 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+# Build error
+```bash
+ ERROR  Nuxt Build Error: [commonjs--resolver] [unimport] failed to find "updateSiteConfig" imported from "#imports"     
+ file: node_modules/nuxt-site-config/dist/runtime/nuxt/plugins/i18n.server.js
+ ```
+
+
+import { computed, updateSiteConfig, useSiteConfig } from "#imports";
+to 
+import { computed } from "#imports";
+const updateSiteConfig = (input = {}) => {
+const useSiteConfig = () => {};

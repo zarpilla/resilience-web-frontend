@@ -7,26 +7,18 @@ const props = defineProps<{
 }>();
 
 const populate = {
-  "populate[0]": "metadata",
-  "populate[1]": "metadata.shareImage",
-  "populate[2]": "localizations",
-  "populate[3]": "sections",
+  "populate[metadata][shareImage]": "*",
+  "populate[localizations]": "*",
+  "populate[sections][populate]": "*",
+  status: "published",
+  locale,
 };
 const { data: pages } = await useAPI("/api/pages", {
   query: {
     "filters[slug][$eq]": props.slug,
     "filters[type][$eq]": props.type,
-    locale,
     ...populate,
   },
-});
-
-const populateSections = {
-  "populate[sections][populate]": "*",
-};
-
-const { data: sections } = await useAPI("/api/pages", {
-  query: { "filters[slug][$eq]": props.slug, locale, ...populateSections },
 });
 
 const documents = pages.value as any;
@@ -35,9 +27,12 @@ if (pages.value && documents.data && documents.data.length === 0) {
   throw new Error("Page not found!");
 }
 
-const sectionsData = sections.value as any;
 const page = documents.data[0];
-page.sections = sectionsData.data[0].sections;
+
+const { data: sections } = await useAPI("/api/pages/sections/" + page.documentId, {});
+
+const sectionsData = sections.value as any;
+page.sections = sectionsData.sections;
 
 useHead({
   title: page.metadata?.metaTitle || page.name,
@@ -49,26 +44,67 @@ useHead({
   },
 });
 
-const shareImage = page.metadata?.shareImage?.url ? `${process.env.API_BASE_URL}${page.metadata?.shareImage?.url}` : null;
+const shareImage = page.metadata?.shareImage?.url
+  ? `${process.env.API_BASE_URL}${page.metadata?.shareImage?.url}`
+  : null;
 
 useSeoMeta({
   title: page.metadata?.metaTitle || page.name,
   ogTitle: page.metadata?.metaTitle || page.name,
-  description: page.metadata?.metaDescription || '',
-  ogDescription: page.metadata?.metaDescription || '',
+  description: page.metadata?.metaDescription || "",
+  ogDescription: page.metadata?.metaDescription || "",
   ogImage: shareImage,
-  twitterCard: 'summary_large_image',
-})
+  twitterCard: "summary_large_image",
+});
+
+onMounted(() => {
+  if (page.pageCss) {
+    document.body.classList.add(page.pageCss);
+  }
+});
+
+onBeforeUnmount(() => {
+  if (page.pageCss) {
+    document.body.classList.remove(page.pageCss);
+  }
+});
 
 </script>
 <template>
   <AppHeader :slug="slug"></AppHeader>
   <div class="main-content">
-    <h1>Page</h1>
+    <div class="section" v-for="section in page.sections" :key="section.id">
+      <AppSection :section="section">
+        <SectionsHero
+          v-if="section.__component === 'sections.hero'"
+          :section="section"
+        ></SectionsHero>
+        <SectionsColumns
+          v-else-if="section.__component === 'sections.columns'"
+          :section="section"
+        ></SectionsColumns>
+        <SectionsMenu
+          v-else-if="section.__component === 'sections.menu'"
+          :section="section">
+        </SectionsMenu>
+        <SectionsSlider 
+          v-else-if="section.__component === 'sections.slider'"
+          :section="section">
+        </SectionsSlider>
+        <SectionsBlurbs
+          v-else-if="section.__component === 'sections.blurbs'"
+          :section="section">
+        </SectionsBlurbs>
+        <div v-else-if="section.__component === 'sections.image'"></div>
+        <pre v-else>{{ section }}</pre>
+      </AppSection>
+
+      <!-- <h1>Page</h1>
     <p>{{ $t("welcome") }} '{{ slug }}'</p>
     <pre>
       {{ page }}
-    </pre>
+    </pre> -->
+    </div>
   </div>
   <AppFooter :slug="slug"></AppFooter>
 </template>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useHeaderStore } from "~/stores/header";
 const { locale, setLocale, availableLocales } = useI18n();
-const switchLocalePath = useSwitchLocalePath()
-const localePath = useLocalePath()
+const switchLocalePath = useSwitchLocalePath();
+const localePath = useLocalePath();
 
 defineProps<{
   slug: string;
@@ -16,29 +16,127 @@ const header = computed(() =>
 const setLocaleLanguage = async (lang: string) => {
   setLocale(lang);
 };
+const runtimeConfig = useRuntimeConfig();
 
+const showMenu = ref(false);
 
+const clickShowMenu = () => {
+  showMenu.value = true;
+  document.body.style.overflow = "hidden";
+};
+
+const onClose = () => {
+  showMenu.value = false;
+  document.body.style.overflow = "auto";
+};
 </script>
 <template>
-  <header>
-    <h1>Header</h1>
-    <pre>
-header: {{ header }}
-        </pre
-    >
-
-    <pre>
-locale: {{ locale }}
-      </pre
-    >
-    <div>
-      
-      <nuxt-link v-for="loc in availableLocales" :key="loc" :to="switchLocalePath(loc)">
-    {{ loc }}<br>
-  </nuxt-link>
-
-      
-      <p>{{ $t("welcome") }} header!</p>
+  <header class="d-flex">
+    <div class="me-auto">      
+      <nuxt-link :to="localePath('/')" class="logo">
+        <img
+          class="hide-on-dark"
+          :src="runtimeConfig.public.apiBase + header?.value?.logo?.url"
+        />
+        <img
+          class="hide-on-white"
+          :src="
+            runtimeConfig.public.apiBase + header?.value?.logoDark?.url
+          "
+        />
+      </nuxt-link>
+    </div>
+    <div class="menu d-flex mt-3">
+      <div class="menu-text me-4">
+        <a :href="header?.value?.emailLink.href"
+          >{{ header?.value?.email }}</a>
+      </div>
+      <svg
+      class="clickable"
+        @click="clickShowMenu"
+        width="32"
+        height="27"
+        viewBox="0 0 32 27"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <line
+          x1="1.05859"
+          y1="15.2547"
+          x2="24.4413"
+          y2="1.75467"
+          stroke="white"
+          stroke-width="3"
+        />
+        <line
+          x1="7.05859"
+          y1="25.6468"
+          x2="30.4413"
+          y2="12.1468"
+          stroke="white"
+          stroke-width="3"
+        />
+      </svg>
     </div>
   </header>
+  <teleport to="body">    
+    <AppMenu v-show="showMenu" @close="onClose" />
+  </teleport>
+
+  
 </template>
+<style scoped lang="scss">
+header {
+  padding: 43px 61px;
+  display: flex;  
+  position: fixed;
+  width: 100%;
+
+  .menu {
+    transform: rotate(0deg);
+
+    .menu-text a{
+      color: var(--Negre, #000);
+      text-align: right;
+      font-family: "PP Neue Montreal";
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 30px; /* 150% */
+      letter-spacing: 0.4px;
+      text-decoration: none;
+    }
+    svg line {
+      stroke: #000;
+    }
+  }
+  .hide-on-dark {
+    display: block;
+  }
+  .hide-on-white {
+    display: none;
+  }
+}
+</style>
+<style lang="scss">
+.header-dark {
+  header {
+    .menu {
+      .menu-text a{
+        color: var(--Blanc, #fff);
+      }
+      svg line {
+        stroke: #fff;
+      }
+    }
+
+    .hide-on-dark {
+    display: none;
+  }
+  .hide-on-white {
+    display: block;
+  }
+  }
+  
+}
+</style>

@@ -3,17 +3,17 @@ import Page from "~/components/AppPage.vue";
 import { useRoute } from "vue-router";
 
 defineI18nRoute({
-  paths: {
-    en: "/resource/[slug]",
-    es: "/recurso/[slug]",
-    ca: "/recurs/[slug]",
-  },
-});
+    paths: {
+      en: '/project/[slug]',
+      es: '/proyecto/[slug]',
+      ca: '/projecte/[slug]'
+    }
+  })
 
 const route = useRoute();
 const slug = route.params.slug as string;
 </script>
 
 <template>
-  <Page :slug="slug" type="resource" />
+  <Page :slug="slug" type="project" />
 </template>

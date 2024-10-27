@@ -4,9 +4,9 @@ import { useRoute } from "vue-router";
 
 defineI18nRoute({
   paths: {
-    en: "/resource/[slug]",
-    es: "/recurso/[slug]",
-    ca: "/recurs/[slug]",
+    en: "/scope/[slug]",
+    es: "/ambito/[slug]",
+    ca: "/ambit/[slug]",
   },
 });
 
@@ -15,5 +15,5 @@ const slug = route.params.slug as string;
 </script>
 
 <template>
-  <Page :slug="slug" type="resource" />
+  <Page :slug="slug" type="scope" />
 </template>

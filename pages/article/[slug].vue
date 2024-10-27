@@ -15,6 +15,5 @@ const slug = route.params.slug as string;
 </script>
 
 <template>
-  slug: {{ slug }}
   <Page :slug="slug" type="article" />
 </template>

@@ -11,7 +11,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         }
       },
       async onResponseError({ response }) {
-        console.error('API error', response)
+        // console.error('API error', response)
         if (response.status === 401) {
           //await nuxtApp.runWithContext(() => navigateTo('/login'))
         }
