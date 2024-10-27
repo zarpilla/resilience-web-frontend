@@ -15,8 +15,10 @@ export const useHeaderStore = defineStore('headerStore', {
           "populate[1]": "logoLink",
           "populate[2]": "emailLink",
           "populate[3]": "social",
-          "populate[4]": "mainMenu",
+          //"populate[4]": "mainMenu",
+          "populate[mainMenu]": "children",
           "populate[5]": "secondaryMenu",
+          "populate[6]": "logoDark",
         
         }
         const { data: header } = await useAPI('/api/header', { query: { locale, ...populate } })

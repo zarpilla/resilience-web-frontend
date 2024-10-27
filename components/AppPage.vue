@@ -34,8 +34,16 @@ const { data: sections } = await useAPI("/api/pages/sections/" + page.documentId
 const sectionsData = sections.value as any;
 page.sections = sectionsData.sections;
 
+const headerStore = useHeaderStore();
+const header = computed<any>(() =>
+  headerStore.headers.find((h) => h.locale === locale.value)
+);
+
+const seoTitleSufix = header.value.value?.seoTitleSufix;
+console.log("seoTitleSufix", seoTitleSufix.value);
+
 useHead({
-  title: page.metadata?.metaTitle || page.name,
+  title: (page.metadata?.metaTitle || page.name) + seoTitleSufix,
   meta: [
     { name: "description", content: page.metadata?.metaDescription || "" },
   ],
@@ -49,8 +57,8 @@ const shareImage = page.metadata?.shareImage?.url
   : null;
 
 useSeoMeta({
-  title: page.metadata?.metaTitle || page.name,
-  ogTitle: page.metadata?.metaTitle || page.name,
+  title: (page.metadata?.metaTitle || page.name) + seoTitleSufix,
+  ogTitle: (page.metadata?.metaTitle || page.name) + seoTitleSufix,
   description: page.metadata?.metaDescription || "",
   ogDescription: page.metadata?.metaDescription || "",
   ogImage: shareImage,
