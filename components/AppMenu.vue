@@ -26,8 +26,8 @@ const contact = computed(() => {
 });
 </script>
 <template>
-  <div class="full-page-menu">
-    <div class="close" @click="emitClose">
+  <div class="full-page-menu ztext-dark">
+    <div class="close text-dark" @click="emitClose">
       <svg
         width="87"
         height="87"
@@ -221,7 +221,7 @@ const contact = computed(() => {
     position: fixed;
     top: 30px;
     right: 30px;
-    cursor: pointer;
+    cursor: none;
 
     @media screen and (max-width: 768px) {
       position: absolute;

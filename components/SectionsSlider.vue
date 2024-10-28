@@ -184,4 +184,7 @@ img {
   opacity: 1;
   width: 10%;
 }
+.section-slider-carousel{
+  min-height: 665px;
+}
 </style>

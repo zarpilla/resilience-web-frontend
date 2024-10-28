@@ -25,23 +25,17 @@ const backgroundImageStyle = computed(() => ({
     <div class="container">
       <div class="section-hero-inner d-flex" :class="`align-${section.align}`" :style="[heightStyle, backgroundImageStyle]">
         <div>
-          <h1 v-if="section.title && section.titleHeading === 'h1'">
-            {{ section.title }}
+          <h1 v-if="section.title && section.titleHeading === 'h1'" v-html="section.title">
           </h1>
-          <h2 v-if="section.title && section.titleHeading === 'h2'">
-            {{ section.title }}
+          <h2 v-if="section.title && section.titleHeading === 'h2'" v-html="section.title">
           </h2>
-          <h3 v-if="section.title && section.titleHeading === 'h3'">
-            {{ section.title }}
+          <h3 v-if="section.title && section.titleHeading === 'h3'" v-html="section.title">
           </h3>
-          <h4 v-if="section.title && section.titleHeading === 'h4'">
-            {{ section.title }}
+          <h4 v-if="section.title && section.titleHeading === 'h4'" v-html="section.title">
           </h4>
-          <h5 v-if="section.title && section.titleHeading === 'h5'">
-            {{ section.title }}
+          <h5 v-if="section.title && section.titleHeading === 'h5'" v-html="section.title">
           </h5>
-          <p v-if="section.title && section.titleHeading === 'p'">
-            {{ section.title }}
+          <p v-if="section.title && section.titleHeading === 'p'" v-html="section.title">
           </p>
           <div v-for="(block, index) in section.text" :key="index">
             <h1 v-if="block.type === 'heading' && block.level === 1">
@@ -111,8 +105,7 @@ const backgroundImageStyle = computed(() => ({
 }
 .align-centered {
   text-align: center;
-  align-items: center;
-  width: 80%;
+  align-items: center;  
   margin: auto;
 }
 </style>

@@ -6,6 +6,7 @@
     &.section-sections-hero{
         background-size: 102%;
         background-repeat: no-repeat;
+        padding: 0;
     }
 }
 
@@ -174,5 +175,20 @@ p {
 }
 
 .clickable {
-    cursor: pointer;
+    cursor: none!important;
+}
+
+.color-text-dark, a.color-text-dark {
+    color: #000!important;
+    &.zone-color-stroke > *{
+        stroke: #000;
+    }
+}
+
+
+.color-text-light, a.color-text-light {
+    color: #fff!important;
+    &.zone-color-stroke > *{
+        stroke: #fff;
+    }
 }

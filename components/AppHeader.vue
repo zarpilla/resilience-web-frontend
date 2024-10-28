@@ -6,6 +6,7 @@ const localePath = useLocalePath();
 
 defineProps<{
   slug: string;
+  colorMode?: "dark" | "light";
 }>();
 
 const headerStore = useHeaderStore();
@@ -13,9 +14,6 @@ const header = computed(() =>
   headerStore.headers.find((h) => h.locale === locale.value)
 );
 
-const setLocaleLanguage = async (lang: string) => {
-  setLocale(lang);
-};
 const runtimeConfig = useRuntimeConfig();
 
 const showMenu = ref(false);
@@ -29,30 +27,42 @@ const onClose = () => {
   showMenu.value = false;
   document.body.style.overflow = "auto";
 };
+
+const modeStore = useModeStore();
+
+const pageHeaderColorMode = ref("light");
+
+watch(
+  () => modeStore.pageHeaderColorMode,
+  (value) => {
+    pageHeaderColorMode.value = value;
+  }
+);
 </script>
 <template>
-  <header class="d-flex">
-    <div class="me-auto">      
-      <nuxt-link :to="localePath('/')" class="logo">
+  <header class="d-flex" :class="`text-${colorMode}`">
+    <div class="me-auto">
+      <nuxt-link :to="localePath('/')" class="logo hoverable">
         <img
-          class="hide-on-dark"
+          class="hide-on-text-light"
+          :class="{ 'd-none': pageHeaderColorMode === 'light' }"
           :src="runtimeConfig.public.apiBase + header?.value?.logo?.url"
         />
         <img
-          class="hide-on-white"
-          :src="
-            runtimeConfig.public.apiBase + header?.value?.logoDark?.url
-          "
+          class="hide-on-text-dark"
+          :class="{ 'd-none': pageHeaderColorMode === 'dark' }"
+          :src="runtimeConfig.public.apiBase + header?.value?.logoDark?.url"
         />
       </nuxt-link>
     </div>
     <div class="menu d-flex mt-3">
       <div class="menu-text me-4">
-        <a :href="header?.value?.emailLink.href"
-          >{{ header?.value?.email }}</a>
+        <a class="zone-color" :href="header?.value?.emailLink.href">{{
+          header?.value?.email
+        }}</a>
       </div>
       <svg
-      class="clickable"
+        class="clickable hoverable zone-color zone-color-stroke"
         @click="clickShowMenu"
         width="32"
         height="27"
@@ -79,23 +89,21 @@ const onClose = () => {
       </svg>
     </div>
   </header>
-  <teleport to="body">    
+  <teleport to="body">
     <AppMenu v-show="showMenu" @close="onClose" />
   </teleport>
-
-  
 </template>
 <style scoped lang="scss">
 header {
   padding: 43px 61px;
-  display: flex;  
+  display: flex;
   position: fixed;
   width: 100%;
 
   .menu {
     transform: rotate(0deg);
 
-    .menu-text a{
+    .menu-text a {
       color: var(--Negre, #000);
       text-align: right;
       font-family: "PP Neue Montreal";
@@ -110,33 +118,19 @@ header {
       stroke: #000;
     }
   }
-  .hide-on-dark {
-    display: block;
-  }
-  .hide-on-white {
-    display: none;
-  }
 }
 </style>
 <style lang="scss">
 .header-dark {
   header {
     .menu {
-      .menu-text a{
+      .menu-text a {
         color: var(--Blanc, #fff);
       }
       svg line {
         stroke: #fff;
       }
     }
-
-    .hide-on-dark {
-    display: none;
   }
-  .hide-on-white {
-    display: block;
-  }
-  }
-  
 }
 </style>

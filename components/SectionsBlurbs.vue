@@ -29,23 +29,17 @@ const runtimeConfig = useRuntimeConfig();
             class="mb-3"
           />
 
-          <h1 v-if="column.title && column.titleHeading === 'h1'">
-            {{ column.title }}
+          <h1 v-if="column.title && column.titleHeading === 'h1'" v-html="column.title">
           </h1>
-          <h2 v-if="column.title && column.titleHeading === 'h2'">
-            {{ column.title }}
+          <h2 v-if="column.title && column.titleHeading === 'h2'" v-html="column.title">
           </h2>
-          <h3 v-if="column.title && column.titleHeading === 'h3'">
-            {{ column.title }}
+          <h3 v-if="column.title && column.titleHeading === 'h3'" v-html="column.title">
           </h3>
-          <h4 v-if="column.title && column.titleHeading === 'h4'">
-            {{ column.title }}
+          <h4 v-if="column.title && column.titleHeading === 'h4'" v-html="column.title">
           </h4>
-          <h5 v-if="column.title && column.titleHeading === 'h5'">
-            {{ column.title }}
+          <h5 v-if="column.title && column.titleHeading === 'h5'" v-html="column.title">
           </h5>
-          <p v-if="column.title && column.titleHeading === 'p'">
-            {{ column.title }}
+          <p v-if="column.title && column.titleHeading === 'p'" v-html="column.title">
           </p>
           <div
             v-for="(block, index) in column.text"

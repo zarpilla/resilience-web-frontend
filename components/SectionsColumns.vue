@@ -3,38 +3,48 @@ const props = defineProps<{
   section: any;
 }>();
 
-import { computed } from "vue";
-
-const runtimeConfig = useRuntimeConfig();
+const widthStyle = computed(() => ({
+  width: props.section.styles?.width ? props.section.styles?.width : null,
+}));
 </script>
 <template>
-  <div class="section-blurbs">
+  <div class="section-columns">
     <div class="container">
-      <div v-if="section.columns && section.columns.length" class="row">
+      <div
+        v-if="section.columns && section.columns.length"
+        class="row"
+        :style="widthStyle"
+      >
         <div
           v-for="(column, columnIndex) in section.columns"
           :key="columnIndex"
           class="col"
           :class="column.styles?.cssClass ?? 'col'"
         >
-          <h1 v-if="column.title && column.titleHeading === 'h1'">
-            {{ column.title }}
-          </h1>
-          <h2 v-if="column.title && column.titleHeading === 'h2'">
-            {{ column.title }}
-          </h2>
-          <h3 v-if="column.title && column.titleHeading === 'h3'">
-            {{ column.title }}
-          </h3>
-          <h4 v-if="column.title && column.titleHeading === 'h4'">
-            {{ column.title }}
-          </h4>
-          <h5 v-if="column.title && column.titleHeading === 'h5'">
-            {{ column.title }}
-          </h5>
-          <p v-if="column.title && column.titleHeading === 'p'">
-            {{ column.title }}
-          </p>
+          <h1
+            v-if="column.title && column.titleHeading === 'h1'"
+            v-html="column.title"
+          ></h1>
+          <h2
+            v-if="column.title && column.titleHeading === 'h2'"
+            v-html="column.title"
+          ></h2>
+          <h3
+            v-if="column.title && column.titleHeading === 'h3'"
+            v-html="column.title"
+          ></h3>
+          <h4
+            v-if="column.title && column.titleHeading === 'h4'"
+            v-html="column.title"
+          ></h4>
+          <h5
+            v-if="column.title && column.titleHeading === 'h5'"
+            v-html="column.title"
+          ></h5>
+          <p
+            v-if="column.title && column.titleHeading === 'p'"
+            v-html="column.title"
+          ></p>
           <div
             v-for="(block, index) in column.text"
             :key="index"
@@ -45,50 +55,60 @@ const runtimeConfig = useRuntimeConfig();
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
+                v-html="child.text"
+                :class="{ bold: child.bold }"
               >
-                {{ child.text }}
               </span>
             </h1>
             <h2 v-if="block.type === 'heading' && block.level === 2">
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
+                v-html="child.text"
+                :class="{ bold: child.bold }"
               >
-                {{ child.text }}
               </span>
             </h2>
             <h3 v-if="block.type === 'heading' && block.level === 3">
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
+                v-html="child.text"
+                :class="{ bold: child.bold }"
               >
-                {{ child.text }}
               </span>
             </h3>
             <h4 v-if="block.type === 'heading' && block.level === 4">
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
+                v-html="child.text"
+                :class="{ bold: child.bold }"
               >
-                {{ child.text }}
               </span>
             </h4>
             <h5 v-if="block.type === 'heading' && block.level === 5">
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
+                v-html="child.text"
+                :class="{ bold: child.bold }"
               >
-                {{ child.text }}
               </span>
             </h5>
             <p v-if="block.type === 'paragraph'">
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
+                v-html="child.text"
+                :class="{ bold: child.bold }"
               >
-                {{ child.text }}
               </span>
             </p>
+          </div>
+
+          <div v-if="column.media" class="media">
+            <MetaMedia :media="column.media" />
           </div>
 
           <div
@@ -108,5 +128,8 @@ const runtimeConfig = useRuntimeConfig();
 <style scoped lang="scss">
 .section-hero {
   background-size: cover;
+}
+.bold{
+  font-weight: bold;
 }
 </style>

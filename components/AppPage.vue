@@ -29,7 +29,10 @@ if (pages.value && documents.data && documents.data.length === 0) {
 
 const page = documents.data[0];
 
-const { data: sections } = await useAPI("/api/pages/sections/" + page.documentId, {});
+const { data: sections } = await useAPI(
+  "/api/pages/sections/" + page.documentId,
+  {}
+);
 
 const sectionsData = sections.value as any;
 page.sections = sectionsData.sections;
@@ -40,7 +43,6 @@ const header = computed<any>(() =>
 );
 
 const seoTitleSufix = header.value.value?.seoTitleSufix;
-console.log("seoTitleSufix", seoTitleSufix.value);
 
 useHead({
   title: (page.metadata?.metaTitle || page.name) + seoTitleSufix,
@@ -65,7 +67,17 @@ useSeoMeta({
   twitterCard: "summary_large_image",
 });
 
-onMounted(() => {
+const modeStore = useModeStore();
+
+onMounted(() => {  ;
+  setTimeout(() => {
+    window.dispatchEvent(new Event("init-theme"));
+  }, 200);
+  
+  if (page.headerColorMode){
+    modeStore.setPageHeaderColorMode(page.headerColorMode);
+  }
+  
   if (page.pageCss) {
     document.body.classList.add(page.pageCss);
   }
@@ -79,7 +91,8 @@ onBeforeUnmount(() => {
 
 </script>
 <template>
-  <AppHeader :slug="slug"></AppHeader>
+  <AppCursor></AppCursor>
+  <AppHeader :color-mode="page.headerColorMode" :slug="slug"></AppHeader>
   <div class="main-content">
     <div class="section" v-for="section in page.sections" :key="section.id">
       <AppSection :section="section">
@@ -93,15 +106,18 @@ onBeforeUnmount(() => {
         ></SectionsColumns>
         <SectionsMenu
           v-else-if="section.__component === 'sections.menu'"
-          :section="section">
+          :section="section"
+        >
         </SectionsMenu>
-        <SectionsSlider 
+        <SectionsSlider
           v-else-if="section.__component === 'sections.slider'"
-          :section="section">
+          :section="section"
+        >
         </SectionsSlider>
         <SectionsBlurbs
           v-else-if="section.__component === 'sections.blurbs'"
-          :section="section">
+          :section="section"
+        >
         </SectionsBlurbs>
         <div v-else-if="section.__component === 'sections.image'"></div>
         <pre v-else>{{ section }}</pre>

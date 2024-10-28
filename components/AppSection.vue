@@ -26,7 +26,7 @@ const heightStyle = computed(() => ({
 }));
 
 const widthStyle = computed(() => ({
-  width: props.section.styles?.width ? props.section.styles?.width : "auto",
+  width: props.section.styles?.width ? props.section.styles?.width : null,
 }));
 
 
@@ -48,11 +48,11 @@ const paddingStyle = computed(() => ({
     :id="section.styles?.sectionId ? section.styles?.sectionId : null"
     :class="`section-${section.__component.replace('.', '-')} text-${
       props.section.styles?.textColor ?? 'dark'
-    } width-${props.section.styles?.widthList ?? 'auto'} ${section.styles?.cssClass ?? 'css-z'}`"
+    } width-${props.section.styles?.widthList ?? 'null'} ${section.styles?.cssClass ?? 'css-z'}`"
     :style="[
       backgroundStyle,
       backgroundImageStyle,
-      heightStyle,
+      heightStyle,      
       marginStyle,
       paddingStyle,
     ]"
@@ -77,6 +77,12 @@ const paddingStyle = computed(() => ({
   margin-right: auto;
 }
 
+.width-pct50 .container {
+  width: 50%!important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .border-bottom-black-50{
   border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 }
@@ -89,5 +95,21 @@ const paddingStyle = computed(() => ({
   margin-left: auto;
   margin-right: auto;
   text-align: left
+}
+.width-pct50 .container .row {
+  width: 50%!important;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left
+}
+.width-pct80 .section-hero {
+  width: 80%!important;
+  margin-left: auto;
+  margin-right: auto;
+}
+.width-pct50 .section-hero {
+  width: 50%!important;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>
