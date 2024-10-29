@@ -377,3 +377,11 @@ const contact = computed(() => {
   }
 }
 </style>
+<style lang="scss">
+.node-webkit .full-page-menu .close {
+  right: 50px;
+  @media screen and (max-width: 768px) {
+    right: 0px;    
+  }
+}
+</style>

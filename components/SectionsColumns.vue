@@ -6,6 +6,8 @@ const props = defineProps<{
 const widthStyle = computed(() => ({
   width: props.section.styles?.width ? props.section.styles?.width : null,
 }));
+
+const runtimeConfig = useRuntimeConfig();
 </script>
 <template>
   <div class="section-columns">
@@ -20,6 +22,9 @@ const widthStyle = computed(() => ({
           :key="columnIndex"
           class="col"
           :class="column.styles?.cssClass ?? 'col'"
+          :style="{
+            backgroundImage: column.styles?.backgroundImage ? `url(${runtimeConfig.public.apiBase + column.styles.backgroundImage.url})` : 'none',            
+          }"
         >
           <h1
             v-if="column.title && column.titleHeading === 'h1'"
@@ -51,57 +56,57 @@ const widthStyle = computed(() => ({
             :style="`padding: ${column?.styles?.padding ?? '0'};
           margin: ${column?.styles?.margin ?? 'inherit'}`"
           >
-            <h1 v-if="block.type === 'heading' && block.level === 1">
+            <h1 v-if="block.type === 'heading' && block.level === 1" :class="block.css">
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
                 v-html="child.text"
-                :class="{ bold: child.bold }"
+                :class="[{ bold: child.bold }, child.css]"
               >
               </span>
             </h1>
-            <h2 v-if="block.type === 'heading' && block.level === 2">
+            <h2 v-if="block.type === 'heading' && block.level === 2" :class="block.css">
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
                 v-html="child.text"
-                :class="{ bold: child.bold }"
+                :class="[{ bold: child.bold }, child.css]"
               >
               </span>
             </h2>
-            <h3 v-if="block.type === 'heading' && block.level === 3">
+            <h3 v-if="block.type === 'heading' && block.level === 3" :class="block.css">
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
                 v-html="child.text"
-                :class="{ bold: child.bold }"
+                :class="[{ bold: child.bold }, child.css]"
               >
               </span>
             </h3>
-            <h4 v-if="block.type === 'heading' && block.level === 4">
+            <h4 v-if="block.type === 'heading' && block.level === 4" :class="block.css">
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
                 v-html="child.text"
-                :class="{ bold: child.bold }"
+                :class="[{ bold: child.bold }, child.css]"
               >
               </span>
             </h4>
-            <h5 v-if="block.type === 'heading' && block.level === 5">
+            <h5 v-if="block.type === 'heading' && block.level === 5" :class="block.css">
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
                 v-html="child.text"
-                :class="{ bold: child.bold }"
+                :class="[{ bold: child.bold }, child.css]"
               >
               </span>
             </h5>
-            <p v-if="block.type === 'paragraph'">
+            <p v-if="block.type === 'paragraph'" :class="block.css">
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
                 v-html="child.text"
-                :class="{ bold: child.bold }"
+                :class="[{ bold: child.bold }, child.css]"
               >
               </span>
             </p>
@@ -132,4 +137,11 @@ const widthStyle = computed(() => ({
 .bold{
   font-weight: bold;
 }
+.container{
+  height: 100%;
+  text-align: left;
+  align-items: flex-end;
+  display: flex;
+}
 </style>
+

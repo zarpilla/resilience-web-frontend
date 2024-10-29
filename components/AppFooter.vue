@@ -88,7 +88,7 @@ const footer = computed(() =>
                     class="mb-5"
                   >
                     <a :href="logo.href" target="_blank" class="n-link">
-                      <MetaMedia :media="logo.icon"></MetaMedia>
+                      <MetaMedia :media="logo.icon" css="media-real"></MetaMedia>
                     </a>
                   </div>
                 </div>
@@ -131,7 +131,7 @@ const footer = computed(() =>
                 rel="noopener noreferrer"
                 class="social-link ms-3 n-link"
               >
-                <MetaMedia :media="social.icon"></MetaMedia>
+                <MetaMedia :media="social.icon" css="media-real"></MetaMedia>
               </a>
             </div>
           </div>
@@ -149,6 +149,9 @@ footer {
   }
   .media-secondary {
     width: 100px;
+  }
+  .media-real {
+    width: inherit;
   }
 
   .main-text {

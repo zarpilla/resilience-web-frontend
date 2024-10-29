@@ -40,9 +40,9 @@ watch(
 );
 </script>
 <template>
-  <header class="d-flex" :class="`text-${colorMode}`">
+  <header class="d-flex hide-on-footer" :class="`text-${colorMode}`">
     <div class="me-auto">
-      <nuxt-link :to="localePath('/')" class="logo hoverable">
+      <nuxt-link :to="localePath('/')" class="logo hoverable clickable">
         <img
           class="hide-on-text-light"
           :class="{ 'd-none': pageHeaderColorMode === 'light' }"
@@ -57,7 +57,7 @@ watch(
     </div>
     <div class="menu d-flex mt-3">
       <div class="menu-text me-4">
-        <a class="zone-color" :href="header?.value?.emailLink.href">{{
+        <a class="zone-color d-none d-md-flex clickable" :href="header?.value?.emailLink.href">{{
           header?.value?.email
         }}</a>
       </div>
@@ -99,6 +99,11 @@ header {
   display: flex;
   position: fixed;
   width: 100%;
+  pointer-events: none;
+
+  .clickable {
+    pointer-events: all;
+  }
 
   .menu {
     transform: rotate(0deg);
@@ -117,6 +122,12 @@ header {
     svg line {
       stroke: #000;
     }
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 20px 20px;
+    position: absolute;
+    
   }
 }
 </style>

@@ -26,8 +26,8 @@ export default defineNuxtConfig({
       },
     },
   },
-  plugins: ["~/plugins/api.ts", "~/plugins/theme.client.ts"],
-  modules: ["@nuxtjs/i18n", "@pinia/nuxt", "usebootstrap"],
+  plugins: ["~/plugins/api.ts", "~/plugins/theme.client.ts", "~/plugins/bootstrap.client.ts"],
+  modules: ["@nuxtjs/i18n", "@pinia/nuxt"],
   i18n: {
     locales: ['en', 'ca', 'es'],
     // [

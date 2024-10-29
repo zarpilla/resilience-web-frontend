@@ -23,10 +23,10 @@ const pageTo = computed(() => {
 
 </script>
 <template>
-  <nuxt-link v-if="page" :to="pageTo" class="n-link" :class="cssClass" @click="onClick">
+  <nuxt-link v-if="page" :to="pageTo" class="hoverable" :class="cssClass || 'n-link'" @click="onClick">
     <span>{{ text }}</span>
   </nuxt-link>
-  <a v-else :href="href" :target="target" class="n-link" :class="cssClass" @click="onClick"
+  <a v-else :href="href" :target="target" class="hoverable" :class="cssClass || 'n-link'" @click="onClick"
     ><span>{{ text }}</span></a
   >
 </template>

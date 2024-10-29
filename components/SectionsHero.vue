@@ -19,11 +19,20 @@ const backgroundImageStyle = computed(() => ({
     : "none",
 }));
 
+const backgroundColorStyle = computed(() => ({
+  backgroundColor: props.section.styles?.backgroundColor
+    ? props.section.styles?.backgroundColor
+    : null,
+}));
+
+const route = useRoute();
+watch(() => route.name, (newValue, oldValue) => console.log("route.name", newValue, oldValue));
+
 </script>
 <template>
   <div class="section-hero">
     <div class="container">
-      <div class="section-hero-inner d-flex" :class="`align-${section.align}`" :style="[heightStyle, backgroundImageStyle]">
+      <div class="section-hero-inner d-flex" :class="`align-${section.align}`" :style="[heightStyle, backgroundImageStyle, backgroundColorStyle]">
         <div>
           <h1 v-if="section.title && section.titleHeading === 'h1'" v-html="section.title">
           </h1>
@@ -98,6 +107,9 @@ const backgroundImageStyle = computed(() => ({
 }
 .section-hero-inner{
   padding: 100px 0;
+  @media screen and (max-width: 768px) {
+    padding: 50px 0;    
+  }
 }
 .align-bottom-left {
   text-align: left;

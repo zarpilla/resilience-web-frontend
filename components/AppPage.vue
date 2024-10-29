@@ -50,7 +50,7 @@ useHead({
     { name: "description", content: page.metadata?.metaDescription || "" },
   ],
   bodyAttrs: {
-    class: `page-type-${props.type}`,
+    class: `page-type-${props.type} page-slug-${props.slug}`,
   },
 });
 
@@ -69,7 +69,8 @@ useSeoMeta({
 
 const modeStore = useModeStore();
 
-onMounted(() => {  ;
+onMounted(() => {  
+  console.log("onMounted");
   setTimeout(() => {
     window.dispatchEvent(new Event("init-theme"));
   }, 200);
@@ -84,6 +85,7 @@ onMounted(() => {  ;
 });
 
 onBeforeUnmount(() => {
+  console.log("onBeforeUnmount");
   if (page.pageCss) {
     document.body.classList.remove(page.pageCss);
   }
@@ -95,7 +97,7 @@ onBeforeUnmount(() => {
   <AppHeader :color-mode="page.headerColorMode" :slug="slug"></AppHeader>
   <div class="main-content">
     <div class="section" v-for="section in page.sections" :key="section.id">
-      <AppSection :section="section">
+      <AppSection :section="section" :slug="slug">
         <SectionsHero
           v-if="section.__component === 'sections.hero'"
           :section="section"
@@ -114,13 +116,22 @@ onBeforeUnmount(() => {
           :section="section"
         >
         </SectionsSlider>
+        <SectionsScroller
+          v-else-if="section.__component === 'sections.scroller'"
+          :section="section"
+        >
+        </SectionsScroller>
         <SectionsBlurbs
           v-else-if="section.__component === 'sections.blurbs'"
           :section="section"
         >
         </SectionsBlurbs>
-        <div v-else-if="section.__component === 'sections.image'"></div>
-        <pre v-else>{{ section }}</pre>
+        <SectionsBios
+          v-else-if="section.__component === 'sections.bios'"
+          :section="section">
+        </SectionsBios>
+        <!-- <div v-else-if="section.__component === 'sections.image'"></div>
+        <pre v-else>{{ section }}</pre> -->
       </AppSection>
 
       <!-- <h1>Page</h1>

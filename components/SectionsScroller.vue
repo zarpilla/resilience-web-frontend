@@ -39,22 +39,16 @@ onMounted(() => {
         </div>
         <h2 class="mb-5">{{ section.title }}</h2>
       </div>
-      <div class="row section-slider-carousel">
+      <div class="row section-scroller">
         <div class="col-12">
-          <div
-            :id="`carousel-${section.id}`"
-            class="carousel slide"
-            data-bs-ride="carousel"
-            data-bs-interval="8000"
-          >
-            <div class="carousel-inner">
+          <div :id="`scroller-${section.id}`" class="scroller">
+            <div class="scroller-inner">
               <div
-                class="carousel-item"
+                class="scroller-item"
                 v-for="(item, i) in section.menu.children"
                 :key="i"
-                :class="{'active' :i === 0}"
               >
-                <div class="carousel-item-inner">
+                <div class="scroller-item-inner">
                   <div class="row">
                     <div class="col-12 col-md-7 py-0 px-0 pe-md-0">
                       <img
@@ -97,38 +91,6 @@ onMounted(() => {
                 </div>
               </div>
             </div>
-            <button
-              class="carousel-control-prev hoverable"
-              type="button"
-              :data-bs-target="`#carousel-${section.id}`"
-              data-bs-slide="prev"
-            >
-              <span
-                class="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button
-              class="carousel-control-next hoverable"
-              type="button"
-              :data-bs-target="`#carousel-${section.id}`"
-              data-bs-slide="next"
-            >
-              <span
-                class="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-
-
-        </div>
-
-        <div>
-          <div class="carousel-c2a text-center mt-3" v-if="section.c2a">
-            <MetaC2A :c2a="section.c2a" :section="section"></MetaC2A>
           </div>
         </div>
       </div>
@@ -136,7 +98,7 @@ onMounted(() => {
   </div>
 </template>
 <style scoped lang="scss">
-.section-slider > .container {
+.section-scroller > .container {
   padding-top: 60px;
   padding-bottom: 60px;
 }
@@ -162,7 +124,7 @@ h2 {
   }
 }
 
-h3 a{
+h3 a {
   color: #000;
 }
 
@@ -170,21 +132,21 @@ h3 a{
   padding-top: 50px;
 }
 
-.carousel-inner{
+.scroller-inner {
   @media screen and (max-width: 768px) {
     padding-left: 60px;
     padding-right: 60px;
   }
 }
 
-.carousel-item-inner {
+.scroller-item-inner {
   width: 80%;
   margin: auto;
   @media screen and (max-width: 768px) {
     width: 100%;
   }
 }
-.carousel-item {
+.scroller-item {
   width: 100%;
 }
 
@@ -200,7 +162,7 @@ img {
     border-top-right-radius: 30px;
   }
 }
-.carousel-item-inner-column-text {
+.scroller-item-inner-column-text {
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
   border: 1px solid #000;
@@ -221,20 +183,16 @@ img {
   }
 }
 
-.carousel-item-inner-text {
+.scroller-item-inner-text {
   padding: 80px 80px 0 80px;
   @media screen and (max-width: 768px) {
     padding: 30px;
   }
 }
-.carousel-item-inner .col {
+.caroscrollerusel-item-inner .col {
   padding: 0 !important;
 }
-.carousel-c2a {
-  width: 80% !important;
-  padding: 0;
-  margin: auto;
-}
+
 .n-link {
   color: var(--Negre, #000);
   font-family: "PP Neue Montreal";
@@ -246,25 +204,7 @@ img {
 }
 </style>
 <style lang="css">
-.carousel-control-next-icon {
-  background-image: url("data:image/svg+xml,%3Csvg width='92' height='92' viewBox='0 0 92 92' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cmask id='mask0_208_2122' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='0' y='0' width='92' height='93'%3E%3Crect y='0.000244141' width='92' height='92' fill='%23D9D9D9'/%3E%3C/mask%3E%3Cg mask='url(%23mask0_208_2122)'%3E%3Cpath d='M67.6586 47.0544H20.3169V44.9461H67.6586L44.5627 21.8502L46.0002 20.3169L71.6836 46.0002L46.0002 71.6836L44.5627 70.1502L67.6586 47.0544Z' fill='%231C1B1F'/%3E%3C/g%3E%3C/svg%3E");
-  opacity: 1;
-}
-.carousel-control-prev-icon {
-  background-image: url("data:image/svg+xml,%3Csvg width='92' height='92' viewBox='0 0 92 92' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cmask id='mask0_208_2125' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='0' y='0' width='92' height='93'%3E%3Crect width='92' height='92' transform='matrix(-1 0 0 1 92 0.000244141)' fill='%23D9D9D9'/%3E%3C/mask%3E%3Cg mask='url(%23mask0_208_2125)'%3E%3Cpath d='M24.3414 47.0544H71.6831V44.9461H24.3414L47.4373 21.8502L45.9998 20.3169L20.3164 46.0002L45.9998 71.6836L47.4373 70.1502L24.3414 47.0544Z' fill='%231C1B1F'/%3E%3C/g%3E%3C/svg%3E");
-}
-.carousel-control-next-icon,
-.carousel-control-prev-icon {
-  width: 4rem;
-  height: 4rem;
-}
-.carousel-control-next,
-.carousel-control-prev {
-  opacity: 1;
-  width: 10%;
-  cursor: none!important;
-}
-.section-slider-carousel {
+.section-scroller-carousel {
   min-height: 665px;
 }
 </style>

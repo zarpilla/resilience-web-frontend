@@ -8,6 +8,7 @@ const runtimeConfig = useRuntimeConfig();
 </script>
 <template>
   <img
+  v-if="props.media"
     :src="runtimeConfig.public.apiBase + props.media.url"
     :alt="props.media.alternativeText"
     class="img"
@@ -20,5 +21,6 @@ const runtimeConfig = useRuntimeConfig();
 }
 .img{
     max-width: 100%;
+    width: 100%;
 }
 </style>
