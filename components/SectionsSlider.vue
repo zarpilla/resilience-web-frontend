@@ -17,7 +17,7 @@ const { $bs } = useNuxtApp() as any;
 
 onMounted(() => {
   try {
-    if (props.section.preset === "three") {
+    if (props.section.preset === "three" && window.innerWidth > 768) {
 
       // get all section-slider-carousel-3 elements
       let carousels = document.querySelectorAll(".section-slider-carousel-3");
@@ -82,7 +82,7 @@ onMounted(() => {
               :id="`carousel-${section.id}`"
               class="carousel slide"
               data-bs-ride="carousel"
-              data-bs-interval="8000"
+              :data-bs-interval="section.intervalMilliseconds || 8000"
             >
               <div class="carousel-inner">
                 <div
@@ -169,14 +169,14 @@ onMounted(() => {
         </div>
       </template>
       <template v-else>
-        <div class="row text-left mb-5">
+        <div class="row text-left mb-0 mb-md-5">
           <div class="col-12 col-md-3">
             <div class="z">
               <h3>{{ section.subTitle }}</h3>
             </div>
           </div>
           <div class="col-12 col-md-9">
-            <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-center justify-content-md-end">
               <button
                 class="carousel-control-prev carousel-control-prev-3 hoverable"
                 type="button"
@@ -213,9 +213,9 @@ onMounted(() => {
               :id="`carousel-${section.id}`"
               class="carousel slide"
               data-bs-ride="carousel"
-              data-bs-interval="800000"
+              :data-bs-interval="section.intervalMilliseconds || 8000"
             >
-              <div class="carousel-inner row" role="listbox">
+              <div class="carousel-inner fake-row" role="listbox">
                 <div
                   class="carousel-item zcol-12 px-0"
                   v-for="(item, i) in section.menu.children"
@@ -395,6 +395,9 @@ img {
 }
 .carousel-control-prev-3{
   left: 20px;
+  @media screen and (max-width: 768px) {
+    left: -20px;    
+  }
 }
 .carousel-control-next-3{
   right: -20px;
@@ -438,7 +441,18 @@ img {
   justify-content: flex-end;
 }
 .mx-custom{
-  margin-right: .75rem !important;
-  margin-left: .75rem !important;
+  @media screen and (min-width: 769px) {
+    margin-right: .75rem !important;
+    margin-left: .75rem !important;
+  }
+}
+.fake-row {
+  padding: 0 !important;
+  @media screen and (min-width: 769px) {
+    width: 100%;
+    margin-left: -10px;
+    margin-right: -10px;    
+  }
+  
 }
 </style>

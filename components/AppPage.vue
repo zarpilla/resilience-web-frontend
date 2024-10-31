@@ -70,7 +70,6 @@ useSeoMeta({
 const modeStore = useModeStore();
 
 onMounted(() => {
-  console.log("onMounted");
   setTimeout(() => {
     window.dispatchEvent(new Event("init-theme"));
   }, 200);
@@ -95,7 +94,7 @@ onBeforeUnmount(() => {
   <AppCursor></AppCursor>
   <AppHeader :slug="slug"></AppHeader>
   <div class="main-content">
-    <template v-for="section in page.sections" :key="section.id">
+    <template v-for="(section, i) in page.sections" :key="section.id">
       <div class="section">
         <AppSection :section="section" :slug="slug">
           <SectionsScroller
@@ -106,6 +105,7 @@ onBeforeUnmount(() => {
           <SectionsHero
             v-if="section.__component === 'sections.hero'"
             :section="section"
+            :section-index="i"
           ></SectionsHero>
           <SectionsColumns
             v-else-if="section.__component === 'sections.columns'"
@@ -136,6 +136,11 @@ onBeforeUnmount(() => {
             :section="section"
           >
           </SectionsBlog>
+          <SectionsCapabilities
+            v-else-if="section.__component === 'sections.capabilities'"
+            :section="section"
+          >
+          </SectionsCapabilities>
         </AppSection>
       </div>
     </template>

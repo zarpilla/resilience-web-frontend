@@ -77,8 +77,8 @@ h1 {
     line-height: 90px;
 
     @media screen and (max-width: 768px) {
-        font-size: 50px;
-        line-height: 50px;
+        font-size: 40px;
+        line-height: 40px;
     }
 }
 
@@ -93,8 +93,8 @@ h2 {
     letter-spacing: 0.6px;
 
     @media screen and (max-width: 768px) {
-        font-size: 40px;
-        line-height: 50px;
+        font-size: 35px;
+        line-height: 35px;
     }
 }
 
@@ -111,8 +111,8 @@ h3 a {
     text-decoration: none;
 
     @media screen and (max-width: 768px) {
-        font-size: 24px;
-        line-height: 32px;
+        font-size: 25px;
+        line-height: 25px;
     }
 }
 
@@ -254,6 +254,12 @@ body:not(.page-slug-home) {
     h3 {
         margin-bottom: 30px;
     }
+    img{
+        width: 100%;
+        @media screen and (max-width: 768px) {            
+            margin-bottom: 1rem;    
+        }        
+    }
 }
 
 // buttons
@@ -390,6 +396,10 @@ a.color-text-light {
         .info {
             padding: 70px 50px;
 
+            @media screen and (max-width: 768px) {
+                padding: 30px;                
+            }
+
             h3 {
                 a {
                     text-decoration: none !important;
@@ -428,15 +438,33 @@ a.color-text-light {
     }
 }
 
-.carousel-blog-item{
+.carousel-blog-item {
     background-color: #FFF;
     border-radius: 30px;
-    img{
+
+    img {
         border-radius: 30px 30px 0 0;
         height: 246px;
         object-fit: cover;
     }
+
     .info {
         padding: 30px;
     }
+}
+
+.img-wb-filter {
+    img {
+        filter: saturate(0%);
+        backface-visibility: hidden;
+    }
+}
+.img-height-100 img{
+    height: 100px; 
+}
+.img-height-75 img{
+    height: 75px;
+}
+.img-height-50 img{
+    height: 50px;
 }

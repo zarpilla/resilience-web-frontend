@@ -20,8 +20,8 @@ const runtimeConfig = useRuntimeConfig();
         <div
           v-for="(column, columnIndex) in section.columns"
           :key="columnIndex"
-          class="col"
-          :class="column.styles?.cssClass ?? 'col'"
+          class="col-12 col-md"
+          :class="column.styles?.cssClass ?? 'col-12 col-md'"
           :style="{
             backgroundImage: column.styles?.backgroundImage ? `url(${runtimeConfig.public.apiBase + column.styles.backgroundImage.url})` : 'none',            
           }"

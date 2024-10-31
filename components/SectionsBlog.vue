@@ -6,7 +6,10 @@ const props = defineProps<{
 import { computed } from "vue";
 
 onMounted(() => {
-  console.log("mounted");
+  
+  if (window.innerWidth < 768) {
+    return;
+  }
   // for each .blog-item-col, get the attribute data-w, acumulate it, and get mod 12 to know if it is in the same row. All the elements in the same row should have the same height
   const blogItems = document.querySelectorAll(".blog-item-col");
   let acum = 0;
@@ -117,6 +120,9 @@ onMounted(() => {
     .media {
       border-radius: 30px 0 0 30px;
       height: 442px;
+      @media screen and (max-width: 768px) {
+        border-radius: 30px 30px 0 0!important;
+      }
     }
 
     .info {

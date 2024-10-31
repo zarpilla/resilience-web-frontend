@@ -1,7 +1,7 @@
 // import Sniffer from "~/plugins/theme/utils/sniffer";
 import Cursor from '~/plugins/theme/components/cursor/index';
 import DarkLightMode from '~/plugins/theme/components/dark-light-mode/index';
-//import HorizontalScroller from '~/plugins/theme/components/horizontal-scroller/index';
+import HorizontalScroller from '~/plugins/theme/components/horizontal-scroller/index';
 
 // import Scroller from '~/plugins/theme/components/scroller/index';
 // import FullPageScroller from '~/plugins/theme/components/fullpage-scroller/index';
@@ -18,7 +18,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   // Sniffer.testPerformance();
   const cursor = new Cursor()
   const darkLightMode = new DarkLightMode()
-  //const horizontalScroller = new HorizontalScroller()
+  const horizontalScroller = new HorizontalScroller()
   // const scroller = new Scroller()
   // const fullPageScroller = new FullPageScroller()
   // const menu = new Menu()
@@ -31,7 +31,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
     cursor.init()
     darkLightMode.init()
-    //horizontalScroller.init()
+    horizontalScroller.init()
     // scroller.init()
     // fullPageScroller.init()
     // menu.init()

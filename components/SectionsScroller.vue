@@ -79,8 +79,7 @@ onUnmounted(() => {
     </div>
   </div>
 
-  <div class="scroller-container">    
-    <!-- <div class="scroller-item scroller-item-first"></div> -->
+  <div class="scroller-container" v-if="section.preset !== 'images'">    
     <div class="scroller-item" v-for="(item, i) in section.menu.children">
       <div class="carousel-item-inner" :class="`margin-rand-${i % 4}`">
         <div class="carousel-item-inner-1">
@@ -112,6 +111,21 @@ onUnmounted(() => {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroller-container" v-else>    
+    <div class="scroller-item" v-for="(item, i) in section.menu.children">
+      <div class="carousel-item-inner-image">
+        <div class="carousel-item-inner-image-1">
+          <img
+              :src="
+                runtimeConfig.public.apiBase +
+                item?.image.url
+              "
+              alt=""
+            />
         </div>
       </div>
     </div>
@@ -192,7 +206,6 @@ onUnmounted(() => {
     }
   }
 
-
   .carousel-item-inner-1{
     background-color: #fff;
     border-radius: 30px;    
@@ -206,4 +219,15 @@ onUnmounted(() => {
     border-top-right-radius: 30px;
   }
 }
+
+.carousel-item-inner-image {
+    margin: 0 10px;
+
+    img {
+    width: 100%;
+    height: 580px;
+    object-fit: cover;
+    border-radius: 30px;
+  }
+  }
 </style>

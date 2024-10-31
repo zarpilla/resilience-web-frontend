@@ -125,23 +125,44 @@ import { computed } from "vue";
     >
       <ul class="marquee__inner">
         <li
-          v-for="(item, menuIndex) in section.menu.children.concat(
-            section.menu.children
-          )"
+          v-for="(item, menuIndex) in section.menu.children"
           :key="menuIndex"
           class="marquee__item"
+          :class="{ marquee__item__image: item.image !== null }"
         >
-          <MetaLink
-            :page="item.page"
-            :text="item.page?.name || item.title"
-            :target="item.target"
-            :href="item.href"
-            css-class="item"
-          />
-          <span
-            class="separator"
-            v-if="menuIndex !== section.menu.children.length - 1"
-            >/</span
+          <div class="marquee-logo" v-if="item.image">
+            <MetaLink
+              v-if="item.href"
+              target="_blank"
+              :href="item.href"
+              css-class="z"
+            >
+              <MetaMedia
+                :media="item.image"
+                :alt="item.image.alt"
+                css-class="marquee-logo-img"
+              />
+            </MetaLink>
+            <MetaMedia
+              v-else
+              :media="item.image"
+              :alt="item.image.alt"
+              css-class="marquee-logo-img"
+            />
+          </div>
+          <template v-else>
+            <MetaLink
+              :page="item.page"
+              :text="item.page?.name || item.title"
+              :target="item.target"
+              :href="item.href"
+              css-class="item"
+            />
+            <span
+              class="separator"
+              v-if="menuIndex !== section.menu.children.length - 1"
+              >/</span
+            ></template
           >
         </li>
       </ul>
@@ -209,8 +230,15 @@ import { computed } from "vue";
     .marquee__inner {
       display: flex;
       list-style: none;
-      animation: scrolling 30s linear infinite;
+      // animation: scrolling 30s linear infinite;
       margin: 0 !important;
+      // @media screen and (max-width: 768px) {
+      //   animation: scrolling 5s linear infinite;        
+      // }
+
+      .marquee__item__image {
+        margin-right: 50px;
+      }
     }
 
     @keyframes scrolling {

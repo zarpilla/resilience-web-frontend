@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   section: any;
+  sectionIndex: number;
 }>();
 
 import { computed } from "vue";
@@ -29,8 +30,8 @@ const route = useRoute();
 watch(() => route.name, (newValue, oldValue) => console.log("route.name", newValue, oldValue));
 
 </script>
-<template>
-  <div class="section-hero">
+<template>  
+  <div class="section-hero" :class="{ 'first-hero': sectionIndex === 0 && !props.section.styles?.height }">
     <div class="container">
       <div class="section-hero-inner d-flex" :class="`align-${section.align}`" :style="[heightStyle, backgroundImageStyle, backgroundColorStyle]">
         <div>
@@ -104,6 +105,13 @@ watch(() => route.name, (newValue, oldValue) => console.log("route.name", newVal
 <style scoped lang="scss">
 .section-hero {
   background-size: cover;
+
+  &.first-hero {
+    @media screen and (max-width: 768px) {
+      padding-top: 100px;
+      
+    }
+  }
 }
 .section-hero-inner{
   padding: 100px 0;
