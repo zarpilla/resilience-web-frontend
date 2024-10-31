@@ -7,16 +7,17 @@ import { computed } from "vue";
 </script>
 <template>
   <div class="section-menu">
-
-    
-    <div class="container" 
-    v-if="
-            section.menu &&
-            section.menu.children &&
-            section.menu.children.length &&
-            (!section.preset || section.preset === 'default' || section.preset === 'tags-cloud')
-          "
-          >
+    <div
+      class="container"
+      v-if="
+        section.menu &&
+        section.menu.children &&
+        section.menu.children.length &&
+        (!section.preset ||
+          section.preset === 'default' ||
+          section.preset === 'tags-cloud')
+      "
+    >
       <div class="row">
         <div
           v-if="
@@ -111,38 +112,40 @@ import { computed } from "vue";
             >
           </div>
         </div>
-
       </div>
     </div>
-    <div class="marquee" 
-    v-else-if="
-            section.menu &&
-            section.menu.children &&
-            section.menu.children.length &&
-            (section.preset === 'marquee')
-          "
+    <div
+      class="marquee"
+      v-else-if="
+        section.menu &&
+        section.menu.children &&
+        section.menu.children.length &&
+        section.preset === 'marquee'
+      "
+    >
+      <ul class="marquee__inner">
+        <li
+          v-for="(item, menuIndex) in section.menu.children.concat(
+            section.menu.children
+          )"
+          :key="menuIndex"
+          class="marquee__item"
+        >
+          <MetaLink
+            :page="item.page"
+            :text="item.page?.name || item.title"
+            :target="item.target"
+            :href="item.href"
+            css-class="item"
+          />
+          <span
+            class="separator"
+            v-if="menuIndex !== section.menu.children.length - 1"
+            >/</span
           >
-
-        
-          <ul class="marquee__inner">
-            <li
-              v-for="(item, menuIndex) in section.menu.children.concat(section.menu.children)"
-              :key="menuIndex"
-              class="marquee__item"
-            >
-              <MetaLink
-                :page="item.page"
-                :text="item.page?.name || item.title"
-                :target="item.target"
-                :href="item.href"
-                css-class="item"
-              />
-              <span class="separator" v-if="menuIndex !== section.menu.children.length - 1">/</span>
-            </li>
-
-          </ul>
-        
-        </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 <style lang="scss">
@@ -207,7 +210,7 @@ import { computed } from "vue";
       display: flex;
       list-style: none;
       animation: scrolling 30s linear infinite;
-      margin: 0!important;
+      margin: 0 !important;
     }
 
     @keyframes scrolling {
@@ -220,11 +223,10 @@ import { computed } from "vue";
     }
 
     li {
-
       .separator {
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
-    }
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
 
       .item,
       .separator {

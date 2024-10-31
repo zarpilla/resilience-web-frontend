@@ -24,9 +24,10 @@ const pageTo = computed(() => {
 </script>
 <template>
   <nuxt-link v-if="page" :to="pageTo" class="hoverable" :class="cssClass || 'n-link'" @click="onClick">
-    <span>{{ text }}</span>
+    <span v-if="text">{{ text }}</span>
+    <slot v-else />
   </nuxt-link>
-  <a v-else :href="href" :target="target" class="hoverable" :class="cssClass || 'n-link'" @click="onClick"
+  <a v-else-if="href" :href="href" :target="target" class="hoverable" :class="cssClass || 'n-link'" @click="onClick"
     ><span>{{ text }}</span></a
   >
 </template>

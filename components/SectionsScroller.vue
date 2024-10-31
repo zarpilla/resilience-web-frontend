@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { $gsap, $ScrollTrigger, $Observer } = useNuxtApp();
 const props = defineProps<{
   section: any;
 }>();
@@ -9,86 +10,105 @@ const hasBackground = computed(() => {
   return props.section.background ? true : false;
 });
 
-const backgrondStyle = computed(() => ({
+const backgroundStyle = computed(() => ({
   background: props.section.background ? props.section.background : "none",
 }));
 
-const { $bs } = useNuxtApp() as any;
-
 onMounted(() => {
-  try {
-    var myCarousel = document.querySelector(`#carousel-${props.section.id}`);
-    const carousel = new $bs.Carousel(myCarousel);
-  } catch (e) {
-    console.log("Bootstrap error: ", e);
+  const scrollerInner = document.querySelector(".scroller-container");
+  const sectionsScroller = document.querySelector(".section-sections-scroller");
+
+  if (!scrollerInner || !sectionsScroller) {
+    return;
   }
+
+  let sections = $gsap.utils.toArray(".scroller-item");
+
+  // add a random bg color to each section
+  // sections.forEach((section: any, i) => {
+  //   section.style.background = `hsl(${i * (360 / sections.length)}, 70%, 80%)`;
+  // });
+
+  // Calculate the total width of the horizontal scroll content
+  const totalWidth = scrollerInner.scrollWidth;
+  
+  const xPercent = -100 * totalWidth / (window as any).innerWidth
+  
+  const tl = $gsap.to(sections, {    
+    xPercent: xPercent * 1.2,
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".scroller-container",
+      pin: true,
+      scrub: 1,
+      snap: 1 / (sections.length - 1),
+      end: () => "+=" + totalWidth,
+      // markers: true,
+      onUpdate(self: any) {
+        // set sectionsScroller backuground-position to move with the scroll, but very slowly
+        $gsap.set(sectionsScroller, {
+          backgroundPosition: `${-1 * self.progress * 20}% 0px`
+        });
+      }
+    },
+  });
 });
+
+onUnmounted(() => {
+  $ScrollTrigger.getAll().forEach((trigger: any) => {
+    trigger.kill();
+  });
+})
+
 </script>
 <template>
-  <div class="section-slider">
+  <div class="section-scroller">
     <div
       class="container"
-      :style="backgrondStyle"
+      :style="backgroundStyle"
       v-if="
         section.menu && section.menu.children && section.menu.children.length
       "
     >
       <div class="row text-center">
-        <div class="subtitle-outter mb-4">
-          <div class="subtitle">{{ section.subTitle }}</div>
-        </div>
         <h2 class="mb-5">{{ section.title }}</h2>
+        <div class="subtitle-outter mb-4" v-if="section.subtitle">
+          <h3 class="subtitle">{{ section.subtitle }}</h3>
+        </div>
       </div>
-      <div class="row section-scroller">
-        <div class="col-12">
-          <div :id="`scroller-${section.id}`" class="scroller">
-            <div class="scroller-inner">
-              <div
-                class="scroller-item"
-                v-for="(item, i) in section.menu.children"
-                :key="i"
-              >
-                <div class="scroller-item-inner">
-                  <div class="row">
-                    <div class="col-12 col-md-7 py-0 px-0 pe-md-0">
-                      <img
-                        :src="
-                          runtimeConfig.public.apiBase +
-                          item?.page?.metadata?.shareImage?.url
-                        "
-                        :alt="item?.page.name"
-                      />
-                    </div>
-                    <div
-                      class="col-12 col-md-5 ps-md-0 carousel-item-inner-column-text"
-                      :class="`has-background-${hasBackground}`"
-                    >
-                      <div class="carousel-item-inner-text">
-                        <h3>
-                          <MetaLink
-                            :page="item.page"
-                            :text="item?.page.name"
-                            href="#"
-                            target=""
-                            css-class="hoverable"
-                          ></MetaLink>
-                        </h3>
-                        <div class="meta-description mt-4">
-                          {{ item?.page.metadata?.metaDescription }}
-                        </div>
-                        <div class="mt-4">
-                          <MetaLink
-                            :page="item.page"
-                            :text="section.goToText"
-                            href="#"
-                            target=""
-                            css-class="n-link"
-                          ></MetaLink>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+    </div>
+  </div>
+
+  <div class="scroller-container">    
+    <!-- <div class="scroller-item scroller-item-first"></div> -->
+    <div class="scroller-item" v-for="(item, i) in section.menu.children">
+      <div class="carousel-item-inner" :class="`margin-rand-${i % 4}`">
+        <div class="carousel-item-inner-1">
+          <div class="div">
+            <img
+              :src="
+                runtimeConfig.public.apiBase +
+                item?.page?.metadata?.shareImage?.url
+              "
+              :alt="item?.page.name"
+            />
+          </div>
+          <div
+            class="div"
+            :class="`has-background-${hasBackground}`"
+          >
+            <div class="carousel-item-inner-text px-5 py-5">
+              <h3>       
+                <MetaLink
+                  :page="item.page"
+                  :text="item.page.name"                  
+                  href="#"
+                  target=""
+                  css-class="hoverable"
+                ></MetaLink>
+              </h3>
+              <div class="meta-description mt-4">
+                {{ item?.page.metadata?.metaDescription }}
               </div>
             </div>
           </div>
@@ -98,113 +118,92 @@ onMounted(() => {
   </div>
 </template>
 <style scoped lang="scss">
-.section-scroller > .container {
-  padding-top: 60px;
-  padding-bottom: 60px;
-}
-.subtitle {
-  color: var(--Negre, #000);
-  text-align: center;
-  font-family: "PP Neue Montreal";
-  font-size: 22px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 40px; /* 181.818% */
-  letter-spacing: 0.22px;
+.section-scroller {
   padding-bottom: 0px;
-  border-bottom: 1px solid #000;
-  display: inline-block;
 }
 
-h2 {
-  width: 30%;
-  margin: auto;
-  @media screen and (max-width: 768px) {
-    width: 100%;
+.subtitle{
+  @media screen and (min-width: 768px) {
+    width: 50%;
+    margin: 0 auto;    
   }
 }
 
-h3 a {
-  color: #000;
-}
 
-.section-slider-carousel {
-  padding-top: 50px;
-}
+.scroller-container {
+  height: 80vh;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  overflow: hidden;
 
-.scroller-inner {
   @media screen and (max-width: 768px) {
-    padding-left: 60px;
-    padding-right: 60px;
+    height: auto;
   }
 }
 
-.scroller-item-inner {
-  width: 80%;
-  margin: auto;
+.scroller-item-first {
+  width: 5vw !important;
+  flex: 0 0 auto;
+  background: transparent;
   @media screen and (max-width: 768px) {
-    width: 100%;
+    width: 0 !important;    
   }
 }
+
 .scroller-item {
-  width: 100%;
+  width: 33.33vw;
+  flex: 0 0 auto;
+  margin-top: 100px;
+  @media screen and (max-width: 768px) {
+    width: 100vw !important;
+  }
 }
 
-img {
-  width: 100%;
-  height: 550px;
-  object-fit: cover;
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
-  @media screen and (max-width: 767px) {
-    height: 300px;
-    border-bottom-left-radius: 0px;
+.carousel-item-inner {
+  margin: 0 60px;  
+  @media screen and (max-width: 768px) {
+    margin: 0 20px;
+    
+  }
+
+  &.margin-rand-0 {
+    margin-top: 40px;    
+    @media screen and (max-width: 768px) {
+      margin-top: 10px;
+    }
+  }
+  &.margin-rand-1 {
+    margin-top: 120px;
+    @media screen and (max-width: 768px) {
+      margin-top: 20px;
+    }
+  }
+  &.margin-rand-2 {
+    margin-top: 0px;
+    @media screen and (max-width: 768px) {
+      margin-top: 0px;
+    }
+  }
+  &.margin-rand-3 {
+    margin-top: 80px;
+    @media screen and (max-width: 768px) {
+      margin-top: 10px;
+    }
+  }
+
+
+  .carousel-item-inner-1{
+    background-color: #fff;
+    border-radius: 30px;    
+  }
+
+  img {
+    width: 100%;
+    height: 232px;
+    object-fit: cover;
+    border-top-left-radius: 30px;
     border-top-right-radius: 30px;
   }
-}
-.scroller-item-inner-column-text {
-  border-top-right-radius: 30px;
-  border-bottom-right-radius: 30px;
-  border: 1px solid #000;
-  border-left: 0;
-  background: #fff;
-
-  @media screen and (max-width: 767px) {
-    border-top-right-radius: 0px;
-    border-top-left-radius: 0px;
-    border-bottom-right-radius: 30px;
-    border-bottom-left-radius: 30px;
-    border-left: 1px solid #000;
-    border-top: 0;
-  }
-
-  &.has-background-true {
-    border: 0;
-  }
-}
-
-.scroller-item-inner-text {
-  padding: 80px 80px 0 80px;
-  @media screen and (max-width: 768px) {
-    padding: 30px;
-  }
-}
-.caroscrollerusel-item-inner .col {
-  padding: 0 !important;
-}
-
-.n-link {
-  color: var(--Negre, #000);
-  font-family: "PP Neue Montreal";
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 150%; /* 27px */
-  letter-spacing: 0.18px;
-}
-</style>
-<style lang="css">
-.section-scroller-carousel {
-  min-height: 665px;
 }
 </style>

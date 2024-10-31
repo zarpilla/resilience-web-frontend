@@ -13,6 +13,10 @@ const backgroundStyle = computed(() => ({
     : "cover no-repeat",
 }));
 
+const sectionIsScroller = computed(() => {
+  return props.section.__component === "sections.scroller";
+});
+
 const backgroundImageStyle = computed(() => ({
   backgroundImage: props.section.styles?.backgroundImage
     ? `url(${
@@ -20,6 +24,7 @@ const backgroundImageStyle = computed(() => ({
       })`
     : "none",
 }));
+
 
 const backgroundColorStyle = computed(() => ({
   backgroundColor: props.section.styles?.backgroundColor
@@ -54,7 +59,7 @@ const paddingStyle = computed(() => ({
       props.section.styles?.textColor ?? 'dark'
     } width-container-${props.section.styles?.container ?? 'null'} ${
       section.styles?.cssClass ?? 'css-z'
-    }`"
+    } ${sectionIsScroller ? 'background-attachment-fixed' : ''}`"
     :style="[
       backgroundStyle,
       backgroundImageStyle,
@@ -64,6 +69,7 @@ const paddingStyle = computed(() => ({
       paddingStyle,
     ]"
   >
+    
     <slot></slot>
   </div>
 </template>
@@ -109,6 +115,30 @@ const paddingStyle = computed(() => ({
   }
 }
 
+.width-container-article {
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (min-width: 768px) {
+  }
+  @media (min-width: 992px) {
+    .container {
+      max-width: 725px !important;
+    }
+  }
+  @media (min-width: 1200px) {
+    .container {
+      max-width: 725px !important;
+    }
+  }
+  @media (min-width: 1400px) {
+    .container {
+      max-width: 725px !important;
+    }
+  }
+}
+
+
 .width-container-small {
   margin-left: auto;
   margin-right: auto;
@@ -117,17 +147,17 @@ const paddingStyle = computed(() => ({
   }
   @media (min-width: 992px) {
     .container {
-      max-width: 450px !important;
+      max-width: 550px !important;
     }
   }
   @media (min-width: 1200px) {
     .container {
-      max-width: 600px !important;
+      max-width: 650px !important;
     }
   }
   @media (min-width: 1400px) {
     .container {
-      max-width: 700px !important;
+      max-width: 650px !important;
     }
   }
 }

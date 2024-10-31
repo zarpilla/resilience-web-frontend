@@ -27,7 +27,7 @@ export default defineNuxtConfig({
     },
   },
   plugins: ["~/plugins/api.ts", "~/plugins/theme.client.ts", "~/plugins/bootstrap.client.ts"],
-  modules: ["@nuxtjs/i18n", "@pinia/nuxt"],
+  modules: ["@nuxtjs/i18n", "@pinia/nuxt", "@hypernym/nuxt-gsap"],
   i18n: {
     locales: ['en', 'ca', 'es'],
     // [
@@ -39,4 +39,11 @@ export default defineNuxtConfig({
     vueI18n: "./i18n.config.ts",
   },
   css: ["bootstrap/dist/css/bootstrap.min.css"],
+  gsap: {
+    extraPlugins: {
+      scrollTrigger: true,
+      scrollTo: true,
+      observer: true,
+    }
+  },
 });

@@ -9,7 +9,7 @@ const hasBackground = computed(() => {
   return props.section.background ? true : false;
 });
 
-const backgrondStyle = computed(() => ({
+const backgroundStyle = computed(() => ({
   background: props.section.background ? props.section.background : "none",
 }));
 
@@ -17,6 +17,42 @@ const { $bs } = useNuxtApp() as any;
 
 onMounted(() => {
   try {
+    if (props.section.preset === "three") {
+
+      // get all section-slider-carousel-3 elements
+      let carousels = document.querySelectorAll(".section-slider-carousel-3");
+      carousels.forEach((carousel) => {
+        // get the max height of the items within this carousel and set it to all the items
+        let citems = carousel.querySelectorAll(".carousel-blog-item");
+        let maxHeight = 0;
+        citems.forEach((el) => {
+          const elHeight = el.clientHeight;
+          if (elHeight > maxHeight) {
+        maxHeight = elHeight;
+          }
+        });
+        citems.forEach((el: any) => {
+          el.style.height = `${maxHeight + 25}px`;
+        });
+      });
+
+
+      let items = document.querySelectorAll(".carousel .carousel-item");
+      items.forEach((el) => {
+        const minPerSlide = 3;
+        let next = el.nextElementSibling;
+        for (var i = 1; i < minPerSlide; i++) {
+          if (!next) {
+            // wrap carousel by using first child
+            next = items[0];
+          }
+          let cloneChild: any = next.cloneNode(true);
+          el.appendChild(cloneChild.children[0]);
+          next = next.nextElementSibling;
+        }
+      });
+    }
+
     var myCarousel = document.querySelector(`#carousel-${props.section.id}`);
     const carousel = new $bs.Carousel(myCarousel);
   } catch (e) {
@@ -28,68 +64,185 @@ onMounted(() => {
   <div class="section-slider">
     <div
       class="container"
-      :style="backgrondStyle"
+      :style="backgroundStyle"
       v-if="
         section.menu && section.menu.children && section.menu.children.length
       "
     >
-      <div class="row text-center">
-        <div class="subtitle-outter mb-4">
-          <div class="subtitle">{{ section.subTitle }}</div>
+      <template v-if="section.preset !== 'three'">
+        <div class="row text-center">
+          <div class="subtitle-outter mb-4">
+            <div class="subtitle">{{ section.subTitle }}</div>
+          </div>
+          <h2 class="mb-5">{{ section.title }}</h2>
         </div>
-        <h2 class="mb-5">{{ section.title }}</h2>
-      </div>
-      <div class="row section-slider-carousel">
-        <div class="col-12">
-          <div
-            :id="`carousel-${section.id}`"
-            class="carousel slide"
-            data-bs-ride="carousel"
-            data-bs-interval="8000"
-          >
-            <div class="carousel-inner">
-              <div
-                class="carousel-item"
-                v-for="(item, i) in section.menu.children"
-                :key="i"
-                :class="{'active' :i === 0}"
-              >
-                <div class="carousel-item-inner">
-                  <div class="row">
-                    <div class="col-12 col-md-7 py-0 px-0 pe-md-0">
-                      <img
-                        :src="
-                          runtimeConfig.public.apiBase +
-                          item?.page?.metadata?.shareImage?.url
-                        "
-                        :alt="item?.page.name"
-                      />
-                    </div>
-                    <div
-                      class="col-12 col-md-5 ps-md-0 carousel-item-inner-column-text"
-                      :class="`has-background-${hasBackground}`"
-                    >
-                      <div class="carousel-item-inner-text">
-                        <h3>
-                          <MetaLink
-                            :page="item.page"
-                            :text="item?.page.name"
-                            href="#"
-                            target=""
-                            css-class="hoverable"
-                          ></MetaLink>
-                        </h3>
-                        <div class="meta-description mt-4">
-                          {{ item?.page.metadata?.metaDescription }}
+        <div class="row section-slider-carousel">
+          <div class="col-12">
+            <div
+              :id="`carousel-${section.id}`"
+              class="carousel slide"
+              data-bs-ride="carousel"
+              data-bs-interval="8000"
+            >
+              <div class="carousel-inner">
+                <div
+                  class="carousel-item"
+                  v-for="(item, i) in section.menu.children"
+                  :key="i"
+                  :class="{ active: i === 0 }"
+                >
+                  <div class="carousel-item-inner">
+                    <div class="row">
+                      <div class="col-12 col-md-7 py-0 px-0 pe-md-0">
+                        <img
+                          :src="
+                            runtimeConfig.public.apiBase +
+                            item?.page?.metadata?.shareImage?.url
+                          "
+                          :alt="item?.page.name"
+                        />
+                      </div>
+                      <div
+                        class="col-12 col-md-5 ps-md-0 carousel-item-inner-column-text"
+                        :class="`has-background-${hasBackground}`"
+                      >
+                        <div class="carousel-item-inner-text">
+                          <h3>
+                            <MetaLink
+                              :page="item.page"
+                              :text="item?.page.name"
+                              href="#"
+                              target=""
+                              css-class="hoverable"
+                            ></MetaLink>
+                          </h3>
+                          <div class="meta-description mt-4">
+                            {{ item?.page.metadata?.metaDescription }}
+                          </div>
+                          <div class="mt-4">
+                            <MetaLink
+                              :page="item.page"
+                              :text="section.goToText"
+                              href="#"
+                              target=""
+                              css-class="n-link"
+                            ></MetaLink>
+                          </div>
                         </div>
-                        <div class="mt-4">
-                          <MetaLink
-                            :page="item.page"
-                            :text="section.goToText"
-                            href="#"
-                            target=""
-                            css-class="n-link"
-                          ></MetaLink>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button
+                class="carousel-control-prev hoverable"
+                type="button"
+                :data-bs-target="`#carousel-${section.id}`"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button
+                class="carousel-control-next hoverable"
+                type="button"
+                :data-bs-target="`#carousel-${section.id}`"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <div class="carousel-c2a text-center mt-3" v-if="section.c2a">
+              <MetaC2A :c2a="section.c2a" :section="section"></MetaC2A>
+            </div>
+          </div>
+        </div>
+      </template>
+      <template v-else>
+        <div class="row text-left mb-5">
+          <div class="col-12 col-md-3">
+            <div class="z">
+              <h3>{{ section.subTitle }}</h3>
+            </div>
+          </div>
+          <div class="col-12 col-md-9">
+            <div class="d-flex justify-content-end">
+              <button
+                class="carousel-control-prev carousel-control-prev-3 hoverable"
+                type="button"
+                :data-bs-target="`#carousel-${section.id}`"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button
+                class="carousel-control-next carousel-control-next-3 hoverable"
+                type="button"
+                :data-bs-target="`#carousel-${section.id}`"
+                data-bs-slide="next"
+              >
+                <span
+                      class="carousel-control-next-icon"
+                    aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+          </div>
+          </div>
+        </div>
+
+        <div
+          class="zrow section-slider-carousel-3 mx-auto my-auto justify-content-center"
+        >
+          <div class="zcol-12">
+            <div
+              :id="`carousel-${section.id}`"
+              class="carousel slide"
+              data-bs-ride="carousel"
+              data-bs-interval="800000"
+            >
+              <div class="carousel-inner row" role="listbox">
+                <div
+                  class="carousel-item zcol-12 px-0"
+                  v-for="(item, i) in section.menu.children"
+                  :key="i"
+                  :class="{ active: i === 0 }"
+                >
+                  <div class="col-md-4 mb-4" :class="`blog-onethird`">
+                    <div class="carousel-blog-item mx-custom">
+                      <div
+                      >
+                        <MetaLink :page="item.page">
+                          <MetaMedia
+                            css="media"
+                            :media="item.page.metadata.shareImage"
+                          />
+                        </MetaLink>
+                      </div>
+                      <div>
+                        <div class="info">
+                          <h3 class="mb-0">
+                            <MetaLink
+                              :page="item.page"
+                              :text="item.page.name"
+                              css-class="n-link"
+                            >
+                            </MetaLink>
+                          </h3>
                         </div>
                       </div>
                     </div>
@@ -97,41 +250,9 @@ onMounted(() => {
                 </div>
               </div>
             </div>
-            <button
-              class="carousel-control-prev hoverable"
-              type="button"
-              :data-bs-target="`#carousel-${section.id}`"
-              data-bs-slide="prev"
-            >
-              <span
-                class="carousel-control-prev-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button
-              class="carousel-control-next hoverable"
-              type="button"
-              :data-bs-target="`#carousel-${section.id}`"
-              data-bs-slide="next"
-            >
-              <span
-                class="carousel-control-next-icon"
-                aria-hidden="true"
-              ></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-
-
-        </div>
-
-        <div>
-          <div class="carousel-c2a text-center mt-3" v-if="section.c2a">
-            <MetaC2A :c2a="section.c2a" :section="section"></MetaC2A>
           </div>
         </div>
-      </div>
+      </template>
     </div>
   </div>
 </template>
@@ -162,7 +283,7 @@ h2 {
   }
 }
 
-h3 a{
+h3 a {
   color: #000;
 }
 
@@ -170,10 +291,10 @@ h3 a{
   padding-top: 50px;
 }
 
-.carousel-inner{
+.carousel-inner {
   @media screen and (max-width: 768px) {
-    padding-left: 60px;
-    padding-right: 60px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 }
 
@@ -262,9 +383,62 @@ img {
 .carousel-control-prev {
   opacity: 1;
   width: 10%;
-  cursor: none!important;
+  cursor: none !important;
 }
 .section-slider-carousel {
   min-height: 665px;
+}
+
+.carousel-control-next-3,
+.carousel-control-prev-3 {
+  position: relative !important;
+}
+.carousel-control-prev-3{
+  left: 20px;
+}
+.carousel-control-next-3{
+  right: -20px;
+}
+
+.section-slider-carousel-3 {
+  @media (max-width: 767px) {
+    .carousel-inner .carousel-item > div {
+      display: none;
+    }
+    .carousel-inner .carousel-item > div:first-child {
+      display: block;
+    }
+  }
+
+  .carousel-inner .carousel-item.active,
+  .carousel-inner .carousel-item-next,
+  .carousel-inner .carousel-item-prev {
+    display: flex;
+  }
+
+  /* medium and up screens */
+  @media (min-width: 768px) {
+    .carousel-inner .carousel-item-end.active,
+    .carousel-inner .carousel-item-next {
+      transform: translateX(33.3333%);
+    }
+
+    .carousel-inner .carousel-item-start.active,
+    .carousel-inner .carousel-item-prev {
+      transform: translateX(-33.3333%);
+    }
+  }
+
+  .carousel-inner .carousel-item-end,
+  .carousel-inner .carousel-item-start {
+    transform: translateX(0);
+  }
+}
+.justify-content-end {
+  justify-content: flex-end;
+}
+.mx-custom{
+  margin-right: .75rem !important;
+  margin-left: .75rem !important;
 }
 </style>

@@ -69,16 +69,16 @@ useSeoMeta({
 
 const modeStore = useModeStore();
 
-onMounted(() => {  
+onMounted(() => {
   console.log("onMounted");
   setTimeout(() => {
     window.dispatchEvent(new Event("init-theme"));
   }, 200);
-  
-  if (page.headerColorMode){
+
+  if (page.headerColorMode) {
     modeStore.setPageHeaderColorMode(page.headerColorMode);
   }
-  
+
   if (page.pageCss) {
     document.body.classList.add(page.pageCss);
   }
@@ -90,56 +90,55 @@ onBeforeUnmount(() => {
     document.body.classList.remove(page.pageCss);
   }
 });
-
 </script>
 <template>
   <AppCursor></AppCursor>
-  <AppHeader :color-mode="page.headerColorMode" :slug="slug"></AppHeader>
+  <AppHeader :slug="slug"></AppHeader>
   <div class="main-content">
-    <div class="section" v-for="section in page.sections" :key="section.id">
-      <AppSection :section="section" :slug="slug">
-        <SectionsHero
-          v-if="section.__component === 'sections.hero'"
-          :section="section"
-        ></SectionsHero>
-        <SectionsColumns
-          v-else-if="section.__component === 'sections.columns'"
-          :section="section"
-        ></SectionsColumns>
-        <SectionsMenu
-          v-else-if="section.__component === 'sections.menu'"
-          :section="section"
-        >
-        </SectionsMenu>
-        <SectionsSlider
-          v-else-if="section.__component === 'sections.slider'"
-          :section="section"
-        >
-        </SectionsSlider>
-        <SectionsScroller
-          v-else-if="section.__component === 'sections.scroller'"
-          :section="section"
-        >
-        </SectionsScroller>
-        <SectionsBlurbs
-          v-else-if="section.__component === 'sections.blurbs'"
-          :section="section"
-        >
-        </SectionsBlurbs>
-        <SectionsBios
-          v-else-if="section.__component === 'sections.bios'"
-          :section="section">
-        </SectionsBios>
-        <!-- <div v-else-if="section.__component === 'sections.image'"></div>
-        <pre v-else>{{ section }}</pre> -->
-      </AppSection>
-
-      <!-- <h1>Page</h1>
-    <p>{{ $t("welcome") }} '{{ slug }}'</p>
-    <pre>
-      {{ page }}
-    </pre> -->
-    </div>
+    <template v-for="section in page.sections" :key="section.id">
+      <div class="section">
+        <AppSection :section="section" :slug="slug">
+          <SectionsScroller
+            v-if="section.__component === 'sections.scroller'"
+            :section="section"
+          >
+          </SectionsScroller>
+          <SectionsHero
+            v-if="section.__component === 'sections.hero'"
+            :section="section"
+          ></SectionsHero>
+          <SectionsColumns
+            v-else-if="section.__component === 'sections.columns'"
+            :section="section"
+          ></SectionsColumns>
+          <SectionsMenu
+            v-else-if="section.__component === 'sections.menu'"
+            :section="section"
+          >
+          </SectionsMenu>
+          <SectionsSlider
+            v-else-if="section.__component === 'sections.slider'"
+            :section="section"
+          >
+          </SectionsSlider>
+          <SectionsBlurbs
+            v-else-if="section.__component === 'sections.blurbs'"
+            :section="section"
+          >
+          </SectionsBlurbs>
+          <SectionsBios
+            v-else-if="section.__component === 'sections.bios'"
+            :section="section"
+          >
+          </SectionsBios>
+          <SectionsBlog
+            v-else-if="section.__component === 'sections.blog'"
+            :section="section"
+          >
+          </SectionsBlog>
+        </AppSection>
+      </div>
+    </template>
   </div>
   <AppFooter :slug="slug"></AppFooter>
 </template>

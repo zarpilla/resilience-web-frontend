@@ -213,10 +213,7 @@ const contact = computed(() => {
   padding: 54px 0;
   overflow-y: auto;
   overflow-x: hidden;
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
-
+  
   .close {
     position: fixed;
     top: 30px;

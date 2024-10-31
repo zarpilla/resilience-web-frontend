@@ -185,9 +185,15 @@ footer {
 
   .br-white {
     border-right: 1px solid #fff;
+    @media screen and (max-width: 768px) {
+      border-right: 0;      
+    }
   }
   .bl-white {
     border-left: 1px solid #fff;
+    @media screen and (max-width: 768px) {
+      border-left: 0;      
+    }
   }
 
   .secondary-menu {
