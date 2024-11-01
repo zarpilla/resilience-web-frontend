@@ -31,10 +31,10 @@ onMounted(() => {
 
   // Calculate the total width of the horizontal scroll content
   const totalWidth = scrollerInner.scrollWidth;
-  
-  const xPercent = -100 * totalWidth / (window as any).innerWidth
-  
-  const tl = $gsap.to(sections, {    
+
+  const xPercent = (-100 * totalWidth) / (window as any).innerWidth;
+
+  const tl = $gsap.to(sections, {
     xPercent: xPercent * 1.2,
     ease: "none",
     scrollTrigger: {
@@ -47,9 +47,9 @@ onMounted(() => {
       onUpdate(self: any) {
         // set sectionsScroller backuground-position to move with the scroll, but very slowly
         $gsap.set(sectionsScroller, {
-          backgroundPosition: `${-1 * self.progress * 20}% 0px`
+          backgroundPosition: `${-1 * self.progress * 20}% 0px`,
         });
-      }
+      },
     },
   });
 });
@@ -58,8 +58,7 @@ onUnmounted(() => {
   $ScrollTrigger.getAll().forEach((trigger: any) => {
     trigger.kill();
   });
-})
-
+});
 </script>
 <template>
   <div class="section-scroller">
@@ -79,7 +78,7 @@ onUnmounted(() => {
     </div>
   </div>
 
-  <div class="scroller-container" v-if="section.preset !== 'images'">    
+  <div class="scroller-container" v-if="section.preset !== 'images'">
     <div class="scroller-item" v-for="(item, i) in section.menu.children">
       <div class="carousel-item-inner" :class="`margin-rand-${i % 4}`">
         <div class="carousel-item-inner-1">
@@ -92,15 +91,12 @@ onUnmounted(() => {
               :alt="item?.page.name"
             />
           </div>
-          <div
-            class="div"
-            :class="`has-background-${hasBackground}`"
-          >
+          <div class="div" :class="`has-background-${hasBackground}`">
             <div class="carousel-item-inner-text px-5 py-5">
-              <h3>       
+              <h3>
                 <MetaLink
                   :page="item.page"
-                  :text="item.page.name"                  
+                  :text="item.page.name"
                   href="#"
                   target=""
                   css-class="hoverable"
@@ -115,17 +111,11 @@ onUnmounted(() => {
       </div>
     </div>
   </div>
-  <div class="scroller-container" v-else>    
+  <div class="scroller-container" v-else>
     <div class="scroller-item" v-for="(item, i) in section.menu.children">
       <div class="carousel-item-inner-image">
         <div class="carousel-item-inner-image-1">
-          <img
-              :src="
-                runtimeConfig.public.apiBase +
-                item?.image.url
-              "
-              alt=""
-            />
+          <img :src="runtimeConfig.public.apiBase + item?.image.url" alt="" />
         </div>
       </div>
     </div>
@@ -136,13 +126,12 @@ onUnmounted(() => {
   padding-bottom: 0px;
 }
 
-.subtitle{
+.subtitle {
   @media screen and (min-width: 768px) {
     width: 50%;
-    margin: 0 auto;    
+    margin: 0 auto;
   }
 }
-
 
 .scroller-container {
   height: 80vh;
@@ -161,7 +150,7 @@ onUnmounted(() => {
   flex: 0 0 auto;
   background: transparent;
   @media screen and (max-width: 768px) {
-    width: 0 !important;    
+    width: 0 !important;
   }
 }
 
@@ -175,14 +164,13 @@ onUnmounted(() => {
 }
 
 .carousel-item-inner {
-  margin: 0 60px;  
+  margin: 0 60px;
   @media screen and (max-width: 768px) {
     margin: 0 20px;
-    
   }
 
   &.margin-rand-0 {
-    margin-top: 40px;    
+    margin-top: 40px;
     @media screen and (max-width: 768px) {
       margin-top: 10px;
     }
@@ -206,9 +194,9 @@ onUnmounted(() => {
     }
   }
 
-  .carousel-item-inner-1{
+  .carousel-item-inner-1 {
     background-color: #fff;
-    border-radius: 30px;    
+    border-radius: 30px;
   }
 
   img {
@@ -221,13 +209,13 @@ onUnmounted(() => {
 }
 
 .carousel-item-inner-image {
-    margin: 0 10px;
+  margin: 0 10px;
 
-    img {
+  img {
     width: 100%;
     height: 580px;
     object-fit: cover;
     border-radius: 30px;
   }
-  }
+}
 </style>

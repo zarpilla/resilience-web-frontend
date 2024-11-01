@@ -127,5 +127,6 @@ watch(() => route.name, (newValue, oldValue) => console.log("route.name", newVal
   text-align: center;
   align-items: center;  
   margin: auto;
+  justify-content: center;
 }
 </style>

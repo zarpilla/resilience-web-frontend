@@ -27,16 +27,6 @@ if (pages.value && documents.data && documents.data.length === 0) {
 
 const page = documents.data[0];
 
-console.log(page);
-
-// const { data: sections } = await useAPI(
-//   "/api/pages/sections/" + page.documentId,
-//   {}
-// );
-
-// const sectionsData = sections.value as any;
-// page.sections = sectionsData.sections;
-
 const headerStore = useHeaderStore();
 const header = computed<any>(() =>
   headerStore.headers.find((h) => h.locale === locale.value)

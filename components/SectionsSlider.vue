@@ -94,6 +94,10 @@ onMounted(() => {
                   <div class="carousel-item-inner">
                     <div class="row">
                       <div class="col-12 col-md-7 py-0 px-0 pe-md-0">
+                        <MetaLink
+                              :page="item.page"                                                            
+                              css-class="hoverable"
+                            >
                         <img
                           :src="
                             runtimeConfig.public.apiBase +
@@ -101,6 +105,7 @@ onMounted(() => {
                           "
                           :alt="item?.page.name"
                         />
+                        </MetaLink>
                       </div>
                       <div
                         class="col-12 col-md-5 ps-md-0 carousel-item-inner-column-text"

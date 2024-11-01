@@ -259,7 +259,11 @@ body:not(.page-slug-home) {
         @media screen and (max-width: 768px) {            
             margin-bottom: 1rem;    
         }        
-    }
+    }    
+}
+
+.media-border-radius img, .media-border-radius iframe {
+    border-radius: 20px;
 }
 
 // buttons

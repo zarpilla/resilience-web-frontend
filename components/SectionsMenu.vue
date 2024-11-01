@@ -159,8 +159,7 @@ import { computed } from "vue";
               css-class="item"
             />
             <span
-              class="separator"
-              v-if="menuIndex !== section.menu.children.length - 1"
+              class="separator"              
               >/</span
             ></template
           >

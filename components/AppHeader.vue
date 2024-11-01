@@ -32,6 +32,16 @@ const modeStore = useModeStore();
 
 const pageHeaderColorMode = ref("light");
 
+if (header.value) {
+  const css = header.value ? header.value.value.css : "";
+  useHead({
+    style: css,
+  });
+
+}
+
+
+
 watch(
   () => modeStore.pageHeaderColorMode,
   (value) => {
@@ -88,7 +98,7 @@ watch(
         />
       </svg>
     </div>
-  </header>
+  </header>  
   <teleport to="body">
     <AppMenu v-show="showMenu" @close="onClose" />
   </teleport>

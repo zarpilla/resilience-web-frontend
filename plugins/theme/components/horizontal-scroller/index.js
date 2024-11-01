@@ -18,6 +18,9 @@ Features:
  */
 function horizontalLoop(items, config) {
   items = gsap.utils.toArray(items);
+  if (!items.length) {
+    return;
+  }
   config = config || {};
   let tl = gsap.timeline({
       repeat: config.repeat,

@@ -75,6 +75,15 @@ const footer = computed(() =>
               class="col-12 col-md-6 main-text py-5 px-120px text-title text-center text-md-start"
             >
               {{ footer?.value.middle2Text }}
+              <div class="mt-5">
+                <AppSubscription
+                  :email-text="footer?.value.subscriptionForm.email"
+                  :button-text="footer?.value.subscriptionForm.button"
+                  :accept-text="footer?.value.subscriptionForm.accept"
+                  :message-ok="footer?.value.subscriptionForm.messageOk"
+                  :message-ko="footer?.value.subscriptionForm.messageKo"
+                ></AppSubscription>
+              </div>
             </div>
             <div class="col-12 col-md-3 text-center text-md-end py-5 bl-white">
               <div>
@@ -88,7 +97,10 @@ const footer = computed(() =>
                     class="mb-5"
                   >
                     <a :href="logo.href" target="_blank" class="n-link">
-                      <MetaMedia :media="logo.icon" css="media-real"></MetaMedia>
+                      <MetaMedia
+                        :media="logo.icon"
+                        css="media-real"
+                      ></MetaMedia>
                     </a>
                   </div>
                 </div>
@@ -186,13 +198,13 @@ footer {
   .br-white {
     border-right: 1px solid #fff;
     @media screen and (max-width: 768px) {
-      border-right: 0;      
+      border-right: 0;
     }
   }
   .bl-white {
     border-left: 1px solid #fff;
     @media screen and (max-width: 768px) {
-      border-left: 0;      
+      border-left: 0;
     }
   }
 

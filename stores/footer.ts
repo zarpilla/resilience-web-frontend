@@ -9,16 +9,8 @@ export const useFooterStore = defineStore('footerStore', {
       footers: [] as Header[],
     }),
     actions: {
-      async fetch(locale: string) {
-        const populate = {
-          "populate[0]": "primaryLogo",
-          "populate[1]": "secondaryLogo",
-          "populate[2]": "middleLogos",
-          "populate[3]": "menu",
-          "populate[4]": "social",
-        
-        }
-        const { data: header } = await useAPI('/api/footer', { query: { locale, ...populate } })
+      async fetch(locale: string) {        
+        const { data: header } = await useAPI('/api/footer', { query: { locale } })
         this.footers.push({ locale: locale, value: JSON.parse(JSON.stringify(header.value)) })  
       }
     },
