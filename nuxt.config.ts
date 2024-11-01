@@ -30,6 +30,7 @@ export default defineNuxtConfig({
   modules: ["@nuxtjs/i18n", "@pinia/nuxt", "@hypernym/nuxt-gsap"],
   i18n: {
     locales: ['en', 'ca', 'es'],
+    detectBrowserLanguage: false,    
     // [
       // { code: 'en', language: 'en-US' },
       // { code: 'ca', language: 'ca-ES' },
