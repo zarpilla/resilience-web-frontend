@@ -115,7 +115,7 @@ onUnmounted(() => {
     <div class="scroller-item" v-for="(item, i) in section.menu.children">
       <div class="carousel-item-inner-image">
         <div class="carousel-item-inner-image-1">
-          <img :src="runtimeConfig.public.apiBase + item?.image.url" alt="" />
+          <img :src="runtimeConfig.public.apiBase + item?.image.url" :alt="item?.image.alternativeText" />
         </div>
       </div>
     </div>

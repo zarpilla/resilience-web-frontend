@@ -4,22 +4,6 @@
       <svg height="20" width="20">
         <circle cx="10" cy="10" r="9" stroke-width="0"></circle>
       </svg>
-      <!-- <span class="cursor__message">GO!</span>
-      <span class="cursor__message__slider">
-        <img v-if="mode === 'light'" src="~/assets/images/icons/cursor-izquierda-blanco.svg" alt="" class="arrow-left">
-        <img v-if="mode !== 'light'" src="~/assets/images/icons/cursor-izquierda-negro.svg" alt="" class="arrow-left">
-        <img v-if="mode === 'light'" src="~/assets/images/icons/cursor-derecha-blanco.svg" alt="" class="arrow-right">
-        <img v-if="mode !== 'light'" src="~/assets/images/icons/cursor-derecha-negro.svg" alt="" class="arrow-right">
-      </span>
-      <span class="cursor__scroll_up">
-        <img v-if="mode === 'light'" src="~/assets/images/icons/flecha-arriba-blanco.svg" alt="" class="arrow-left">
-        <img v-if="mode !== 'light'" src="~/assets/images/icons/flecha-arriba-negro.svg" alt="" class="arrow-left">
-      </span>
-      <span class="cursor__scroll_down">
-        <img v-if="mode === 'light'" src="~/assets/images/icons/flecha-abajo-blanco.svg" alt="" class="arrow-left">
-        <img v-if="mode !== 'light'" src="~/assets/images/icons/flecha-abajo-negro.svg" alt="" class="arrow-left">
-      </span>
-      <img src="~/assets/images/foto3.jpg" alt="" class="cursor__image"> -->
     </div>
   </div>
 </template>

@@ -1,5 +1,11 @@
 @import 'fonts';
 
+
+
+.container{
+    --bs-gutter-x: 40px;
+}
+
 // Layout
 
 html {
@@ -338,14 +344,44 @@ body:not(.page-slug-home) {
     cursor: none !important;
 }
 
-.color-text-dark,
-a.color-text-dark {
+.header-light a.zone-color, .header-light .zone-color{
+    color: #fff !important;
+    &.zone-color-stroke > * {
+        stroke: #fff;
+    }
+    &.color-text-dark {
+        color: #000 !important;
+
+        &.zone-color-stroke>* {
+            stroke: #000;
+        }
+    }
+}
+
+.header-dark a.zone-color, .header-dark .zone-color{
+    color: #000 !important;
+    &.zone-color-stroke > * {
+        stroke: #000;
+    }
+    &.color-text-light {
+        color: #fff !important;
+
+        &.zone-color-stroke>* {
+            stroke: #fff;
+        }
+    }
+}
+
+.zone-color.color-text-dark,
+.zone-color a.color-text-dark {
     color: #000 !important;
 
     &.zone-color-stroke>* {
         stroke: #000;
     }
 }
+
+
 
 
 .color-text-light,
@@ -395,6 +431,7 @@ a.color-text-light {
         .media {
             border-radius: 30px 0 0 30px;
             height: 442px;
+            width: 100%;
         }
 
         .info {
@@ -450,6 +487,7 @@ a.color-text-light {
         border-radius: 30px 30px 0 0;
         height: 246px;
         object-fit: cover;
+        width: 100%;
     }
 
     .info {

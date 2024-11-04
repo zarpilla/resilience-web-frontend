@@ -192,7 +192,7 @@ const contact = computed(() => {
             >
               <img
                 :src="runtimeConfig.public.apiBase + social.icon.url"
-                :alt="social.name"
+                :alt="social.name"                
               />
             </a>
           </div>

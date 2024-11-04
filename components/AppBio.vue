@@ -57,12 +57,18 @@ useSeoMeta({
   twitterCard: "summary_large_image",
 });
 
+
+const modeStore = useModeStore();
+
 onMounted(() => {
   setTimeout(() => {
     window.dispatchEvent(new Event("init-theme"));
   }, 200);
 
+  modeStore.setPageHeaderColorMode('dark');
+
   document.body.classList.add("page-bio");
+  document.body.classList.add("header-dark");
   if (page.pageCss) {
     document.body.classList.add(page.pageCss);
   }
@@ -70,6 +76,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   document.body.classList.remove("page-bio");
+  document.body.classList.remove("header-dark");
   if (page.pageCss) {
     document.body.classList.remove(page.pageCss);
   }
@@ -81,7 +88,7 @@ const columnsHero = {
   styles: {
     backgroundColor: "#f0f0f0",
     height: "70vh",
-    cssClass: "align-bottom-left",
+    cssClass: "align-bottom-left bio-hero",
     backgroundImage: page.mainImage,
   },
   columns: [
@@ -204,6 +211,15 @@ const columnsMedia = {
   .main-content > .section > .section-inner {
     background-size: 25%;
     background-position: 80% bottom;
+
+    &.bio-hero{
+      @media (max-width: 767px) {
+      height: 85vh!important;
+      background-size: 100%;
+      background-position: top center;
+    }
+    }
+    
   }
 
   @media (min-width: 768px) {

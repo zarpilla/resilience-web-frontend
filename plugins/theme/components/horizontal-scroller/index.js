@@ -18,6 +18,7 @@ Features:
  */
 function horizontalLoop(items, config) {
   items = gsap.utils.toArray(items);
+  console.log("items", items);
   if (!items.length) {
     return;
   }
@@ -131,16 +132,23 @@ export default class HorizontalScroller {
     // const colors = ["#f38630","#6fb936", "#ccc", "#6fb936"];
     const boxes = gsap.utils.toArray(".marquee li");
 
+    console.log("boxes", boxes);
+
     // gsap.set(boxes , {
     //   backgroundColor: gsap.utils.wrap(colors)
     // });
 
-    const loop = horizontalLoop(boxes, { paused: false, repeat: -1, speed: 1 });
+    this.loop = horizontalLoop(boxes, { paused: false, repeat: -1, speed: 1 });
   };
 
   init() {
     this.start();
   }
 
-  destroy() {}
+  destroy() {
+    if (this.loop){
+      console.log("destroying loop");
+      this.loop.kill();      
+    }
+  }
 }

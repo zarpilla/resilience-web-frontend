@@ -70,12 +70,14 @@ useSeoMeta({
 const modeStore = useModeStore();
 
 onMounted(() => {
+
   setTimeout(() => {
     window.dispatchEvent(new Event("init-theme"));
   }, 200);
 
   if (page.headerColorMode) {
     modeStore.setPageHeaderColorMode(page.headerColorMode);
+    document.body.classList.add('header-' + page.headerColorMode);
   }
 
   if (page.pageCss) {
@@ -84,7 +86,9 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  console.log("onBeforeUnmount");
+  if (page.headerColorMode) {
+    document.body.classList.remove('header-' + page.headerColorMode);
+  }
   if (page.pageCss) {
     document.body.classList.remove(page.pageCss);
   }

@@ -18,7 +18,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   // Sniffer.testPerformance();
   const cursor = new Cursor()
   const darkLightMode = new DarkLightMode()
-  const horizontalScroller = new HorizontalScroller()
+  //const horizontalScroller = new HorizontalScroller()
   // const scroller = new Scroller()
   // const fullPageScroller = new FullPageScroller()
   // const menu = new Menu()
@@ -31,7 +31,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
     cursor.init()
     darkLightMode.init()
-    horizontalScroller.init()
+    //horizontalScroller.init()
     // scroller.init()
     // fullPageScroller.init()
     // menu.init()

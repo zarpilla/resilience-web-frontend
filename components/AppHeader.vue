@@ -57,11 +57,13 @@ watch(
           class="hide-on-text-light"
           :class="{ 'd-none': pageHeaderColorMode === 'light' }"
           :src="runtimeConfig.public.apiBase + header?.value?.logo?.url"
+          :alt="header?.value?.logo?.alternativeText"
         />
         <img
           class="hide-on-text-dark"
           :class="{ 'd-none': pageHeaderColorMode === 'dark' }"
           :src="runtimeConfig.public.apiBase + header?.value?.logoDark?.url"
+          :alt="header?.value?.logo?.alternativeText"
         />
       </nuxt-link>
     </div>
