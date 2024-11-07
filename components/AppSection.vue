@@ -118,22 +118,23 @@ const paddingStyle = computed(() => ({
 .width-container-article {
   margin-left: auto;
   margin-right: auto;
+  padding: 0;
 
   @media (min-width: 768px) {
   }
   @media (min-width: 992px) {
     .container {
-      max-width: 725px !important;
+      max-width: 800px !important;
     }
   }
   @media (min-width: 1200px) {
     .container {
-      max-width: 725px !important;
+      max-width: 800px !important;
     }
   }
   @media (min-width: 1400px) {
     .container {
-      max-width: 725px !important;
+      max-width: 800px !important;
     }
   }
 }

@@ -19,13 +19,18 @@ const runtimeConfig = useRuntimeConfig();
 const showMenu = ref(false);
 
 const clickShowMenu = () => {
+  console.log("clickShowMenu");
   showMenu.value = true;
   document.body.style.overflow = "hidden";
+  // set overflow hidden to html
+  document.documentElement.style.overflow = "hidden";
 };
 
 const onClose = () => {
   showMenu.value = false;
   document.body.style.overflow = "auto";
+  // set overflow auto to html
+  document.documentElement.style.overflow = "auto";
 };
 
 const modeStore = useModeStore();

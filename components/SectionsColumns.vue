@@ -137,11 +137,11 @@ const runtimeConfig = useRuntimeConfig();
 .bold{
   font-weight: bold;
 }
-.container{
-  height: 100%;
-  text-align: left;
-  align-items: flex-end;
-  display: flex;
-}
+// .container{
+//   height: 100%;
+//   text-align: left;
+//   align-items: flex-end;
+//   display: flex;
+// }
 </style>
 

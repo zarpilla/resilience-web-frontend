@@ -196,15 +196,15 @@ onUnmounted(() => {
 
   .carousel-item-inner-1 {
     background-color: #fff;
-    border-radius: 30px;
+    border-radius: 20px;
   }
 
   img {
     width: 100%;
     height: 232px;
     object-fit: cover;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
   }
 }
 
@@ -215,7 +215,7 @@ onUnmounted(() => {
     width: 100%;
     height: 580px;
     object-fit: cover;
-    border-radius: 30px;
+    border-radius: 20px;
   }
 }
 </style>

@@ -151,3 +151,8 @@ onBeforeUnmount(() => {
   </div>
   <AppFooter :slug="slug"></AppFooter>
 </template>
+<style scoped lang="scss">
+.main-content{
+  width: 100vw;  
+}
+</style>

@@ -115,13 +115,13 @@ onMounted(() => {
 .section-blog {
   .blog-item {
     background: #fff;
-    border-radius: 30px;
+    border-radius: 20px;
 
     .media {
-      border-radius: 30px 0 0 30px;
+      border-radius: 20px 0 0 20px;
       height: 442px;
       @media screen and (max-width: 768px) {
-        border-radius: 30px 30px 0 0!important;
+        border-radius: 20px 20px 0 0!important;
       }
     }
 
@@ -138,7 +138,7 @@ onMounted(() => {
     &.blog-onethird {
       .media {
         height: 246px;
-        border-radius: 30px 30px 0 0;
+        border-radius: 20px 20px 0 0;
       }
       .info {
         padding: 30px;
@@ -148,7 +148,7 @@ onMounted(() => {
     &.blog-twothirds {
       .media {
         height: 246px;
-        border-radius: 30px 30px 0 0;
+        border-radius: 20px 20px 0 0;
       }
       .info {
         padding: 30px;
