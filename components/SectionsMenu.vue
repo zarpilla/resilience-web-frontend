@@ -6,7 +6,6 @@ const props = defineProps<{
 
 import { computed } from "vue";
 
-
 /*
 This helper function makes a group of elements animate along the x-axis in a seamless, responsive loop.
 
@@ -21,8 +20,8 @@ Features:
    - current() - returns the current index (if an animation is in-progress, it reflects the final index)
    - times - an Array of the times on the timeline where each element hits the "starting" spot. There's also a label added accordingly, so "label1" is when the 2nd element reaches the start.
  */
- const horizontalLoop = (items: any, config: any) => {
-  items = $gsap.utils.toArray(items);  
+const horizontalLoop = (items: any, config: any) => {
+  items = $gsap.utils.toArray(items);
   if (!items.length) {
     return;
   }
@@ -31,7 +30,8 @@ Features:
       repeat: config.repeat,
       paused: config.paused,
       defaults: { ease: "none" },
-      onReverseComplete: (): any => tl.totalTime(tl.rawTime() + tl.duration() * 100),
+      onReverseComplete: (): any =>
+        tl.totalTime(tl.rawTime() + tl.duration() * 100),
     }),
     length = items.length,
     startX = items[0].offsetLeft,
@@ -40,7 +40,10 @@ Features:
     xPercents: any[] = [],
     curIndex = 0,
     pixelsPerSecond = (config.speed || 1) * 100,
-    snap = config.snap === false ? (v: any) => v : $gsap.utils.snap(config.snap || 1), // some browsers shift by a pixel to accommodate flex layouts, so for example if width is 20% the first element's width might be 242px, and the next 243px, alternating back and forth. So we snap to 5 percentage points to make things look more natural
+    snap =
+      config.snap === false
+        ? (v: any) => v
+        : $gsap.utils.snap(config.snap || 1), // some browsers shift by a pixel to accommodate flex layouts, so for example if width is 20% the first element's width might be 242px, and the next 243px, alternating back and forth. So we snap to 5 percentage points to make things look more natural
     totalWidth,
     curX,
     distanceToStart,
@@ -67,8 +70,8 @@ Features:
     (xPercents[length - 1] / 100) * widths[length - 1] -
     startX +
     items[length - 1].offsetWidth *
-    // @ts-ignore
-    $gsap.getProperty(items[length - 1], "scaleX") +
+      // @ts-ignore
+      $gsap.getProperty(items[length - 1], "scaleX") +
     (parseFloat(config.paddingRight) || 0);
   for (i = 0; i < length; i++) {
     item = items[i];
@@ -76,7 +79,7 @@ Features:
     distanceToStart = item.offsetLeft + curX - startX;
 
     distanceToLoop =
-    // @ts-ignore
+      // @ts-ignore
       distanceToStart + widths[i] * $gsap.getProperty(item, "scaleX");
     tl.to(
       item,
@@ -132,10 +135,61 @@ Features:
     tl.reverse();
   }
   return tl;
-}
+};
 
 const loop = ref<any>(null);
 
+const activeImages = ref<string[]>([]);
+
+const runtimeConfig = useRuntimeConfig();
+
+const mouseEnter = (item: any) => {
+  if (item.page && item.page.metadata && item.page.metadata.shareImage) {
+    // create an image in the section-menu-tags-cloud-${section.id}-placeholder
+    const placeholder = document.getElementById(
+      `section-menu-tags-cloud-${props.section.id}-placeholder`
+    );
+    if (placeholder) {
+      const id = `section-menu-tags-cloud-${props.section.id}-image-${item.page.id}`;
+      if (!document.getElementById(id)) {
+        const img = document.createElement("img");
+        img.id = `section-menu-tags-cloud-${props.section.id}-image-${item.page.id}`;
+        const url = item.page.metadata.shareImage.formats ? item.page.metadata.shareImage.formats.small.url : item.page.metadata.shareImage.url;
+        img.src =
+          runtimeConfig.public.apiBase + url;
+        img.alt = item.page.metadata.shareImage.altertativeText;
+        img.classList.add("active-image");
+        placeholder.appendChild(img);
+
+        // random position between -40vh and 40vh, and 0 and 40vw
+        img.style.top = `${Math.random() * 60 - 30}vh`;
+        img.style.left = `${Math.random() * 40}vw`;
+        console.log("top", img.style.top, "left", img.style.left);
+
+        setTimeout(() => {
+          img.style.opacity = "1";
+          img.style.visibility = "visible";
+        }, 100);
+      }
+    }
+  }
+};
+
+const mouseLeave = (item: any) => {
+  if (item.page && item.page.metadata && item.page.metadata.shareImage) {
+    const img = document.getElementById(
+      `section-menu-tags-cloud-${props.section.id}-image-${item.page.id}`
+    );
+    const randomBetween800And1200 = Math.floor(
+      Math.random() * (1200 - 800) + 800
+    );
+    if (img) {      
+      setTimeout(() => {
+        img.remove();
+      }, randomBetween800And1200);
+    }
+  }
+};
 
 onMounted(() => {
   // const script = document.createElement("script");
@@ -143,14 +197,18 @@ onMounted(() => {
   // script.async = true;
   // document.body.appendChild(script);
 
-
-  const boxes = $gsap.utils.toArray(`#section-menu-${props.section.id} .marquee li`);
+  const boxes = $gsap.utils.toArray(
+    `#section-menu-${props.section.id} .marquee li`
+  );
   if (boxes.length) {
     setTimeout(() => {
-      loop.value = horizontalLoop(boxes, { paused: false, repeat: -1, speed: 1 });
+      loop.value = horizontalLoop(boxes, {
+        paused: false,
+        repeat: -1,
+        speed: 1,
+      });
     }, 500);
-    
-  }    
+  }
 });
 
 onUnmounted(() => {
@@ -158,7 +216,6 @@ onUnmounted(() => {
     loop.value.kill();
   }
 });
-
 </script>
 <template>
   <div class="section-menu" :id="`section-menu-${section.id}`">
@@ -246,12 +303,14 @@ onUnmounted(() => {
             section.menu.children.length &&
             section.preset === 'tags-cloud'
           "
-          class="d-flex section-menu-tags-cloud flex-wrap"
+          class="d-flex section-menu-tags-cloud flex-wrap position-relative"
         >
           <div
             v-for="(item, menuIndex) in section.menu.children"
             :key="menuIndex"
             class="item-col zme-5"
+            @mouseenter="mouseEnter(item)"
+            @mouseleave="mouseLeave(item)"
           >
             <MetaLink
               :page="item.page"
@@ -266,6 +325,7 @@ onUnmounted(() => {
               >/</span
             >
           </div>
+          <div :id="`section-menu-tags-cloud-${section.id}-placeholder`"></div>
         </div>
       </div>
     </div>
@@ -313,10 +373,7 @@ onUnmounted(() => {
               :href="item.href"
               css-class="item"
             />
-            <span
-              class="separator"              
-              >/</span
-            ></template
+            <span class="separator">/</span></template
           >
         </li>
       </ul>
@@ -387,7 +444,7 @@ onUnmounted(() => {
       // animation: scrolling 30s linear infinite;
       margin: 0 !important;
       // @media screen and (max-width: 768px) {
-      //   animation: scrolling 5s linear infinite;        
+      //   animation: scrolling 5s linear infinite;
       // }
 
       .marquee__item__image {
@@ -434,6 +491,17 @@ onUnmounted(() => {
         }
       }
     }
+  }
+
+  .active-image {
+    width: 280px;
+    height: auto;
+    position: absolute;
+    z-index: 20;
+    opacity: 0;
+    visibility: hidden;
+    border-radius: 20px;
+    pointer-events: none;
   }
 }
 </style>

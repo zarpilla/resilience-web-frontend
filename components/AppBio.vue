@@ -57,7 +57,6 @@ useSeoMeta({
   twitterCard: "summary_large_image",
 });
 
-
 const modeStore = useModeStore();
 
 onMounted(() => {
@@ -65,7 +64,7 @@ onMounted(() => {
     window.dispatchEvent(new Event("init-theme"));
   }, 200);
 
-  modeStore.setPageHeaderColorMode('dark');
+  modeStore.setPageHeaderColorMode("dark");
 
   document.body.classList.add("page-bio");
   document.body.classList.add("header-dark");
@@ -159,8 +158,8 @@ const columnsMedia = {
   },
   columns: [
     {
-      id: 5,      
-      styles: {        
+      id: 5,
+      styles: {
         cssClass: "media-border-radius",
       },
       media: page.largeImage,
@@ -184,9 +183,7 @@ const columnsMedia = {
       <AppSection :section="columnsMedia">
         <SectionsColumns :section="columnsMedia"></SectionsColumns>
       </AppSection>
-      
     </div>
-    
   </div>
   <AppFooter :slug="slug"></AppFooter>
 </template>
@@ -206,31 +203,30 @@ const columnsMedia = {
 
 .page-bio {
   .main-content > .section > .section-inner > .section-columns {
-    height: 100%;    
+    height: 100%;
   }
   .main-content > .section > .section-inner {
     background-size: 25%;
     background-position: 80% bottom;
 
-    &.bio-hero{
+    &.bio-hero {
       @media (max-width: 767px) {
-      height: 85vh!important;
-      background-size: 100%;
-      background-position: top center;
+        height: 85vh !important;
+        background-size: 100%;
+        background-position: top center;
+      }
     }
-    }
-    
   }
 
   @media (min-width: 768px) {
   }
   @media (min-width: 992px) {
-    .container {
+    .main-content .container {
       max-width: 700px !important;
     }
   }
   @media (min-width: 1200px) {
-    .container {
+    .main-content .container {
       max-width: 1046px !important;
     }
   }
