@@ -25,6 +25,14 @@ const backgroundImageStyle = computed(() => ({
     : "none",
 }));
 
+const backgroundImage2Style = computed(() => ({
+  backgroundImage: props.section.styles?.backgroundImage2 && !sectionIsScroller.value
+    ? `url(${
+        runtimeConfig.public.apiBase + props.section.styles?.backgroundImage2.url
+      })`
+    : "none",
+}));
+
 
 const backgroundColorStyle = computed(() => ({
   backgroundColor: props.section.styles?.backgroundColor
@@ -69,14 +77,26 @@ const paddingStyle = computed(() => ({
       paddingStyle,
     ]"
   >
-    
-    <slot></slot>
+    <div
+    class="section-inner-2" :style="[backgroundImage2Style]">
+      <slot></slot>
+    </div>
   </div>
 </template>
 <style scoped lang="scss">
 .section-inner {
   background-size: 102%;
   background-repeat: no-repeat;
+  position: relative;
+}
+.section-inner-2 {
+  background-size: 52%;
+  background-repeat: no-repeat;
+  background-position: right;  
+  @media screen and (max-width: 768px) {
+    background-size: 100%;
+    background-position: center;    
+  }
 }
 .width-auto {
   width: auto !important;
@@ -90,8 +110,6 @@ const paddingStyle = computed(() => ({
 </style>
 
 <style lang="scss">
-
-
 .width-container-narrow {
   margin-left: auto;
   margin-right: auto;

@@ -11,9 +11,12 @@ export default class Cursor {
     this.hoverables = document.querySelectorAll(".hoverable, .n-link");
     this.cursor =  document.querySelector(".cursor");
     this.textLights = document.querySelectorAll("div.text-light");    
+    this.lightButtons = document.querySelectorAll(".btn:not(.btn-black)");    
     this.textDarks = document.querySelectorAll("div.text-dark");
+    this.darkButtons = document.querySelectorAll(".btn-black");
     this.hovering = false;
     this.moved = false;    
+    this.current = ''
 
     if (device.mobile()) {
       document.body.style.cursor = 'inherit'
@@ -36,16 +39,26 @@ export default class Cursor {
     }
     if (this.textLights) {
       for (let i = 0; i < this.textLights.length; i++) {
-        // this.textLights[i].addEventListener("mouseleave", () => this.onMouseHoverLightLeave());
-        this.textLights[i].addEventListener("mouseenter", () => this.onMouseHoverLightEnter('cursor-text-light'));
+        this.textLights[i].addEventListener("mouseenter", () => this.onMouseHoverLightEnter('cursor-text-light', true));
         
       }      
     }
     if (this.textDarks) {
       for (let i = 0; i < this.textDarks.length; i++) {
-        // this.textLights[i].addEventListener("mouseleave", () => this.onMouseHoverLightLeave());
-        this.textDarks[i].addEventListener("mouseenter", () => this.onMouseHoverLightEnter('cursor-text-dark'));
+        this.textDarks[i].addEventListener("mouseenter", () => this.onMouseHoverLightEnter('cursor-text-dark', true));
       }      
+    }
+    if (this.darkButtons) {
+      for (let i = 0; i < this.darkButtons.length; i++) {
+        this.darkButtons[i].addEventListener("mouseenter", () => this.onMouseHoverLightEnter('cursor-text-dark', false));
+        this.darkButtons[i].addEventListener("mouseleave", () => this.onMouseHoverLightLeave('cursor-text-dark'));
+      }
+    }
+    if (this.lightButtons) {
+      for (let i = 0; i < this.lightButtons.length; i++) {
+        this.lightButtons[i].addEventListener("mouseenter", () => this.onMouseHoverLightEnter('cursor-text-light', false));
+        this.lightButtons[i].addEventListener("mouseleave", () => this.onMouseHoverLightLeave('cursor-text-light'));
+      }
     }
   };
 
@@ -84,8 +97,8 @@ export default class Cursor {
 
   };
 
-  onMouseHoverLightEnter = (css) => {
-    if (this.cursor) {
+  onMouseHoverLightEnter = (css, storeCurrent) => {
+    if (this.cursor) {            
       if (css !== 'cursor-text-light') {
         this.cursor.classList.remove('cursor-text-light');
       }
@@ -93,13 +106,20 @@ export default class Cursor {
         this.cursor.classList.remove('cursor-text-dark');
       }
       this.cursor.classList.add(css);
+      if (storeCurrent) {
+        this.current = css;
+      }
     }
   }
-  onMouseHoverLightLeave = () => {
-    // if (this.cursor) {
-    //   this.cursor.classList.remove('cursor-text-light');
-    //   this.cursor.classList.remove('cursor-text-dark');
-    // }
+  onMouseHoverLightLeave = (css) => {
+    if (this.cursor) {
+      if (css === 'cursor-text-dark') {        
+        this.cursor.classList.remove('cursor-text-dark');
+      } else {
+        this.cursor.classList.remove('cursor-text-light');        
+      }
+      this.cursor.classList.add(this.current);
+    }
   }
 
   // Hover an element

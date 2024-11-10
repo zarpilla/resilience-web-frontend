@@ -81,49 +81,61 @@ onBeforeUnmount(() => {
   }
 });
 
-const columnsHero = {
-  id: 1,
-  __component: "sections.columns",
+const columnsHero0 = {
+  id: 0,
+  __component: "sections.hero",
   styles: {
     backgroundColor: "#f0f0f0",
     height: "70vh",
     cssClass: "align-bottom-left bio-hero",
     backgroundImage: page.mainImage,
+    container: "small",
+  },
+  title: page.title,
+  titleHeading: "h1",
+  align: "bottom-left",
+  text: [
+    {
+      type: "paragraph",
+      level: 1,
+      css: "mb-0 mt-5",
+      children: [
+        {
+          text: page.name,
+          type: "text",
+          bold: true,
+          css: "mb-0",
+        },
+      ],
+    },
+    {
+      type: "paragraph",
+      level: 1,
+      children: [
+        {
+          text: page.position,
+          type: "text",
+          css: "mb-0",
+        },
+      ],
+    },
+  ],
+};
+
+const columnsImage = {
+  id: 1,
+  __component: "sections.columns",
+  styles: {
+    backgroundColor: "#f0f0f0",    
+    cssClass: "bio-image d-block d-md-none",    
   },
   columns: [
     {
-      id: 1,
-      title: page.title,
-      titleHeading: "h1",
+      id: 1,      
       styles: {
-        cssClass: "col col-6",
+        cssClass: "col col-6 align-bottom-left",
       },
-      text: [
-        {
-          type: "paragraph",
-          level: 1,
-          css: "mb-0 mt-5",
-          children: [
-            {
-              text: page.name,
-              type: "text",
-              bold: true,
-              css: "mb-0",
-            },
-          ],
-        },
-        {
-          type: "paragraph",
-          level: 1,
-          children: [
-            {
-              text: page.position,
-              type: "text",
-              css: "mb-0",
-            },
-          ],
-        },
-      ],
+      media: page.mainImage
     },
   ],
 };
@@ -172,10 +184,12 @@ const columnsMedia = {
   <AppHeader color-mode="dark" :slug="slug"></AppHeader>
   <div class="main-content">
     <div class="section">
-      <AppSection :section="columnsHero">
-        <SectionsColumns :section="columnsHero"></SectionsColumns>
+      <AppSection :section="columnsHero0">
+        <SectionsHero :section="columnsHero0" :section-index="0"></SectionsHero>
       </AppSection>
-
+      <AppSection :section="columnsImage">
+        <SectionsColumns :section="columnsImage"></SectionsColumns>
+      </AppSection>
       <AppSection :section="columnsContent">
         <SectionsColumns :section="columnsContent"></SectionsColumns>
       </AppSection>
@@ -209,12 +223,29 @@ const columnsMedia = {
     background-size: 25%;
     background-position: 80% bottom;
 
-    &.bio-hero {
+    &.bio-hero {      
       @media (max-width: 767px) {
-        height: 85vh !important;
+        background-image: none!important;
+        height: auto !important;
         background-size: 100%;
         background-position: top center;
       }
+    }
+  }
+  .section-hero-inner {
+    background-color: inherit !important;
+    width: 50%;
+    @media (max-width: 767px) {
+        height: auto !important;
+        padding-top: 140px;
+      }
+  }
+  .section-sections-hero {
+    h1 {
+      margin-bottom: 4rem;
+    }
+    p {
+      margin-bottom: 0rem;
     }
   }
 

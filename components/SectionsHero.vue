@@ -52,6 +52,7 @@ watch(() => route.name, (newValue, oldValue) => console.log("route.name", newVal
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
+                :class="[{ bold: child.bold }, child.css]"
               >
                 {{ child.text }}
               </span>
@@ -60,6 +61,7 @@ watch(() => route.name, (newValue, oldValue) => console.log("route.name", newVal
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
+                :class="[{ bold: child.bold }, child.css]"
               >
                 {{ child.text }}
               </span>
@@ -68,6 +70,7 @@ watch(() => route.name, (newValue, oldValue) => console.log("route.name", newVal
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
+                :class="[{ bold: child.bold }, child.css]"
               >
                 {{ child.text }}
               </span>
@@ -76,6 +79,7 @@ watch(() => route.name, (newValue, oldValue) => console.log("route.name", newVal
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
+                :class="[{ bold: child.bold }, child.css]"
               >
                 {{ child.text }}
               </span>
@@ -84,6 +88,7 @@ watch(() => route.name, (newValue, oldValue) => console.log("route.name", newVal
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
+                :class="[{ bold: child.bold }, child.css]"
               >
                 {{ child.text }}
               </span>
@@ -92,6 +97,7 @@ watch(() => route.name, (newValue, oldValue) => console.log("route.name", newVal
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
+                :class="[{ bold: child.bold }, child.css]"
               >
                 {{ child.text }}
               </span>
@@ -112,6 +118,9 @@ watch(() => route.name, (newValue, oldValue) => console.log("route.name", newVal
       
     }
   }
+  .bold {
+  font-weight: 500;
+}
 }
 .section-hero-inner{
   padding: 100px 0;

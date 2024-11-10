@@ -72,7 +72,7 @@ const footer = computed(() =>
               </div>
             </div>
             <div
-              class="col-12 col-md-6 main-text py-5 px-120px text-title text-center text-md-start"
+              class="col-12 col-md-6 main-text py-5 px-120px text-title text-center text-md-start bt-mob bb-mob"
             >
               {{ footer?.value.middle2Text }}
               <div class="mt-5">
@@ -223,6 +223,18 @@ footer {
     line-height: 180%; /* 32.4px */
     letter-spacing: 0.18px;
     text-decoration: none;
+  }
+  .bt-mob{
+    border-top: 1px solid #fff;
+    @media screen and (min-width: 768px) {
+      border-top: 0;
+    }
+  }
+  .bb-mob{
+    border-bottom: 1px solid #fff;
+    @media screen and (min-width: 768px) {
+      border-bottom: 0;
+    }
   }
 }
 </style>

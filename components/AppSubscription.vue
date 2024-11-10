@@ -131,7 +131,7 @@ const formModel = reactive({
       >
         <path
           d="M-3.0598e-07 9L12.175 9L6.575 14.6L8 16L16 8L8 -3.49691e-07L6.575 1.4L12.175 7L-3.93402e-07 7L-3.0598e-07 9Z"
-          fill="white"
+          fill="black"
         />
       </svg>
     </button>

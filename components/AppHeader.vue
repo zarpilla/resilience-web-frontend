@@ -117,6 +117,7 @@ header {
   position: fixed;
   width: 100%;
   pointer-events: none;
+  z-index: 1;
 
   .clickable {
     pointer-events: all;

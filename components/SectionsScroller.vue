@@ -14,9 +14,24 @@ const backgroundStyle = computed(() => ({
   background: props.section.background ? props.section.background : "none",
 }));
 
-onMounted(() => {
+const backgroundImage2Style = computed(() => ({
+  backgroundImage: props.section.styles?.backgroundImage2
+    ? `url(${
+        runtimeConfig.public.apiBase + props.section.styles?.backgroundImage2.url
+      })`
+    : "none",
+}));
+const sleep = (ms:number) =>{
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+onMounted(async() => {
+  await sleep(500);
   const scrollerInner = document.querySelector(".scroller-container");
   const sectionsScroller = document.querySelector(".section-sections-scroller");
+  if (!scrollerInner || !sectionsScroller) {
+    return;
+  }
+  const sectionsScrollerInner2 = sectionsScroller.querySelector(".scroller-container-inner");
 
   if (!scrollerInner || !sectionsScroller) {
     return;
@@ -49,6 +64,10 @@ onMounted(() => {
         $gsap.set(sectionsScroller, {
           backgroundPosition: `${-1 * self.progress * 20}% 0px`,
         });
+        $gsap.set(sectionsScrollerInner2, {
+          backgroundPosition: `${-1 * self.progress * 20}vw 53vh`,
+        });
+        
       },
     },
   });
@@ -79,6 +98,7 @@ onUnmounted(() => {
   </div>
 
   <div class="scroller-container" v-if="section.preset !== 'images'">
+    <div class="scroller-container-inner" :style="[backgroundImage2Style]"></div>
     <div class="scroller-item" v-for="(item, i) in section.menu.children">
       <div class="carousel-item-inner" :class="`margin-rand-${i % 4}`">
         <div class="carousel-item-inner-1">
@@ -115,7 +135,10 @@ onUnmounted(() => {
     <div class="scroller-item" v-for="(item, i) in section.menu.children">
       <div class="carousel-item-inner-image">
         <div class="carousel-item-inner-image-1">
-          <img :src="runtimeConfig.public.apiBase + item?.image.url" :alt="item?.image.alternativeText" />
+          <img
+            :src="runtimeConfig.public.apiBase + item?.image.url"
+            :alt="item?.image.alternativeText"
+          />
         </div>
       </div>
     </div>
@@ -139,6 +162,15 @@ onUnmounted(() => {
   flex-wrap: nowrap;
   overflow-x: scroll;
   overflow: hidden;
+
+  .scroller-container-inner{
+    background-repeat: repeat-x;
+    background-attachment: fixed;
+    background-position: 0px 63vw;
+    height: 80vh;
+    width: 100vw;
+    position: absolute;
+  }
 
   @media screen and (max-width: 768px) {
     height: auto;
@@ -218,4 +250,13 @@ onUnmounted(() => {
     border-radius: 20px;
   }
 }
+</style>
+<style lang="scss">
+// .section-sections-scroller {
+//   .section-inner-2 {
+//     background-size: 100%!important;
+//     background-repeat: repeat-x;
+//     background-position: 13vw 20vh;
+//   }
+// }
 </style>
