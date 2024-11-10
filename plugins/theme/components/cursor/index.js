@@ -11,9 +11,9 @@ export default class Cursor {
     this.hoverables = document.querySelectorAll(".hoverable, .n-link");
     this.cursor =  document.querySelector(".cursor");
     this.textLights = document.querySelectorAll("div.text-light");    
-    this.lightButtons = document.querySelectorAll(".btn:not(.btn-black)");    
+    this.lightButtons = document.querySelectorAll(".btn:not(.btn-black):not(.btn-dark)");    
     this.textDarks = document.querySelectorAll("div.text-dark");
-    this.darkButtons = document.querySelectorAll(".btn-black");
+    this.darkButtons = document.querySelectorAll(".btn-black, .btn-dark");
     this.hovering = false;
     this.moved = false;    
     this.current = ''

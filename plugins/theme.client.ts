@@ -17,7 +17,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     darkLightMode.init()
 
     const buttonElements = document.querySelectorAll('[data-block="button"]');
-    console.log("buttonElements", buttonElements);
     buttonElements.forEach((buttonElement) => {
       new Button(buttonElement);
     });

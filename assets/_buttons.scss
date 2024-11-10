@@ -87,11 +87,11 @@ button {
     text-decoration: none;
 }
 
-.button.btn-black{
+.button.btn-black, .button.btn-dark{
     background-color: #000;
 }
 
-.button.btn-black, .button.btn-black {
+.button.btn-black, .button.btn-dark {
     color: var(--color-just-white);
 }
 
@@ -100,7 +100,7 @@ button {
     text-decoration: none;
 }
 
-.btn-black.button.button--stroke:hover {
+.btn-black.button.button--stroke:hover,.btn-dark.button.button--stroke:hover {
     color: var(--color-just-black);
     text-decoration: none;
 }
@@ -120,14 +120,14 @@ button {
     pointer-events: none;
 }
 
-.btn-black.button--stroke:after {
+.btn-black.button--stroke:after,.btn-dark.button--stroke:after {
     border: 1px solid var(--color-surface-white);
     border-radius: 6.25rem;
     content: "";
     pointer-events: none;
 }
 
-.btn-black.button--stroke:hover:after {
+.btn-black.button--stroke:hover:after,.btn-dark.button--stroke:hover:after {
     border: 1px solid var(--color-surface-black);
 }
 
@@ -174,7 +174,7 @@ button {
     width: 170%;
 }
 
-.btn-black .button__flair:before {
+.btn-black .button__flair:before,.btn-dark .button__flair:before {
     aspect-ratio: 1/1;
     background-color: var(--color-surface-white);
     border-radius: 50%;

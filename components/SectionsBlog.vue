@@ -19,7 +19,6 @@ onMounted(() => {
     if (acum > 12) {
       row++;
       acum = acum - 12;
-      console.log("acum 2", acum);
     }
     item.setAttribute("data-row", row.toString());
   });
