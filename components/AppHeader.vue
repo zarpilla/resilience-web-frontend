@@ -19,7 +19,6 @@ const runtimeConfig = useRuntimeConfig();
 const showMenu = ref(false);
 
 const clickShowMenu = () => {
-  console.log("clickShowMenu");
   showMenu.value = true;
   document.body.style.overflow = "hidden";
   // set overflow hidden to html
@@ -41,8 +40,23 @@ if (header.value) {
   const css = header.value ? header.value.value.css : "";
   useHead({
     style: css,
+    link: [
+      {
+        rel: "icon",        
+      },
+    ],
   });
-
+  if (header.value.value.favicon) {
+    useHead({
+      link: [
+        {
+          rel: "icon",
+          href: runtimeConfig.public.apiBase + header.value.value.favicon.url,
+          type: "image/x-icon",
+        },
+      ],
+    });
+  }
 }
 
 
