@@ -27,17 +27,18 @@ export default defineNuxtConfig({
     },
   },
   plugins: ["~/plugins/api.ts", "~/plugins/theme.client.ts", "~/plugins/bootstrap.client.ts"],
-  modules: ["@nuxtjs/i18n", "@pinia/nuxt", "@hypernym/nuxt-gsap"],
+  modules: ["@nuxtjs/i18n", "@pinia/nuxt", "@hypernym/nuxt-gsap", "@nuxt/image"],
   i18n: {
-    locales: ['en', 'ca', 'es'],
+    //locales: ['en', 'ca', 'es'],
     detectBrowserLanguage: false,    
-    // [
-      // { code: 'en', language: 'en-US' },
-      // { code: 'ca', language: 'ca-ES' },
-      // { code: 'es', language: 'es-ES' },
-    // ],
+    locales: [
+      { code: 'en', language: 'en-US' },
+      { code: 'ca', language: 'ca-ES' },
+      { code: 'es', language: 'es-ES' },
+    ],
     defaultLocale: "ca",
     vueI18n: "./i18n.config.ts",
+    baseUrl: process.env.BASE_URL,
   },
   css: ["bootstrap/dist/css/bootstrap.min.css"],
   gsap: {
@@ -47,4 +48,9 @@ export default defineNuxtConfig({
       observer: true,
     }
   },
+  image: {
+    strapi: {
+      baseURL: process.env.API_BASE_URL + '/uploads/'
+    }
+  }
 });

@@ -9,12 +9,11 @@ const runtimeConfig = useRuntimeConfig();
 <template>
   
   <template v-if="props.media && props.media.mime.startsWith('image')">
-    <img
+    <NuxtImg
       :src="runtimeConfig.public.apiBase + props.media.url"
       :alt="props.media.alternativeText"
       class="img"
-      :class="css"
-    />
+      :class="css"/>    
   </template>  
   <template v-if="props.media && props.media.mime.startsWith('audio')">
     <audio

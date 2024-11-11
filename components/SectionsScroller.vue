@@ -17,21 +17,24 @@ const backgroundStyle = computed(() => ({
 const backgroundImage2Style = computed(() => ({
   backgroundImage: props.section.styles?.backgroundImage2
     ? `url(${
-        runtimeConfig.public.apiBase + props.section.styles?.backgroundImage2.url
+        runtimeConfig.public.apiBase +
+        props.section.styles?.backgroundImage2.url
       })`
     : "none",
 }));
-const sleep = (ms:number) =>{
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-onMounted(async() => {
+const sleep = (ms: number) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+onMounted(async () => {
   await sleep(500);
   const scrollerInner = document.querySelector(".scroller-container");
   const sectionsScroller = document.querySelector(".section-sections-scroller");
   if (!scrollerInner || !sectionsScroller) {
     return;
   }
-  const sectionsScrollerInner2 = sectionsScroller.querySelector(".scroller-container-inner");
+  const sectionsScrollerInner2 = sectionsScroller.querySelector(
+    ".scroller-container-inner"
+  );
 
   if (!scrollerInner || !sectionsScroller) {
     return;
@@ -67,7 +70,6 @@ onMounted(async() => {
         $gsap.set(sectionsScrollerInner2, {
           backgroundPosition: `${-1 * self.progress * 20}vw 53vh`,
         });
-        
       },
     },
   });
@@ -98,12 +100,15 @@ onUnmounted(() => {
   </div>
 
   <div class="scroller-container" v-if="section.preset !== 'images'">
-    <div class="scroller-container-inner" :style="[backgroundImage2Style]"></div>
+    <div
+      class="scroller-container-inner"
+      :style="[backgroundImage2Style]"
+    ></div>
     <div class="scroller-item" v-for="(item, i) in section.menu.children">
       <div class="carousel-item-inner" :class="`margin-rand-${i % 4}`">
         <div class="carousel-item-inner-1">
           <div class="div">
-            <img
+            <NuxtImg
               :src="
                 runtimeConfig.public.apiBase +
                 item?.page?.metadata?.shareImage?.url
@@ -135,9 +140,10 @@ onUnmounted(() => {
     <div class="scroller-item" v-for="(item, i) in section.menu.children">
       <div class="carousel-item-inner-image">
         <div class="carousel-item-inner-image-1">
-          <img
+          <NuxtImg
             :src="runtimeConfig.public.apiBase + item?.image.url"
             :alt="item?.image.alternativeText"
+          />
           />
         </div>
       </div>
@@ -163,7 +169,7 @@ onUnmounted(() => {
   overflow-x: scroll;
   overflow: hidden;
 
-  .scroller-container-inner{
+  .scroller-container-inner {
     background-repeat: repeat-x;
     background-attachment: fixed;
     background-position: 0px 63vw;

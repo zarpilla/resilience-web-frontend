@@ -95,7 +95,7 @@ onMounted(() => {
                       <div class="row">
                         <div class="col-12 col-md-7 py-0 px-0 pe-md-0">
                           <MetaLink :page="item.page" css-class="hoverable">
-                            <img
+                            <NuxtImg
                               :src="
                                 runtimeConfig.public.apiBase +
                                 item?.page?.metadata?.shareImage?.url
@@ -163,12 +163,12 @@ onMounted(() => {
               </div>
             </div>
           </div>
-<div class="col-12">
-          <div class="container">
-            <div class="carousel-c2a text-center mt-3" v-if="section.c2a">
-              <MetaC2A :c2a="section.c2a" :section="section"></MetaC2A>
+          <div class="col-12">
+            <div class="container">
+              <div class="carousel-c2a text-center mt-3" v-if="section.c2a">
+                <MetaC2A :c2a="section.c2a" :section="section"></MetaC2A>
+              </div>
             </div>
-          </div>
           </div>
         </div>
       </template>
