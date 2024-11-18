@@ -71,9 +71,9 @@ onMounted(() => {
       <template v-if="section.preset !== 'three'">
         <div class="row text-center">
           <div class="subtitle-outter mb-4">
-            <div class="subtitle">{{ section.subTitle }}</div>
+            <div class="subtitle" v-html="section.subTitle"></div>
           </div>
-          <h2 class="mb-5">{{ section.title }}</h2>
+          <h2 class="mb-5" v-html="section.title"></h2>
         </div>
         <div class="row section-slider-carousel">
           <div class="col-12">

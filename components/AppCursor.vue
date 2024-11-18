@@ -1,8 +1,8 @@
 <template>
   <div class="cursor">
     <div class="cursor__ball cursor__ball--small" style="display: none">
-      <svg height="20" width="20">
-        <circle cx="10" cy="10" r="9" stroke-width="0"></circle>
+      <svg height="16" width="16">
+        <circle cx="8" cy="8" r="7" stroke-width="0"></circle>
       </svg>
     </div>
   </div>

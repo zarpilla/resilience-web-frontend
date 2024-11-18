@@ -9,13 +9,22 @@ const localePath = useLocalePath();
 
 const { $bs } = useNuxtApp() as any;
 
+const expanded = ref<boolean[]>(props.section.bios.map(() => false));
+
 onMounted(() => {
   try {
     var collapseElementList = [].slice.call(
       document.querySelectorAll(".collapse")
     );
-    var collapseList = collapseElementList.map(function (collapseEl) {
-      return new $bs.Collapse(collapseEl, { toggle: false });
+    var collapseList = collapseElementList.map((el: any, i) => {
+      const collapsible = new $bs.Collapse(el, { toggle: false });
+      el.addEventListener("show.bs.collapse", function () {
+        expanded.value[i] = true;
+      });
+      el.addEventListener("hide.bs.collapse", function () {
+        expanded.value[i] = false;
+      });
+      return collapsible;
     });
   } catch (e) {
     console.log("Bootstrap error: ", e);
@@ -97,7 +106,7 @@ onMounted(() => {
               :to="localePath({ name: 'bio-slug', params: { slug: bio.slug } })"
               class="bio-link hoverable"
             >
-              <svg
+              <svg                
                 width="16"
                 height="17"
                 viewBox="0 0 16 17"
@@ -171,23 +180,28 @@ onMounted(() => {
             v-if="section.title && section.titleHeading === 'p'"
             v-html="section.title"
           ></p>
-          <h2 class="mt-5"
+          <h2
+            class="mt-5"
             v-if="section.subtitle && section.titleHeading === 'h1'"
             v-html="section.subtitle"
           ></h2>
-          <h3 class="mt-5"
+          <h3
+            class="mt-5"
             v-if="section.subtitle && section.titleHeading === 'h2'"
             v-html="section.subtitle"
           ></h3>
-          <h4 class="mt-5"
+          <h4
+            class="mt-5"
             v-if="section.subtitle && section.titleHeading === 'h3'"
             v-html="section.subtitle"
           ></h4>
-          <h5 class="mt-5"
+          <h5
+            class="mt-5"
             v-if="section.subtitle && section.titleHeading === 'h4'"
             v-html="section.subtitle"
           ></h5>
-          <p class="mt-5"
+          <p
+            class="mt-5"
             v-if="section.subtitle && section.titleHeading === 'p'"
             v-html="section.subtitle"
           ></p>
@@ -202,7 +216,7 @@ onMounted(() => {
               <a
                 class="toogle-bio d-flex hoverable"
                 :class="{
-                  'bt-0': index === 0,                  
+                  'bt-0': index === 0,
                 }"
                 data-bs-toggle="collapse"
                 :href="`#collapse-section${section.id}-bio-${index}`"
@@ -214,6 +228,7 @@ onMounted(() => {
                   {{ bio.name }}
                 </span>
                 <svg
+                  :class="{ 'rotate-180': expanded[index] }"
                   width="16"
                   height="16"
                   viewBox="0 0 16 16"
@@ -267,22 +282,32 @@ onMounted(() => {
                   </div>
                   <div class="mt-3">
                     <nuxt-link
-                      :to="localePath({ name: 'bio-slug', params: { slug: bio.slug } })"
+                      :to="
+                        localePath({
+                          name: 'bio-slug',
+                          params: { slug: bio.slug },
+                        })
+                      "
                       class="bio-link hoverable"
-                      >
-                    <MetaMedia
-                      :media="bio.mainImage"
-                      :css-class="'bio-image'"
-                    ></MetaMedia>
-                  </nuxt-link>  
+                    >
+                      <MetaMedia
+                        :media="bio.mainImage"
+                        :css-class="'bio-image'"
+                      ></MetaMedia>
+                    </nuxt-link>
                     <div class="mt-3">
                       <nuxt-link
-                      :to="localePath({ name: 'bio-slug', params: { slug: bio.slug } })"
-                      class="bio-link hoverable"
+                        :to="
+                          localePath({
+                            name: 'bio-slug',
+                            params: { slug: bio.slug },
+                          })
+                        "
+                        class="bio-link hoverable"
                       >
-                      {{ section.c2aText }}
-                    </nuxt-link>
-                  </div>
+                        {{ section.c2aText }}
+                      </nuxt-link>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -347,14 +372,17 @@ onMounted(() => {
   .bio-body {
     padding-bottom: 2rem;
   }
-  .bio-link{
-    color: var(--Turquesa, #409C8C);
-font-family: "PP Neue Montreal";
-font-size: 18px;
-font-style: normal;
-font-weight: 500;
-line-height: 150%; /* 27px */
-letter-spacing: 0.36px;
+  .bio-link {
+    color: var(--Turquesa, #409c8c);
+    font-family: "PP Neue Montreal";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 27px */
+    letter-spacing: 0.36px;
+  }
+  .rotate-180{
+    transform: rotate(180deg);
   }
 }
 </style>

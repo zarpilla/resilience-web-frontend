@@ -23,7 +23,7 @@ const footer = computed(() =>
               class="col-12 col-md-3 justify-content-center justify-content-md-start d-flex"
             >
               <div class="pt-5">
-                <nuxt-link :to="localePath('/')">
+                <nuxt-link :to="localePath('/')" class="n-link">
                   <MetaMedia
                     css="media-primary"
                     :media="footer?.value.primaryLogo"

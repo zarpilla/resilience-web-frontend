@@ -58,7 +58,7 @@ const contact = computed(() => {
             <li
               v-for="(loc, i) in availableLocales"
               :key="loc"
-              class="language"
+              class="language n-link"
               :class="{ current: loc === locale }"
             >
               <nuxt-link :to="switchLocalePath(loc)" @click="emitClose">
@@ -188,7 +188,7 @@ const contact = computed(() => {
               :href="social.href"
               target="_blank"
               rel="noopener noreferrer"
-              class="social-link"
+              class="social-link n-link"
             >
               <img
                 :src="runtimeConfig.public.apiBase + social.icon.url"

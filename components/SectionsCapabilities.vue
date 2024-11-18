@@ -26,13 +26,22 @@ const play = (id: number, url: string) => {
   }
 };
 
+const expanded = ref<boolean[]>(props.section.capabilities.map(() => false));
+
 onMounted(() => {
   try {
     var collapseElementList = [].slice.call(
       document.querySelectorAll(".collapse")
     );
-    var collapseList = collapseElementList.map(function (collapseEl) {
-      return new $bs.Collapse(collapseEl, { toggle: false });
+    var collapseList = collapseElementList.map((el: any, i) => {
+      const collapsible = new $bs.Collapse(el, { toggle: false });      
+      el.addEventListener('show.bs.collapse', function () {
+        expanded.value[i] = true;
+      })
+      el.addEventListener('hide.bs.collapse', function () {
+        expanded.value[i] = false;
+      })
+      return collapsible;
     });
   } catch (e) {
     console.log("Bootstrap error: ", e);
@@ -137,6 +146,7 @@ onMounted(() => {
 
                 <svg
                   width="16"
+                  :class="{ 'rotate-180': expanded[index]  }"
                   height="16"
                   viewBox="0 0 16 16"
                   fill="none"
@@ -263,6 +273,10 @@ onMounted(() => {
     font-weight: 500;
     line-height: 150%; /* 27px */
     letter-spacing: 0.36px;
+  }
+
+  .rotate-180 {
+    transform: rotate(180deg);
   }
 }
 </style>

@@ -5,12 +5,13 @@ const props = defineProps<{
 }>();
 
 onMounted(() => {
-
   // when the viewport enter at the middle of the section, get all .blur circle, .blur path and .blur ellipse and set opacity to 1 randomnly, during 5 seconds, using $gsap
-  const elements = $gsap.utils.toArray('.blurb path, .blurb circle, .blurb ellipse');
-  
+  const elements = $gsap.utils.toArray(
+    ".blurb path, .blurb circle, .blurb ellipse"
+  );
+
   // set elements opacity to 0.2
-  $gsap.set('.blurb path, .blurb circle, .blurb ellipse', {
+  $gsap.set(".blurb path, .blurb circle, .blurb ellipse", {
     opacity: 0,
   });
 
@@ -22,19 +23,16 @@ onMounted(() => {
       delay: Math.random() * 5 + 1,
 
       scrollTrigger: {
-        trigger: '.section-blurbs',
-        start: 'top bottom',
-        end: 'bottom top',
+        trigger: ".section-blurbs",
+        start: "top bottom",
+        end: "bottom top",
         //scrub: true,
       },
       // repeat: -1,
       // yoyo: true,
     });
   });
-  
-
-
-})
+});
 
 const runtimeConfig = useRuntimeConfig();
 </script>
@@ -44,7 +42,7 @@ const runtimeConfig = useRuntimeConfig();
       <div v-if="section.title">
         <h3 class="text-left mb-5">
           {{ section.title }}
-        </h3>        
+        </h3>
       </div>
       <div v-if="section.blurbs && section.blurbs.length" class="row">
         <div
@@ -61,19 +59,30 @@ const runtimeConfig = useRuntimeConfig();
           /> -->
           <div class="blurb" v-html="column.svg"></div>
 
-
-          <h1 v-if="column.title && column.titleHeading === 'h1'" v-html="column.title">
-          </h1>
-          <h2 v-if="column.title && column.titleHeading === 'h2'" v-html="column.title">
-          </h2>
-          <h3 v-if="column.title && column.titleHeading === 'h3'" v-html="column.title">
-          </h3>
-          <h4 v-if="column.title && column.titleHeading === 'h4'" v-html="column.title">
-          </h4>
-          <h5 v-if="column.title && column.titleHeading === 'h5'" v-html="column.title">
-          </h5>
-          <p v-if="column.title && column.titleHeading === 'p'" v-html="column.title">
-          </p>
+          <h1
+            v-if="column.title && column.titleHeading === 'h1'"
+            v-html="column.title"
+          ></h1>
+          <h2
+            v-if="column.title && column.titleHeading === 'h2'"
+            v-html="column.title"
+          ></h2>
+          <h3
+            v-if="column.title && column.titleHeading === 'h3'"
+            v-html="column.title"
+          ></h3>
+          <h4
+            v-if="column.title && column.titleHeading === 'h4'"
+            v-html="column.title"
+          ></h4>
+          <h5
+            v-if="column.title && column.titleHeading === 'h5'"
+            v-html="column.title"
+          ></h5>
+          <p
+            v-if="column.title && column.titleHeading === 'p'"
+            v-html="column.title"
+          ></p>
           <div
             v-for="(block, index) in column.text"
             :key="index"
@@ -144,18 +153,33 @@ const runtimeConfig = useRuntimeConfig();
     </div>
   </div>
 </template>
-<style scoped lang="scss">
+<style lang="scss">
 .section-blurbs {
   .col {
-    text-align: center
+    text-align: center;
   }
-  img{
+  img {
     height: 120px;
   }
+  .blurb {
+    height: 140px;
+    margin-bottom: 2rem;
+  }
+  svg {
+    height: 140px !important;
+  }
+  h3 {
+    font-size: 50px;
+  }
 
-  .blurb path, .blurb circle, .blurb ellipse {
+  p {
+    font-size: 21px;
+  }
+
+  .blurb path,
+  .blurb circle,
+  .blurb ellipse {
     opacity: 0;
   }
-  
 }
 </style>
