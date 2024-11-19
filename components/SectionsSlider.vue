@@ -459,8 +459,8 @@ img {
 }
 .mx-custom {
   @media screen and (min-width: 769px) {
-    margin-right: 0.75rem !important;
-    margin-left: 0.75rem !important;
+    margin-right: 18px !important;
+    margin-left: 18px !important;
   }
 }
 .fake-row {

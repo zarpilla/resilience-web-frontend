@@ -104,9 +104,9 @@ onMounted(() => {
             </div>
             <nuxt-link
               :to="localePath({ name: 'bio-slug', params: { slug: bio.slug } })"
-              class="bio-link hoverable"
+              class="bio-link bio-link-arrow hoverable"
             >
-              <svg                
+              <svg
                 width="16"
                 height="17"
                 viewBox="0 0 16 17"
@@ -381,8 +381,24 @@ onMounted(() => {
     line-height: 150%; /* 27px */
     letter-spacing: 0.36px;
   }
-  .rotate-180{
+  .rotate-180 {
     transform: rotate(180deg);
+  }
+  .bio-card {
+    .bio-link-arrow {
+      margin-left: 0;
+      transition: all 0.1s ease-in-out;
+    }
+
+    &:hover {
+      .name a {
+        background: #000;
+        color: #fff !important;
+      }
+      .bio-link-arrow {
+        margin-left: 10px;
+      }
+    }
   }
 }
 </style>

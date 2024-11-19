@@ -85,7 +85,7 @@ const columnsHero0 = {
   id: 0,
   __component: "sections.hero",
   styles: {
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#F2EEEA",
     height: "70vh",
     cssClass: "align-bottom-left bio-hero",
     backgroundImage: page.mainImage,

@@ -6,7 +6,6 @@ const props = defineProps<{
 import { computed } from "vue";
 
 onMounted(() => {
-  
   if (window.innerWidth < 768) {
     return;
   }
@@ -39,8 +38,9 @@ onMounted(() => {
     });
     itemsInRow.forEach((item: any) => {
       // get the .blog-item element inside the .blog-item-col and set the height
-      item.querySelector(".blog-item").style.height = `${maxHeight - 25}px`;
-      //item.style.height = `${maxHeight}px`;
+      if (itemsInRow.length > 1) {
+        //item.querySelector(".blog-item").style.height = `${maxHeight}px`;
+      }
     });
   });
 });
@@ -48,15 +48,15 @@ onMounted(() => {
 <template>
   <div class="section-blog">
     <div class="container">
-      <div class="row">
+      <div class="row gx-blog zgx-5">
         <div
           v-for="(blogPage, i) in section.blogPage"
           :key="i"
           class="blog-item-col col-12"
           :class="{
-            'col-md-4': blogPage.width === 'onethird',
-            'col-md-8': blogPage.width === 'twothirds',
-            'col-md-12': blogPage.width === 'threethirds',
+            'col-sm-6 col-md-4': blogPage.width === 'onethird',
+            'col-sm-6 col-md-8': blogPage.width === 'twothirds',
+            'col-sm-12 col-md-12': blogPage.width === 'threethirds',
           }"
           :data-w="
             blogPage.width === 'onethird'
@@ -66,7 +66,7 @@ onMounted(() => {
               : 12
           "
         >
-          <div class="blog-item mb-4" :class="`blog-${blogPage.width}`">
+          <div class="blog-item" :class="`blog-${blogPage.width}`">
             <div class="row">
               <div
                 class="col-12"
@@ -90,7 +90,12 @@ onMounted(() => {
                 }"
               >
                 <div class="info">
-                  <h3 :class="{ 'mb-5': blogPage.width === 'threethirds', 'mb-0': blogPage.width !== 'threethirds' }">
+                  <h3
+                    :class="{
+                      'mb-5': blogPage.width === 'threethirds',
+                      'mb-0': blogPage.width !== 'threethirds',
+                    }"
+                  >
                     <MetaLink
                       :page="blogPage.page"
                       :text="blogPage.page.name"
@@ -115,12 +120,13 @@ onMounted(() => {
   .blog-item {
     background: #fff;
     border-radius: 20px;
+    margin-bottom: 40px;
 
     .media {
       border-radius: 20px 0 0 20px;
       height: 442px;
       @media screen and (max-width: 768px) {
-        border-radius: 20px 20px 0 0!important;
+        border-radius: 20px 20px 0 0 !important;
       }
     }
 
@@ -141,7 +147,6 @@ onMounted(() => {
       }
       .info {
         padding: 30px;
-        
       }
     }
     &.blog-twothirds {
@@ -160,4 +165,7 @@ onMounted(() => {
     object-fit: cover;
   }
 }
+.gx-blog {
+    --bs-gutter-x: 38px!important;
+  }
 </style>

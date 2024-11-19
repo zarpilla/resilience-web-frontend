@@ -53,10 +53,10 @@ onMounted(async () => {
   const xPercent = (-100 * totalWidth) / (window as any).innerWidth;
 
   const tl = $gsap.to(sections, {
-    xPercent: xPercent * 1.2,
+    xPercent: xPercent * 1,
     ease: "none",
     scrollTrigger: {
-      trigger: ".scroller-container",
+      trigger: ".section-sections-scroller",
       pin: true,
       scrub: 1,
       snap: 1 / (sections.length - 1),
@@ -68,7 +68,7 @@ onMounted(async () => {
           backgroundPosition: `${-1 * self.progress * 20}% 0px`,
         });
         $gsap.set(sectionsScrollerInner2, {
-          backgroundPosition: `${-1 * self.progress * 20}vw 53vh`,
+          backgroundPosition: `${-1 * self.progress * 180}% 3vh`,
         });
       },
     },
@@ -193,7 +193,7 @@ onUnmounted(() => {
 }
 
 .scroller-item {
-  width: 33.33vw;
+  width: 33.33%;
   flex: 0 0 auto;
   margin-top: 100px;
   @media screen and (max-width: 768px) {
