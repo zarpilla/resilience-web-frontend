@@ -3,7 +3,6 @@
 .btn {
     border: 1px solid #000;
     background: #fff;
-
     color: var(--Blanc, #000);
     font-family: "PP Neue Montreal";
     font-size: 22px;
@@ -72,15 +71,11 @@ button {
     border-radius: 6.25rem;
     color: var(--color-just-black);
     cursor: pointer;
-    display: inline-flex;
-    font-size: 1.2rem;
-    font-weight: 600;
+    display: inline-flex;    
     gap: 0.363636em;
-    justify-content: center;
-    letter-spacing: -0.01em;
-    line-height: 1.04545;
+    justify-content: center;    
     overflow: hidden;
-    padding: 0.9375rem 1.5rem;
+    //padding: 0.9375rem 1.5rem;
     position: relative;
     text-decoration: none;
     word-break: break-word;

@@ -369,7 +369,7 @@ img {
   letter-spacing: 0.18px;
 }
 </style>
-<style lang="css">
+<style lang="scss">
 .carousel-control-next-icon {
   background-image: url("data:image/svg+xml,%3Csvg width='92' height='92' viewBox='0 0 92 92' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cmask id='mask0_208_2122' style='mask-type:alpha' maskUnits='userSpaceOnUse' x='0' y='0' width='92' height='93'%3E%3Crect y='0.000244141' width='92' height='92' fill='%23D9D9D9'/%3E%3C/mask%3E%3Cg mask='url(%23mask0_208_2122)'%3E%3Cpath d='M67.6586 47.0544H20.3169V44.9461H67.6586L44.5627 21.8502L46.0002 20.3169L71.6836 46.0002L46.0002 71.6836L44.5627 70.1502L67.6586 47.0544Z' fill='%231C1B1F'/%3E%3C/g%3E%3C/svg%3E");
   opacity: 1;
@@ -388,6 +388,20 @@ img {
   width: 10%;
   cursor: none !important;
 }
+
+.carousel-control-prev {  
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    left: -10px!important;
+  }
+}
+.carousel-control-next {  
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    right: -10px!important;
+  }
+}
+
 .section-slider-carousel {
   min-height: 665px;
 }

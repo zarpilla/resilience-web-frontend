@@ -128,7 +128,7 @@ onUnmounted(() => {
                 ></MetaLink>
               </h3>
               <div class="meta-description mt-4">
-                {{ item?.page.metadata?.metaDescription }}
+                {{ item?.page.client }}
               </div>
             </div>
           </div>

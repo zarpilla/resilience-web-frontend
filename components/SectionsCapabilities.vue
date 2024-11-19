@@ -265,16 +265,6 @@ onMounted(() => {
   .bio-body {
     padding-bottom: 2rem;
   }
-  .bio-link {
-    color: var(--Turquesa, #409c8c);
-    font-family: "PP Neue Montreal";
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 150%; /* 27px */
-    letter-spacing: 0.36px;
-  }
-
   .rotate-180 {
     transform: rotate(180deg);
   }

@@ -149,14 +149,14 @@ const columnsContent = {
       title: page.excerpt,
       titleHeading: "h3",
       styles: {
-        cssClass: "col col-4",
+        cssClass: "col-12 col-md-4",
       },
     },
     {
       id: 3,
       text: page.content,
       styles: {
-        cssClass: "col col-8",
+        cssClass: "col-12 col-md-8",
       },
     },
   ],

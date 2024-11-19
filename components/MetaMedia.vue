@@ -46,6 +46,7 @@ const runtimeConfig = useRuntimeConfig();
   }  
 }
 .media-secondary {
-    width: 100px;
+    width: 125px;
+    margin-top: 12px;
   }
 </style>

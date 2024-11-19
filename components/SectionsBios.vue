@@ -373,7 +373,7 @@ onMounted(() => {
     padding-bottom: 2rem;
   }
   .bio-link {
-    color: var(--Turquesa, #409c8c);
+    color: #000;
     font-family: "PP Neue Montreal";
     font-size: 18px;
     font-style: normal;
