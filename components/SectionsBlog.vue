@@ -6,9 +6,22 @@ const props = defineProps<{
 import { computed } from "vue";
 
 onMounted(() => {
+  setItemsHeight();
+
+  window.addEventListener("resize", () => {
+    setItemsHeight();
+  });
+});
+
+const setItemsHeight = () => {
   if (window.innerWidth < 768) {
     return;
   }
+
+  document.querySelectorAll(".blog-item").forEach((item: any) => {
+    item.style.minHeight = "auto";
+  });
+
   // for each .blog-item-col, get the attribute data-w, acumulate it, and get mod 12 to know if it is in the same row. All the elements in the same row should have the same height
   const blogItems = document.querySelectorAll(".blog-item-col");
   let acum = 0;
@@ -39,11 +52,11 @@ onMounted(() => {
     itemsInRow.forEach((item: any) => {
       // get the .blog-item element inside the .blog-item-col and set the height
       if (itemsInRow.length > 1) {
-        //item.querySelector(".blog-item").style.height = `${maxHeight}px`;
+        item.querySelector(".blog-item").style.minHeight = `${maxHeight - 40}px`;
       }
     });
   });
-});
+}
 </script>
 <template>
   <div class="section-blog">

@@ -50,13 +50,15 @@ onMounted(async () => {
   // Calculate the total width of the horizontal scroll content
   const totalWidth = scrollerInner.scrollWidth;
 
+  const trigger = window.innerHeight > 950 ? ".section-sections-scroller" : ".scroller-container"
+  
   const xPercent = (-100 * totalWidth) / (window as any).innerWidth;
 
   const tl = $gsap.to(sections, {
     xPercent: xPercent * 1,
     ease: "none",
     scrollTrigger: {
-      trigger: ".section-sections-scroller",
+      trigger: trigger,
       pin: true,
       scrub: 1,
       snap: 1 / (sections.length - 1),
@@ -91,7 +93,7 @@ onUnmounted(() => {
       "
     >
       <div class="row text-center">
-        <h2 class="mb-5">{{ section.title }}</h2>
+        <h2 class="mb-4">{{ section.title }}</h2>
         <div class="subtitle-outter mb-4" v-if="section.subtitle">
           <h3 class="subtitle">{{ section.subtitle }}</h3>
         </div>

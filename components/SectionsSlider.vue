@@ -226,7 +226,7 @@ onMounted(() => {
                   :key="i"
                   :class="{ active: i === 0 }"
                 >
-                  <div class="col-md-4 mb-4" :class="`blog-onethird`">
+                  <div class="col-md-4 mb-4 blog-onethird">
                     <div class="carousel-blog-item mx-custom">
                       <div>
                         <MetaLink :page="item.page">
@@ -286,8 +286,10 @@ h2 {
   }
 }
 
-h3 a {
+h3, h3 a {
   color: #000;
+  font-size: 25px;
+  line-height: 32px;
 }
 
 .section-slider-carousel {
