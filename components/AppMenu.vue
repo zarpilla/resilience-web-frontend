@@ -26,32 +26,8 @@ const contact = computed(() => {
 });
 </script>
 <template>
-  <div class="full-page-menu ztext-dark">
-    <div class="close text-dark" @click="emitClose">
-      <svg
-        width="87"
-        height="87"
-        viewBox="0 0 87 87"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <line
-          x1="65.0671"
-          y1="64.8541"
-          x2="21.7601"
-          y2="21.5471"
-          stroke="black"
-          stroke-width="2"
-        />
-        <path
-          d="M64.6465 21.3394L21.3395 64.6464"
-          stroke="black"
-          stroke-width="2"
-        />
-      </svg>
-    </div>
-
-    <div class="container">
+  <div class="full-page-menu text-dark">
+    <div class="container container-menu">
       <div class="row">
         <div class="col-12">
           <ul class="languages d-flex">
@@ -90,6 +66,20 @@ const contact = computed(() => {
                     css-class="item"
                     :on-click="emitClose"
                   />
+
+                  <svg
+                    class="arrow"
+                    width="52"
+                    height="52"
+                    viewBox="0 0 52 52"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M47.6586 27.0544H0.316895V24.9461H47.6586L24.5627 1.85023L26.0002 0.316895L51.6836 26.0002L26.0002 51.6836L24.5627 50.1502L47.6586 27.0544Z"
+                      fill="#1C1B1F"
+                    />
+                  </svg>
                 </h2>
 
                 <ul
@@ -181,7 +171,9 @@ const contact = computed(() => {
           </ul>
         </div>
         <div class="col-12 col-md-3">
-          <div class="social d-flex justify-content-start justify-content-md-end mt-5 mt-md-0">
+          <div
+            class="social d-flex justify-content-start justify-content-md-end mt-5 mt-md-0"
+          >
             <a
               v-for="(social, index) in header?.value.social"
               :key="index"
@@ -192,7 +184,7 @@ const contact = computed(() => {
             >
               <img
                 :src="runtimeConfig.public.apiBase + social.icon.url"
-                :alt="social.name"                
+                :alt="social.name"
               />
             </a>
           </div>
@@ -213,7 +205,7 @@ const contact = computed(() => {
   padding: 54px 0;
   overflow-y: auto;
   overflow-x: hidden;
-  
+
   .close {
     position: fixed;
     top: 30px;
@@ -222,7 +214,7 @@ const contact = computed(() => {
 
     @media screen and (max-width: 768px) {
       position: absolute;
-      top: 10px;      
+      top: 10px;
       right: 10px;
     }
   }
@@ -275,6 +267,20 @@ const contact = computed(() => {
         h2 {
           margin-bottom: 0 !important;
           padding: 0px 0 !important;
+
+          .arrow {
+            opacity: 0;
+            transition: all 0.3s;
+            margin-left: 1rem !important;
+            scale: 0.75;
+          }
+
+          &:hover {
+            .arrow {
+              opacity: 1;
+              margin-left: 2rem !important;
+            }
+          }
         }
       }
     }
@@ -378,7 +384,7 @@ const contact = computed(() => {
 .node-webkit .full-page-menu .close {
   right: 50px;
   @media screen and (max-width: 768px) {
-    right: 0px;    
+    right: 0px;
   }
 }
 </style>

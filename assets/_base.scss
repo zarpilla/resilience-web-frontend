@@ -305,6 +305,10 @@ body:not(.page-slug-home) {
     }
 }
 
+.menu-open .zone-color-stroke>* {
+    stroke: #000!important;
+}
+
 .header-dark a.zone-color,
 .header-dark .zone-color {
     color: #000 !important;
