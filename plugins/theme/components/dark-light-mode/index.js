@@ -26,7 +26,7 @@ export default class DarkLightMode {
     textLightZones.forEach(zone => {
       ScrollTrigger.create({
         trigger: zone,
-        start: window.innerWidth < 768 ? "top middle" : "top middle",
+        start: "top middle",
         end: "bottom middle",
         //markers: true,        
         onEnter: () => {

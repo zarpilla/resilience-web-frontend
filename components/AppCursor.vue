@@ -10,7 +10,7 @@
 
 <style lang="scss">
 body {
-  cursor: none;
+  cursor: none !important;
 }
 .cursor {
   pointer-events: none;

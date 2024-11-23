@@ -25,11 +25,15 @@ const clickShowMenu = () => {
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
     document.body.classList.add("menu-open");
+    const appMenu = document.querySelector(".app-menu");
+    appMenu?.classList.add("text-dark");
     convertToCross();
   } else {
     document.body.style.overflow = "auto";
     document.documentElement.style.overflow = "auto";
     document.body.classList.remove("menu-open");
+    const appMenu = document.querySelector(".app-menu");
+    appMenu?.classList.remove("text-dark");
     revertToLines();
   }
 };
@@ -150,7 +154,7 @@ watch(
 );
 </script>
 <template>
-  <header class="d-flex hide-on-footer" :class="`text-${colorMode}`">
+  <header class="d-flex hide-on-footer bg-dark" :class="`text-${colorMode}`">
     <div class="me-auto">
       <nuxt-link :to="localePath('/')" class="logo hoverable clickable">
         <img

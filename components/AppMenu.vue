@@ -26,7 +26,7 @@ const contact = computed(() => {
 });
 </script>
 <template>
-  <div class="full-page-menu text-dark">
+  <div class="full-page-menu">
     <div class="container container-menu">
       <div class="row">
         <div class="col-12">
@@ -210,7 +210,7 @@ const contact = computed(() => {
     position: fixed;
     top: 30px;
     right: 30px;
-    cursor: none;
+    cursor: none !important;
 
     @media screen and (max-width: 768px) {
       position: absolute;

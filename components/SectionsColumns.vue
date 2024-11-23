@@ -276,5 +276,7 @@ onMounted(() => {
     height: 120px!important;    
   }
 }
-
+.has-vertical-scroller{
+  overflow: hidden;
+}
 </style>
