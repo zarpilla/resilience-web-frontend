@@ -21,11 +21,12 @@ export default class DarkLightMode {
     const zoneColorElements = gsap.utils.toArray('.zone-color')
 
     const footer = document.querySelector('footer')
+    const header = document.querySelector('header')
     
     textLightZones.forEach(zone => {
       ScrollTrigger.create({
         trigger: zone,
-        start: "top middle",
+        start: window.innerWidth < 768 ? "top middle" : "top middle",
         end: "bottom middle",
         //markers: true,        
         onEnter: () => {
@@ -39,6 +40,9 @@ export default class DarkLightMode {
             element.classList.remove('color-text-dark')
             element.classList.add('color-text-light')
           });
+          header && header.classList.remove('bg-light')
+          header && header.classList.add('bg-dark')
+
         },
         onEnterBack: () => {
           hideOnTextLightElements.forEach(element => {
@@ -51,6 +55,8 @@ export default class DarkLightMode {
             element.classList.remove('color-text-dark')
             element.classList.add('color-text-light')
           });          
+          header && header.classList.remove('bg-light')
+          header && header.classList.add('bg-dark')
         }
       });
     });
@@ -71,6 +77,8 @@ export default class DarkLightMode {
             element.classList.remove('color-text-light')
             element.classList.add('color-text-dark')
           });
+          header && header.classList.remove('bg-dark')
+          header && header.classList.add('bg-light')
         },
         onEnterBack: () => {
           hideOnTextLightElements.forEach(element => {
@@ -83,7 +91,8 @@ export default class DarkLightMode {
             element.classList.remove('color-text-light')
             element.classList.add('color-text-dark')
           });
-
+          header && header.classList.remove('bg-dark')
+          header && header.classList.add('bg-light')
         }
       });
     });

@@ -61,7 +61,7 @@ const convertToCross = () => {
       // translate 20px up
       $gsap.to(menu, {
         duration,
-        y: -27,
+        y: window.innerWidth > 768 ? -27 : 27,
       });
       // translate 20px right
       $gsap.to(menu, {
@@ -216,6 +216,13 @@ header {
   pointer-events: none;
   z-index: 10;
 
+  &.bg-light{
+    background-color: transparent!important;
+  }
+  &.bg-dark{
+      background-color: transparent!important;
+  }
+
   .clickable {
     pointer-events: all;
   }
@@ -240,8 +247,28 @@ header {
   }
 
   @media screen and (max-width: 768px) {
-    padding: 20px 20px;
-    position: absolute;
+    width: calc(100% - 40px);
+    margin: 20px 20px 0 20px;
+    padding: 17px 26px;
+    border-radius: 10px;
+    position: fixed;
+    background: #fff;
+    bottom: 20px;
+
+    &.bg-light{
+      background-color: #fff!important;
+      background-blend-mode: multiply;
+    }
+    &.bg-dark{
+        background-color: #000!important;
+        background-blend-mode: multiply;
+    }
+
+    .logo{
+      img {
+        height: 47px;
+      }
+    }
   }
 }
 
@@ -250,6 +277,12 @@ header {
   position: fixed;
   right: 61px;
   top: 59px;
+
+  @media screen and (max-width: 768px) {
+    right: 48px;
+    top: inherit;
+    bottom: 48px;
+  }
 }
 </style>
 <style lang="scss">

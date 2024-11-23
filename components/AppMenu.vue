@@ -273,6 +273,10 @@ const contact = computed(() => {
             transition: all 0.3s;
             margin-left: 1rem !important;
             scale: 0.75;
+
+            @media screen and (max-width: 768px) {
+              display: none;                
+            }
           }
 
           &:hover {
