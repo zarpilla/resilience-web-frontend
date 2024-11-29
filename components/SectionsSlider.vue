@@ -290,6 +290,7 @@ h3, h3 a {
   color: #000;
   font-size: 25px;
   line-height: 32px;
+  font-weight: 500;
 }
 
 .section-slider-carousel {

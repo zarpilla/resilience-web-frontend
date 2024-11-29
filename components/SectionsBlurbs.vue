@@ -169,7 +169,11 @@ const runtimeConfig = useRuntimeConfig();
     height: 140px !important;
   }
   h3 {
-    font-size: 50px;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 38px; /* 126.667% */
+    letter-spacing: 0.3px;
   }
 
   p {
