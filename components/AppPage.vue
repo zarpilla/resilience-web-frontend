@@ -13,7 +13,7 @@ const populate = {
   status: "published",
   locale,
 };
-console.log("props", props);
+
 const { data: pages } = await useAPI("/api/pages", {
   query: {
     "filters[slug][$eq]": props.slug,
@@ -21,8 +21,6 @@ const { data: pages } = await useAPI("/api/pages", {
     ...populate,
   },
 });
-
-console.log("pages", pages.value);
 
 const documents = pages.value as any;
 
