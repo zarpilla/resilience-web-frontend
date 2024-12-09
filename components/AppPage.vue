@@ -7,19 +7,22 @@ const props = defineProps<{
 }>();
 
 const populate = {
-  "populate[metadata][shareImage]": "*",
-  "populate[localizations]": "*",
-  "populate[sections][populate]": "*",
+  // "populate[metadata][shareImage]": "*",
+  // "populate[localizations]": "*",
+  // "populate[sections][populate]": "*",
   status: "published",
   locale,
 };
+console.log("props", props);
 const { data: pages } = await useAPI("/api/pages", {
   query: {
     "filters[slug][$eq]": props.slug,
-    "filters[type][$eq]": props.type,
+    "filters[type][$eq]": props.type,    
     ...populate,
   },
 });
+
+console.log("pages", pages.value);
 
 const documents = pages.value as any;
 
@@ -36,6 +39,8 @@ const { data: sections } = await useAPI(
 
 const sectionsData = sections.value as any;
 page.sections = sectionsData.sections;
+page.metadata = sectionsData.metadata;
+page.localizations = sectionsData.localizations;
 
 const headerStore = useHeaderStore();
 const header = computed<any>(() =>

@@ -6,9 +6,9 @@ const props = defineProps<{
 }>();
 
 const populate = {
-  "populate[localizations]": "*",
-  "populate[mainImage]": "*",
-  "populate[largeImage]": "*",
+  "populate": "*",
+  //"populate[mainImage]": "*",
+  //"populate[largeImage]": "*",
   status: "published",
   locale,
 };
