@@ -5,13 +5,13 @@ const props = defineProps<{
 }>();
 
 onMounted(() => {
+
+  const dots = ".blurb-effect-dots path, .blurb-effect-dots circle, .blurb-effect-dots ellipse, .blurb-effect-null path, .blurb-effect-null circle, .blurb-effect-null ellipse";
   // when the viewport enter at the middle of the section, get all .blur circle, .blur path and .blur ellipse and set opacity to 1 randomnly, during 5 seconds, using $gsap
-  const elements = $gsap.utils.toArray(
-    ".blurb path, .blurb circle, .blurb ellipse"
-  );
+  const elements = $gsap.utils.toArray(dots);
 
   // set elements opacity to 0.2
-  $gsap.set(".blurb path, .blurb circle, .blurb ellipse", {
+  $gsap.set(dots, {
     opacity: 0,
   });
 
@@ -32,6 +32,45 @@ onMounted(() => {
       // yoyo: true,
     });
   });
+
+
+  // scrolltrigger to animate the circleMask when .section-blurbs is in the viewport
+  $gsap.set("#circleMask,#circleMaskTWO,#circleMask3", {scale:0, transformOrigin:"center center"});
+  $gsap.set("#toBeRevealed", {scale:0, transformOrigin:"center center"});
+  
+
+  $ScrollTrigger.create({
+    trigger: ".section-blurbs",
+    start: "top bottom",
+    end: "bottom top",
+    onEnter: () => {
+      $gsap.to("#circleMask", {scale:10, transformOrigin:"center center", duration:5, ease:'power3.in'});
+      $gsap.to("#circleMaskTWO", {scale:5, transformOrigin:"40% 20%", duration:5, ease:'power3.in'});
+      $gsap.to("#circleMask3", {scale:10, transformOrigin:"47% 53%", duration:9, ease:'power3.in'});
+      $gsap.to("#toBeRevealed", {
+      scale: 1,
+      transformOrigin: "center center",
+      duration: 5,
+      ease: 'power3.in',
+      rotate: (Math.random() - 0.5) * 13
+      });
+    },
+    onLeaveBack: () => {
+      // $gsap.to("#circleMask", {scale:0, transformOrigin:"center center", duration:5, ease:'power3.in'});
+      // $gsap.to("#circleMaskTWO", {scale:0, transformOrigin:"40% 20%", duration:5, ease:'power3.in'});
+      // $gsap.to("#circleMask3", {scale:0, transformOrigin:"center center", duration:9, ease:'power3.in'});
+    },
+  });
+
+
+  
+
+  // $gsap.to("#circleMask", {scale:10, transformOrigin:"center center", duration:5, ease:'power3.in'});
+
+  // $gsap.to("#circleMaskTWO", {scale:5, transformOrigin:"40% 20%", duration:5, ease:'power3.in'});
+
+  // $gsap.to("#circleMask3", {scale:10, transformOrigin:"center center", duration:9, ease:'power3.in'});
+
 });
 
 const runtimeConfig = useRuntimeConfig();
@@ -57,8 +96,24 @@ const runtimeConfig = useRuntimeConfig();
             :alt="column.image.alternativeText"
             class="mb-3"
           /> -->
-          <div class="blurb" v-html="column.svg"></div>
-
+          
+          <div v-if="column.effect === 'grow'" class="blurb" :class="`blurb-effect-${column.effect}`">
+          <svg v-if="column.effect === 'grow'" width="137" height="142" viewBox="0 0 137 142" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+            <mask id="theMask">
+              <circle id ="circleMask3" fill="#fff" cx="68.5" cy="71" r="68.5" />
+              <!-- <ellipse id ="circleMask3" fill="#fff" cx="68.5" cy="71" rx="38.5" ry="71" /> -->
+            <!-- <path id ="circleMask" fill="#fff" d="M 25 20 Q 45 0 70 10 Q 110 20 85 50 Q 80 75 50 60 C 50 90 15 115 10 45 Z" /> -->
+            <!-- <path id ="circleMaskTWO" fill="#fff" d="M23,.06c13-1.08,26,12,27,19s0,15-11,21-39,4-39-5S11,1.06,23,.06Z" /> -->
+            </mask>
+            </defs> 
+            <g id="toBeRevealed" zmask="url(#theMask)"> 
+              <g class="z" v-html="column.svg"></g>
+            </g>
+            </svg>
+          </div>
+            <div v-else class="blurb" :class="`blurb-effect-${column.effect}`" v-html="column.svg"></div>
+            
           <h1
             v-if="column.title && column.titleHeading === 'h1'"
             v-html="column.title"
@@ -183,7 +238,7 @@ const runtimeConfig = useRuntimeConfig();
   .blurb path,
   .blurb circle,
   .blurb ellipse {
-    opacity: 0;
+    // opacity: 0;
   }
 }
 </style>
