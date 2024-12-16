@@ -485,3 +485,41 @@ a.color-text-light {
 .img-height-50 img {
     height: 50px;
 }
+
+.columns-with-text-slider .col-view {
+    position: absolute;
+    padding: 75px;    
+
+    @media screen and (max-width: 768px) {
+        padding: 30px;        
+    }
+
+    h2, h3{
+        font-size: 1.875rem!important;
+        font-style: normal;
+        font-weight: 500!important;
+
+        @media screen and (max-width: 768px) {
+            font-size: 1.2rem!important;
+        }
+    }
+}
+
+.columns-with-text-slider .text-slider {
+    position: absolute;
+    padding: 25%;
+    text-align: center;
+
+    @media screen and (max-width: 768px) {
+        padding: 80px 0px;        
+    }
+}
+// .columns-with-text-slider .text-slider:nth-child(4) {
+//     display: none;
+// }
+// .columns-with-text-slider .text-slider:nth-child(5) {
+//     display: none;
+// }
+// .columns-with-text-slider .text-slider:nth-child(6) {
+//     display: none;
+// }

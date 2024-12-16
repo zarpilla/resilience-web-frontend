@@ -30,6 +30,39 @@ onMounted(() => {
       },
     });
   }
+
+  const hasColumnsWithTextSlider = props.section.styles?.cssClass && props.section.styles?.cssClass.includes('columns-with-text-slider');   
+  const columnsWithTextSlider = document.querySelectorAll( '.columns-with-text-slider');
+  if (hasColumnsWithTextSlider && columnsWithTextSlider) {
+    const elements = document.querySelectorAll('.columns-with-text-slider .text-slider');
+    const tl = $gsap.timeline({ repeat: -1 });
+    elements.forEach((element, index) => {
+      $gsap.set(element, { opacity: 0 });
+    });
+    elements.forEach((element, index) => {
+      const nextElement = elements[index + 1] || elements[0];
+      tl.to(element, { opacity: 1, duration: 0 })
+      .to(element, { opacity: 0, duration: 1 }, "+=3")
+      .to(nextElement, { opacity: 1, duration: 1 }, "-=1");
+    });
+  }
+
+  const hasColumnsWithFixedOnScroll = props.section.columns && props.section.columns.some((column: any) => column.styles && column.styles?.cssClass && column.styles?.cssClass.includes('fixed-when-scroll')); 
+  if (hasColumnsWithFixedOnScroll) {
+    $gsap.to('.fixed-when-scroll > div', {
+      position: 'fixed',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.fixed-when-scroll > div',
+        start: 'top+=200px center',
+        end: 'bottom-=250px center',
+        endTrigger: '.fixed-when-scroll',
+        scrub: true,
+        pin: true,
+        // markers: true,
+      },
+    });
+  }
 });
 
 </script>
