@@ -179,6 +179,23 @@ onMounted(() => {
               </span>
             </h5>
             <p v-if="block.type === 'paragraph'" :class="block.css">
+              <template v-for="(child, childIndex) in block.children">
+                <span v-if="child.type === 'text'" v-html="child.text.replace(/\n/g, '<br>')"></span>
+                <template v-else-if="child.type === 'link'">
+                  
+                  <a :href="child.url" :class="child.css" class="link hoverable">
+                    <template v-for="(text, childIndex) in child.children" :key="childIndex">
+                      <span                        
+                        v-html="text.text"
+                        :class="[{ bold: text.bold }, text.css]"
+                      >
+                      </span>
+                    </template>                    
+                  </a>
+                </template>
+              </template>
+            </p>
+            <a v-if="block.type === 'link'" :href="block.url" :class="block.css">
               <span
                 v-for="(child, childIndex) in block.children"
                 :key="childIndex"
@@ -186,7 +203,7 @@ onMounted(() => {
                 :class="[{ bold: child.bold }, child.css]"
               >
               </span>
-            </p>
+            </a>
           </div>
 
           <div v-if="column.media" class="media">
@@ -266,6 +283,10 @@ onMounted(() => {
   > div{
     width: calc(33% - 10px);    
   }
+}
+.link{
+  text-decoration: underline;
+  color: #000;
 }
 </style>
 
