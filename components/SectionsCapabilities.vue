@@ -198,6 +198,27 @@ onMounted(() => {
                     {{ item.description }}
                   </div>
                 </div>
+                <div v-if="item.page" class="mb-4 text-end">
+                  <MetaLink
+                    :page="item.page"                    
+                    css-class="hoverable">
+                  
+                    <svg
+                    class="arrow"
+                    width="52"
+                    height="52"
+                    viewBox="0 0 52 52"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M47.6586 27.0544H0.316895V24.9461H47.6586L24.5627 1.85023L26.0002 0.316895L51.6836 26.0002L26.0002 51.6836L24.5627 50.1502L47.6586 27.0544Z"
+                      fill="#1C1B1F"
+                    />
+                  </svg>
+
+                  </MetaLink>
+                </div>                
               </div>
             </div>
           </div>

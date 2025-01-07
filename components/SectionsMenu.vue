@@ -154,9 +154,10 @@ const mouseEnter = (item: any) => {
       if (!document.getElementById(id)) {
         const img = document.createElement("img");
         img.id = `section-menu-tags-cloud-${props.section.id}-image-${item.page.id}`;
-        const url = item.page.metadata.shareImage.formats ? item.page.metadata.shareImage.formats.small.url : item.page.metadata.shareImage.url;
-        img.src =
-          runtimeConfig.public.apiBase + url;
+        const url = item.page.metadata.shareImage.formats
+          ? item.page.metadata.shareImage.formats.small.url
+          : item.page.metadata.shareImage.url;
+        img.src = runtimeConfig.public.apiBase + url;
         img.alt = item.page.metadata.shareImage.altertativeText;
         img.classList.add("active-image");
         placeholder.appendChild(img);
@@ -183,13 +184,44 @@ const mouseLeave = (item: any) => {
     const randomBetween800And1200 = Math.floor(
       Math.random() * (1200 - 800) + 800
     );
-    if (img) {      
+    if (img) {
       setTimeout(() => {
         img.remove();
       }, randomBetween800And1200);
     }
   }
 };
+
+const route = useRoute();
+
+const currentPageFromMenu = computed(() => {
+  const slugFromUrl = route.params.slug;
+  return props.section.menu.children.find(
+    (menu: any) => menu.page && menu.page.slug === slugFromUrl
+  );
+});
+
+const previousPageFromMenu = computed(() => {
+  const index = props.section.menu.children.findIndex(
+    (menu: any) => menu.page && menu.page.slug === route.params.slug
+  );
+  // if the index is 0, return the last element
+  if (index === 0) {
+    return props.section.menu.children[props.section.menu.children.length - 1];
+  }
+  return props.section.menu.children[index - 1];
+});
+
+const nextPageFromMenu = computed(() => {
+  const index = props.section.menu.children.findIndex(
+    (menu: any) => menu.page && menu.page.slug === route.params.slug
+  );
+  // if the index is the last element, return the first element
+  if (index === props.section.menu.children.length - 1) {
+    return props.section.menu.children[0];
+  }
+  return props.section.menu.children[index + 1];
+});
 
 onMounted(() => {
   // const script = document.createElement("script");
@@ -378,6 +410,99 @@ onUnmounted(() => {
         </li>
       </ul>
     </div>
+    <div
+      class="marquee"
+      v-else-if="
+        section.menu &&
+        section.menu.children &&
+        section.menu.children.length &&
+        section.preset === 'navigation-arrows'
+      "
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-3 col-md-2">
+            <MetaLink
+              v-if="previousPageFromMenu"
+              :page="previousPageFromMenu.page"
+              css-class="menu-item"
+            >
+              <svg
+                width="92"
+                height="95"
+                viewBox="0 0 92 95"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <mask
+                  id="mask0_864_2892"
+                  style="mask-type: alpha"
+                  maskUnits="userSpaceOnUse"
+                  x="0"
+                  y="0"
+                  width="92"
+                  height="95"
+                >
+                  <rect
+                    width="92"
+                    height="93.4931"
+                    transform="matrix(-1 0 0 1 92 0.753418)"
+                    fill="#D9D9D9"
+                  />
+                </mask>
+                <g mask="url(#mask0_864_2892)">
+                  <path
+                    d="M24.3419 48.5712H71.6836V46.4287H24.3419L47.4378 22.958L46.0003 21.3998L20.3169 47.4999L46.0003 73.6001L47.4378 72.0419L24.3419 48.5712Z"
+                    fill="#1C1B1F"
+                  />
+                </g>
+              </svg>
+            </MetaLink>
+          </div>
+          <div class="col-6 col-md-8 text-center">
+            <h3 class="explora">{{ section.alias }}</h3>
+          </div>
+          <div class="col-3 col-md-2">
+            <MetaLink
+              v-if="nextPageFromMenu"
+              :page="nextPageFromMenu.page"
+              css-class="menu-item"
+            >
+              <svg
+                width="92"
+                height="95"
+                viewBox="0 0 92 95"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <mask
+                  id="mask0_864_2888"
+                  style="mask-type: alpha"
+                  maskUnits="userSpaceOnUse"
+                  x="0"
+                  y="0"
+                  width="92"
+                  height="95"
+                >
+                  <rect
+                    y="0.753418"
+                    width="92"
+                    height="93.4931"
+                    fill="#D9D9D9"
+                  />
+                </mask>
+                <g mask="url(#mask0_864_2888)">
+                  <path
+                    d="M67.6581 48.5712H20.3164V46.4287H67.6581L44.5622 22.958L45.9997 21.3998L71.6831 47.4999L45.9997 73.6001L44.5622 72.0419L67.6581 48.5712Z"
+                    fill="#1C1B1F"
+                  />
+                </g>
+              </svg>
+            </MetaLink>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <style lang="scss">
@@ -502,6 +627,16 @@ onUnmounted(() => {
     visibility: hidden;
     border-radius: 20px;
     pointer-events: none;
+  }
+
+  .explora {
+    font-weight: 500;
+    line-height: 95px;
+
+    @media screen and (max-width: 768px) {
+      line-height: 50px;
+      
+    }
   }
 }
 </style>

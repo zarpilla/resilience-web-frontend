@@ -180,9 +180,8 @@ onMounted(() => {
             </h5>
             <p v-if="block.type === 'paragraph'" :class="block.css">
               <template v-for="(child, childIndex) in block.children">
-                <span v-if="child.type === 'text'" v-html="child.text.replace(/\n/g, '<br>')"></span>
-                <template v-else-if="child.type === 'link'">
-                  
+                <span :class="[{ bold: child.bold }, child.css]" v-if="child.type === 'text'" v-html="child.text.replace(/\n/g, '<br>')"></span>
+                <template v-else-if="child.type === 'link'">                  
                   <a :href="child.url" :class="child.css" class="link hoverable">
                     <template v-for="(text, childIndex) in child.children" :key="childIndex">
                       <span                        
@@ -202,7 +201,7 @@ onMounted(() => {
                 v-html="child.text"
                 :class="[{ bold: child.bold }, child.css]"
               >
-              </span>
+              </span>            
             </a>
           </div>
 

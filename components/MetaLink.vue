@@ -30,6 +30,7 @@ const pageTo = computed(() => {
     class="hoverable"
     :class="`${cssClass ? cssClass : 'n-link'} ${cta ? 'button button--stroke' : ''}`"
     :data-block="cta ? 'button' : null"
+    :title="page.name"
     @click="onClick"
   >
     <span v-if="cta" class="button__flair"></span>
