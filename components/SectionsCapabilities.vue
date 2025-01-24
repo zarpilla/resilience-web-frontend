@@ -59,6 +59,9 @@ onMounted(() => {
             v-if="section.subtitle"
             v-html="section.subtitle"
           ></h3>
+          <div v-if="section.description" class="capabilities-description">
+            <MetaText :text="section.description" styles="" />
+          </div>
         </div>
         <div class="col-12 col-md-6">
           <div class="bio-list">

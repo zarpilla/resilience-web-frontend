@@ -24,6 +24,33 @@ const emitClose = () => {
 const contact = computed(() => {
   return header.value.value?.contact?.replace(/\n/g, "<br>");
 });
+
+const { $bs } = useNuxtApp() as any;
+
+const expanded = ref<boolean[]>(
+  header?.value.value.mainMenu?.children.map(() => false)
+);
+
+onMounted(() => {
+  try {
+    var collapseElementList = [].slice.call(
+      document.querySelectorAll(".toogle-menu .collapse")
+    );
+
+    var collapseList = collapseElementList.map((el: any, i) => {
+      const collapsible = new $bs.Collapse(el, { toggle: false });
+      el.addEventListener("show.bs.collapse", function () {
+        expanded.value[i] = true;
+      });
+      el.addEventListener("hide.bs.collapse", function () {
+        expanded.value[i] = false;
+      });
+      return collapsible;
+    });
+  } catch (e) {
+    console.log("Bootstrap error: ", e);
+  }
+});
 </script>
 <template>
   <div class="full-page-menu">
@@ -58,7 +85,26 @@ const contact = computed(() => {
                 :key="index"
               >
                 <h2>
+                  <a
+                    class="toogle-menu hoverable"
+                    data-bs-toggle="collapse"
+                    :href="`#collapse-menu-${item.id}`"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                    v-if="
+                      item.submenu &&
+                      item.submenu.children &&
+                      item.submenu.children.length
+                    "
+                  >
+                    <span class="item">
+                      {{ item.page?.name || item.title }}</span
+                    >
+                  </a>
+
                   <MetaLink
+                    v-else
                     :page="item.page"
                     :text="item.page?.name || item.title"
                     :target="item.target"
@@ -82,37 +128,39 @@ const contact = computed(() => {
                   </svg>
                 </h2>
 
-                <ul
-                  class="second-level d-flex flex-wrap d-none d-md-flex"
+                <div
+                  class="collapse"
+                  :id="`collapse-menu-${item.id}`"
                   v-if="
                     item.submenu &&
                     item.submenu.children &&
                     item.submenu.children.length
                   "
                 >
-                  <li
-                    v-for="(subitem, index) in item.submenu.children"
-                    :key="index"
-                    class="second-level"
-                  >
-                    <h3>
-                      <MetaLink
-                        :page="subitem.page"
-                        :text="subitem.page?.name || subitem.title"
-                        :target="subitem.target"
-                        :href="subitem.href"
-                        css-class="item"
-                        :on-click="emitClose"
-                      />
-                    </h3>
-                    <span
-                      class="separator"
-                      v-if="index < item.submenu.children.length - 1"
-                      >/
-                    </span>
-                  </li>
-                </ul>
-                <ul
+                  <ul class="second-level d-flex flex-wrap d-none d-md-flex">
+                    <li
+                      v-for="(subitem, index) in item.submenu.children"
+                      :key="index"
+                      class="second-level"
+                    >
+                      <h3>
+                        <MetaLink
+                          :page="subitem.page"
+                          :text="subitem.page?.name || subitem.title"
+                          :target="subitem.target"
+                          :href="subitem.href"
+                          css-class="item"
+                          :on-click="emitClose"
+                        />
+                      </h3>
+                      <span
+                        class="separator"
+                        v-if="index < item.submenu.children.length - 1"
+                        >/
+                      </span>
+                    </li>
+                  </ul>
+                  <!-- <ul
                   v-else-if="item.children"
                   class="second-level"
                   v-if="item.children.length"
@@ -138,7 +186,8 @@ const contact = computed(() => {
                       >/
                     </span>
                   </li>
-                </ul>
+                </ul> -->
+                </div>
               </li>
             </ul>
           </div>
@@ -275,7 +324,7 @@ const contact = computed(() => {
             scale: 0.75;
 
             @media screen and (max-width: 768px) {
-              display: none;                
+              display: none;
             }
           }
 

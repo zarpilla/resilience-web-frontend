@@ -143,13 +143,33 @@ const activeImages = ref<string[]>([]);
 
 const runtimeConfig = useRuntimeConfig();
 
-const mouseEnter = (item: any) => {
+
+const getRandomYPositionInViewportExcludingTheParameters = (top: number, bottom: number) => {
+  const y = Math.random() * window.innerHeight;
+  console.log("y", y, "top", top, "bottom", bottom);
+  if (y > top && y < bottom) {
+    return getRandomYPositionInViewportExcludingTheParameters(top, bottom);
+  }
+  return y;  
+};
+
+const mouseEnter = (event: any, item: any) => {
   if (item.page && item.page.metadata && item.page.metadata.shareImage) {
     // create an image in the section-menu-tags-cloud-${section.id}-placeholder
     const placeholder = document.getElementById(
       `section-menu-tags-cloud-${props.section.id}-placeholder`
     );
+
     if (placeholder) {
+
+      const sectionItemsId = `section-menu-${props.section.id}`;
+      const section = document.getElementById(sectionItemsId);
+      if (!section) {
+        return;
+      }
+      
+      const sectionRect = section.getBoundingClientRect();
+
       const id = `section-menu-tags-cloud-${props.section.id}-image-${item.page.id}`;
       if (!document.getElementById(id)) {
         const img = document.createElement("img");
@@ -162,10 +182,17 @@ const mouseEnter = (item: any) => {
         img.classList.add("active-image");
         placeholder.appendChild(img);
 
+        const placeholderRect = placeholder.getBoundingClientRect();
+
+        // random y position between the 0 and the bottom but excluding the y - 200px and y + 200px
+        const top = getRandomYPositionInViewportExcludingTheParameters (sectionRect.y, sectionRect.height + sectionRect.y);
+
         // random position between -40vh and 40vh, and 0 and 40vw
-        img.style.top = `${Math.random() * 60 - 30}vh`;
+        img.style.top = `${top - placeholderRect.top}px`;
         img.style.left = `${Math.random() * 40}vw`;
         console.log("top", img.style.top, "left", img.style.left);
+
+        activeImages.value.push(id);
 
         setTimeout(() => {
           img.style.opacity = "1";
@@ -188,6 +215,15 @@ const mouseLeave = (item: any) => {
       setTimeout(() => {
         img.remove();
       }, randomBetween800And1200);
+
+      // if there are more than 2 activeImages, remove the first one
+      if (activeImages.value.length > 1) {
+        const first = activeImages.value.shift();
+        const firstImg = document.getElementById(first as string);
+        if (firstImg) {
+          firstImg.remove();
+        }
+      }
     }
   }
 };
@@ -341,7 +377,7 @@ onUnmounted(() => {
             v-for="(item, menuIndex) in section.menu.children"
             :key="menuIndex"
             class="item-col zme-5"
-            @mouseenter="mouseEnter(item)"
+            @mouseenter="mouseEnter($event, item)"
             @mouseleave="mouseLeave(item)"
           >
             <MetaLink
@@ -462,7 +498,7 @@ onUnmounted(() => {
           <div class="col-6 col-md-8 text-center">
             <h3 class="explora">{{ section.alias }}</h3>
           </div>
-          <div class="col-3 col-md-2">
+          <div class="col-3 col-md-2 text-right">
             <MetaLink
               v-if="nextPageFromMenu"
               :page="nextPageFromMenu.page"
