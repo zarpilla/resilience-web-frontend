@@ -217,11 +217,5 @@ const runtimeConfig = useRuntimeConfig();
   p {
     font-size: 21px;
   }
-
-  .blurb path,
-  .blurb circle,
-  .blurb ellipse {
-    // opacity: 0;
-  }
 }
 </style>

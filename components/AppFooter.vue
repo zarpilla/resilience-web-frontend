@@ -85,16 +85,16 @@ const footer = computed(() =>
                 ></AppSubscription>
               </div>
             </div>
-            <div class="col-12 col-md-3 text-center text-md-end py-5 bl-white">
+            <div class="col-12 col-md-3 text-center text-md-start py-5 ps-5 pe-0 bl-white">
               <div>
                 <div class="text-title pb-4">
                   {{ footer?.value.middle3Title }}
                 </div>
-                <div class="main-text">
+                <div class="main-text d-flex flex-wrap media-logos-footer-wrapper">
                   <div
                     v-for="(logo, index) in footer?.value.middle3Logos"
                     :key="index"
-                    class="mb-5"
+                    class="w-50 mb-5 pe-4 media-logos-footer"
                   >
                     <a :href="logo.href" target="_blank" class="n-link">
                       <MetaMedia
@@ -236,5 +236,37 @@ footer {
       border-bottom: 0;
     }
   }
+
+  .media-logos-footer-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .media-logos-footer a img{
+    display: table-cell;
+    vertical-align: middle;
+  }
 }
+</style>
+<style lang="scss">
+  .media-logos-footer-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+    height: 80px;
+  }
+  .media-logos-footer a img{
+    display: table-cell;
+    vertical-align: middle;
+    height: 80px;
+  }
+  .media-logos-footer a{
+    display: table-cell;
+    vertical-align: middle;
+    height: 80px;
+  }
+  .media-logos-footer{
+    display: table-cell;
+    vertical-align: middle;
+    height: 80px;
+  }
+
 </style>

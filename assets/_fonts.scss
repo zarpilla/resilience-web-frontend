@@ -3,40 +3,51 @@
     font-weight: bold;
     src: url("/fonts/PPNeueMontreal-Bold.otf") format("opentype");
 }
+
 @font-face {
     font-family: "PP Neue Montreal";
     font-weight: 700;
-    src: url("/fonts/PPNeueMontreal-Bold.otf") format("opentype");
+    src: url("/fonts/PPNeueMontreal-Bold.woff2") format("woff2"),
+        url("/fonts/PPNeueMontreal-Bold.woff") format("woff"),
+        url("/fonts/PPNeueMontreal-Bold.ttf") format("truetype"),
+        url("/fonts/PPNeueMontreal-Bold.otf") format("opentype");
 }
+
 @font-face {
     font-family: "PP Neue Montreal";
     font-weight: 600;
-    src: url("/fonts/PPNeueMontreal-Medium.otf") format("opentype");
+    src: url("/fonts/PPNeueMontreal-SemiBold.woff2") format("woff2"),
+        url("/fonts/PPNeueMontreal-SemiBold.woff") format("woff"),
+        url("/fonts/PPNeueMontreal-SemiBold.ttf") format("truetype"),
+        url("/fonts/PPNeueMontreal-SemiBold.otf") format("opentype");
 }
+
 @font-face {
     font-family: "PP Neue Montreal";
-    font-weight: 500;
-    src: url("/fonts/PPNeueMontreal-Medium.otf") format("opentype");
+    font-weight: 500, normal;
+    src: url('/fonts/PPNeueMontreal-Medium.woff2') format('woff2'),
+        url('/fonts/PPNeueMontreal-Medium.woff') format('woff'),
+        url('/fonts/PPNeueMontreal-Medium.ttf') format('truetype'),
+        url('/fonts/PPNeueMontreal-Medium.otf') format('opentype');
 }
+
 @font-face {
-    font-family: "PP Neue Montreal";    
+    font-family: "PP Neue Montreal";
     font-weight: 400;
-    src: url("/fonts/PPNeueMontreal-Book.otf") format("opentype");
+    src: url("/fonts/PPNeueMontreal-Book.woff2") format("woff2"),
+        url("/fonts/PPNeueMontreal-Book.woff") format("woff"),
+        url("/fonts/PPNeueMontreal-Book.ttf") format("truetype"),
+        url("/fonts/PPNeueMontreal-Book.otf") format("opentype");
 }
+
 @font-face {
-    font-family: "PP Neue Montreal";    
-    font-weight: 300;
-    src: url("/fonts/PPNeueMontreal-Thin.otf") format("opentype");
+    font-family: "Queens";
+    font-weight: 400, 500;
+    src: url('/fonts/Queens_W-Regular.woff2') format('woff2'),
+        url("/fonts/Queens_W-Regular.woff") format("woff");
 }
-@font-face {
-    font-family: "PP Neue Montreal";    
-    font-weight: 200;
-    src: url("/fonts/PPNeueMontreal-Thin.otf") format("opentype");
-}
-// @font-face {
-//     font-family: "PP Neue Montreal";    
-//     src: url("/fonts/PPNeueMontreal-Book.otf") format("opentype");
-// }
+
+
 
 body {
     font-family: "PP Neue Montreal", sans-serif;
@@ -46,7 +57,11 @@ body {
     color: #333;
     cursor: none !important;
 
-    a{
+    a {
         cursor: none !important;
+    }
+
+    cite {
+        font-family: "Queens";
     }
 }

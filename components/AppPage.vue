@@ -143,6 +143,11 @@ onBeforeUnmount(() => {
             :section="section"
           >
           </SectionsBlog>
+          <SectionsMasonry
+            v-else-if="section.__component === 'sections.masonry'"
+            :section="section"
+          >
+          </SectionsMasonry>
           <SectionsCapabilities
             v-else-if="section.__component === 'sections.capabilities'"
             :section="section"

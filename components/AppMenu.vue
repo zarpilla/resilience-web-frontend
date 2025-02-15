@@ -101,31 +101,51 @@ onMounted(() => {
                     <span class="item">
                       {{ item.page?.name || item.title }}</span
                     >
+
+                    <svg class="arrow" width="74" height="74" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <mask id="mask0_1236_18974" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="75" height="74">
+    <rect x="0.339844" y="73.6724" width="73.6672" height="73.6699" transform="rotate(-90 0.339844 73.6724)" fill="#D9D9D9"/>
+  </mask>
+  <g mask="url(#mask0_1236_18974)">
+    <path d="M38.0197 19.4959L38.0197 57.4038L36.3314 57.4038L36.3314 19.4959L17.8372 37.9894L16.6094 36.8384L37.1756 16.273L57.7418 36.8384L56.5139 37.9894L38.0197 19.4959Z" fill="black"/>
+    <path d="M38.0197 19.4959L38.0197 57.4038L36.3314 57.4038L36.3314 19.4959L17.8372 37.9894L16.6094 36.8384L37.1756 16.273L57.7418 36.8384L56.5139 37.9894L38.0197 19.4959Z" fill="black" fill-opacity="0.2"/>
+    <path d="M38.0197 19.4959L38.0197 57.4038L36.3314 57.4038L36.3314 19.4959L17.8372 37.9894L16.6094 36.8384L37.1756 16.273L57.7418 36.8384L56.5139 37.9894L38.0197 19.4959Z" fill="black" fill-opacity="0.2"/>
+    <path d="M38.0197 19.4959L38.0197 57.4038L36.3314 57.4038L36.3314 19.4959L17.8372 37.9894L16.6094 36.8384L37.1756 16.273L57.7418 36.8384L56.5139 37.9894L38.0197 19.4959Z" fill="black" fill-opacity="0.2"/>
+    <path d="M38.0197 19.4959L38.0197 57.4038L36.3314 57.4038L36.3314 19.4959L17.8372 37.9894L16.6094 36.8384L37.1756 16.273L57.7418 36.8384L56.5139 37.9894L38.0197 19.4959Z" fill="black" fill-opacity="0.2"/>
+    <path d="M38.0197 19.4959L38.0197 57.4038L36.3314 57.4038L36.3314 19.4959L17.8372 37.9894L16.6094 36.8384L37.1756 16.273L57.7418 36.8384L56.5139 37.9894L38.0197 19.4959Z" fill="black" fill-opacity="0.2"/>
+    <path d="M38.0197 19.4959L38.0197 57.4038L36.3314 57.4038L36.3314 19.4959L17.8372 37.9894L16.6094 36.8384L37.1756 16.273L57.7418 36.8384L56.5139 37.9894L38.0197 19.4959Z" fill="black" fill-opacity="0.2"/>
+  </g>
+</svg>
                   </a>
 
                   <MetaLink
                     v-else
-                    :page="item.page"
-                    :text="item.page?.name || item.title"
+                    :page="item.page"                    
                     :target="item.target"
                     :href="item.href"
                     css-class="item"
                     :on-click="emitClose"
-                  />
-
-                  <svg
-                    class="arrow"
-                    width="52"
-                    height="52"
-                    viewBox="0 0 52 52"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <path
-                      d="M47.6586 27.0544H0.316895V24.9461H47.6586L24.5627 1.85023L26.0002 0.316895L51.6836 26.0002L26.0002 51.6836L24.5627 50.1502L47.6586 27.0544Z"
-                      fill="#1C1B1F"
-                    />
-                  </svg>
+                  <span>{{ item.page?.name || item.title }}</span>
+
+                  <svg class="arrow-right" width="74" height="74" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <mask id="mask0_1236_18974" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="75" height="74">
+    <rect x="0.339844" y="73.6724" width="73.6672" height="73.6699" transform="rotate(-90 0.339844 73.6724)" fill="#D9D9D9"/>
+  </mask>
+  <g mask="url(#mask0_1236_18974)">
+    <path d="M38.0197 19.4959L38.0197 57.4038L36.3314 57.4038L36.3314 19.4959L17.8372 37.9894L16.6094 36.8384L37.1756 16.273L57.7418 36.8384L56.5139 37.9894L38.0197 19.4959Z" fill="black"/>
+    <path d="M38.0197 19.4959L38.0197 57.4038L36.3314 57.4038L36.3314 19.4959L17.8372 37.9894L16.6094 36.8384L37.1756 16.273L57.7418 36.8384L56.5139 37.9894L38.0197 19.4959Z" fill="black" fill-opacity="0.2"/>
+    <path d="M38.0197 19.4959L38.0197 57.4038L36.3314 57.4038L36.3314 19.4959L17.8372 37.9894L16.6094 36.8384L37.1756 16.273L57.7418 36.8384L56.5139 37.9894L38.0197 19.4959Z" fill="black" fill-opacity="0.2"/>
+    <path d="M38.0197 19.4959L38.0197 57.4038L36.3314 57.4038L36.3314 19.4959L17.8372 37.9894L16.6094 36.8384L37.1756 16.273L57.7418 36.8384L56.5139 37.9894L38.0197 19.4959Z" fill="black" fill-opacity="0.2"/>
+    <path d="M38.0197 19.4959L38.0197 57.4038L36.3314 57.4038L36.3314 19.4959L17.8372 37.9894L16.6094 36.8384L37.1756 16.273L57.7418 36.8384L56.5139 37.9894L38.0197 19.4959Z" fill="black" fill-opacity="0.2"/>
+    <path d="M38.0197 19.4959L38.0197 57.4038L36.3314 57.4038L36.3314 19.4959L17.8372 37.9894L16.6094 36.8384L37.1756 16.273L57.7418 36.8384L56.5139 37.9894L38.0197 19.4959Z" fill="black" fill-opacity="0.2"/>
+    <path d="M38.0197 19.4959L38.0197 57.4038L36.3314 57.4038L36.3314 19.4959L17.8372 37.9894L16.6094 36.8384L37.1756 16.273L57.7418 36.8384L56.5139 37.9894L38.0197 19.4959Z" fill="black" fill-opacity="0.2"/>
+  </g>
+</svg>
+
+                  </MetaLink>
+
+                  
                 </h2>
 
                 <div
@@ -137,7 +157,7 @@ onMounted(() => {
                     item.submenu.children.length
                   "
                 >
-                  <ul class="second-level d-flex flex-wrap d-none d-md-flex">
+                  <ul class="second-level d-flex flex-wrap d-flex d-md-flex">
                     <li
                       v-for="(subitem, index) in item.submenu.children"
                       :key="index"
@@ -310,7 +330,7 @@ onMounted(() => {
         border-bottom: 1px solid #000;
         padding: 15px 0;
         @media screen and (max-width: 768px) {
-          padding: 10px 0;
+          padding: 16px 0;
         }
 
         h2 {
@@ -321,16 +341,37 @@ onMounted(() => {
             opacity: 0;
             transition: all 0.3s;
             margin-left: 1rem !important;
-            scale: 0.75;
+            margin-bottom: 1rem;
 
             @media screen and (max-width: 768px) {
               display: none;
             }
           }
 
+          .arrow-right {
+            opacity: 0;
+            transition: all 0.3s;
+            transform: rotate(90deg);
+            margin-left: 1rem !important;            
+            @media screen and (max-width: 768px) {
+              display: none;
+            }
+          }
+
+          .collapsed {
+            .arrow {
+              transform: rotate(180deg);
+            }
+          }
+
           &:hover {
             .arrow {
               opacity: 1;
+              margin-left: 2rem !important;
+            }
+            .arrow-right {
+              opacity: 1;
+              transform: rotate(90deg);
               margin-left: 2rem !important;
             }
           }
@@ -358,6 +399,9 @@ onMounted(() => {
       margin-top: 15px;
       padding: 0;
       width: 80%;
+      @media screen and (max-width: 768px) {
+        width: 100%;        
+      }
     }
 
     h3 {

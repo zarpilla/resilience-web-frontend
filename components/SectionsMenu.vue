@@ -146,7 +146,6 @@ const runtimeConfig = useRuntimeConfig();
 
 const getRandomYPositionInViewportExcludingTheParameters = (top: number, bottom: number) => {
   const y = Math.random() * window.innerHeight;
-  console.log("y", y, "top", top, "bottom", bottom);
   if (y > top && y < bottom) {
     return getRandomYPositionInViewportExcludingTheParameters(top, bottom);
   }
@@ -178,26 +177,39 @@ const mouseEnter = (event: any, item: any) => {
           ? item.page.metadata.shareImage.formats.small.url
           : item.page.metadata.shareImage.url;
         img.src = runtimeConfig.public.apiBase + url;
-        img.alt = item.page.metadata.shareImage.altertativeText;
+        img.alt = item.page.metadata.shareImage.altertativeText || item.page.name;
         img.classList.add("active-image");
         placeholder.appendChild(img);
 
-        const placeholderRect = placeholder.getBoundingClientRect();
+        //const placeholderRect = placeholder.getBoundingClientRect();
 
         // random y position between the 0 and the bottom but excluding the y - 200px and y + 200px
-        const top = getRandomYPositionInViewportExcludingTheParameters (sectionRect.y, sectionRect.height + sectionRect.y);
+        // const top = getRandomYPositionInViewportExcludingTheParameters (sectionRect.y, sectionRect.height + sectionRect.y);
 
         // random position between -40vh and 40vh, and 0 and 40vw
-        img.style.top = `${top - placeholderRect.top}px`;
-        img.style.left = `${Math.random() * 40}vw`;
-        console.log("top", img.style.top, "left", img.style.left);
+        // img.style.top = `${top - placeholderRect.top}px`;
+        // img.style.left = `${Math.random() * 40}vw`;
+        // console.log("top", img.style.top, "left", img.style.left);
+
+        if (activeImages.value.length > 0) {
+          const first = activeImages.value.shift();
+          const firstImg = document.getElementById(first as string);
+          if (firstImg) {
+            firstImg.remove();
+          }
+        }
 
         activeImages.value.push(id);
 
-        setTimeout(() => {
-          img.style.opacity = "1";
-          img.style.visibility = "visible";
-        }, 100);
+        // set opacity from 0 to 1 in 1 scond
+        $gsap.set(img, { opacity: 0 });
+        $gsap.to(img, { opacity: 1, duration: 0.5 });
+
+
+        // setTimeout(() => {
+        //   img.style.opacity = "1";
+        //   img.style.visibility = "visible";
+        // }, 100);
       }
     }
   }
@@ -212,9 +224,14 @@ const mouseLeave = (item: any) => {
       Math.random() * (1200 - 800) + 800
     );
     if (img) {
-      setTimeout(() => {
-        img.remove();
-      }, randomBetween800And1200);
+      // setTimeout(() => {
+      //   img.remove();
+      // }, randomBetween800And1200);
+
+      // $gsap.to(img, { opacity: 0, duration: 0.5 }).then(() => {
+      //   img.remove();
+      // });
+
 
       // if there are more than 2 activeImages, remove the first one
       if (activeImages.value.length > 1) {
@@ -373,6 +390,7 @@ onUnmounted(() => {
           "
           class="d-flex section-menu-tags-cloud flex-wrap position-relative"
         >
+          <div class="section-menu-tags-cloud-placeholder" :id="`section-menu-tags-cloud-${section.id}-placeholder`"></div>
           <div
             v-for="(item, menuIndex) in section.menu.children"
             :key="menuIndex"
@@ -393,7 +411,7 @@ onUnmounted(() => {
               >/</span
             >
           </div>
-          <div :id="`section-menu-tags-cloud-${section.id}-placeholder`"></div>
+          
         </div>
       </div>
     </div>
@@ -541,7 +559,7 @@ onUnmounted(() => {
     </div>
   </div>
 </template>
-<style lang="scss">
+<style scoped lang="scss" >
 .section-menu {
   background-size: cover;
 
@@ -654,15 +672,10 @@ onUnmounted(() => {
     }
   }
 
-  .active-image {
-    width: 280px;
-    height: auto;
+  .section-menu-tags-cloud-placeholder{
     position: absolute;
-    z-index: 20;
-    opacity: 0;
-    visibility: hidden;
-    border-radius: 20px;
-    pointer-events: none;
+    top: -350px;
+    right: 10%;    
   }
 
   .explora {
