@@ -13,6 +13,10 @@ body {
     overflow-y: visible;
     position: relative;
     height: unset;
+
+    a{
+        text-decoration: none;
+    }
 }
 
 html,
@@ -571,4 +575,13 @@ img.active-image {
     @media screen and (max-width: 768px) {
         display: none;
     }
+}
+.page-type-scope .main-content {
+    @media screen and (min-width: 769px) {
+        padding-top: 150px;
+    }
+}
+
+a.bio-link .bio-title{
+    text-decoration: none!important;
 }

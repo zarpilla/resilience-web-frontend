@@ -143,13 +143,15 @@ const activeImages = ref<string[]>([]);
 
 const runtimeConfig = useRuntimeConfig();
 
-
-const getRandomYPositionInViewportExcludingTheParameters = (top: number, bottom: number) => {
+const getRandomYPositionInViewportExcludingTheParameters = (
+  top: number,
+  bottom: number
+) => {
   const y = Math.random() * window.innerHeight;
   if (y > top && y < bottom) {
     return getRandomYPositionInViewportExcludingTheParameters(top, bottom);
   }
-  return y;  
+  return y;
 };
 
 const mouseEnter = (event: any, item: any) => {
@@ -160,13 +162,12 @@ const mouseEnter = (event: any, item: any) => {
     );
 
     if (placeholder) {
-
       const sectionItemsId = `section-menu-${props.section.id}`;
       const section = document.getElementById(sectionItemsId);
       if (!section) {
         return;
       }
-      
+
       const sectionRect = section.getBoundingClientRect();
 
       const id = `section-menu-tags-cloud-${props.section.id}-image-${item.page.id}`;
@@ -177,7 +178,8 @@ const mouseEnter = (event: any, item: any) => {
           ? item.page.metadata.shareImage.formats.small.url
           : item.page.metadata.shareImage.url;
         img.src = runtimeConfig.public.apiBase + url;
-        img.alt = item.page.metadata.shareImage.altertativeText || item.page.name;
+        img.alt =
+          item.page.metadata.shareImage.altertativeText || item.page.name;
         img.classList.add("active-image");
         placeholder.appendChild(img);
 
@@ -205,7 +207,6 @@ const mouseEnter = (event: any, item: any) => {
         $gsap.set(img, { opacity: 0 });
         $gsap.to(img, { opacity: 1, duration: 0.5 });
 
-
         // setTimeout(() => {
         //   img.style.opacity = "1";
         //   img.style.visibility = "visible";
@@ -231,7 +232,6 @@ const mouseLeave = (item: any) => {
       // $gsap.to(img, { opacity: 0, duration: 0.5 }).then(() => {
       //   img.remove();
       // });
-
 
       // if there are more than 2 activeImages, remove the first one
       if (activeImages.value.length > 1) {
@@ -390,7 +390,10 @@ onUnmounted(() => {
           "
           class="d-flex section-menu-tags-cloud flex-wrap position-relative"
         >
-          <div class="section-menu-tags-cloud-placeholder" :id="`section-menu-tags-cloud-${section.id}-placeholder`"></div>
+          <div
+            class="section-menu-tags-cloud-placeholder"
+            :id="`section-menu-tags-cloud-${section.id}-placeholder`"
+          ></div>
           <div
             v-for="(item, menuIndex) in section.menu.children"
             :key="menuIndex"
@@ -411,7 +414,6 @@ onUnmounted(() => {
               >/</span
             >
           </div>
-          
         </div>
       </div>
     </div>
@@ -426,7 +428,11 @@ onUnmounted(() => {
     >
       <ul class="marquee__inner">
         <li
-          v-for="(item, menuIndex) in section.menu.children"
+          v-for="(item, menuIndex) in section.menu.children
+            .concat(section.menu.children)
+            .concat(section.menu.children)
+            .concat(section.menu.children)
+            .concat(section.menu.children)"
           :key="menuIndex"
           class="marquee__item"
           :class="{ marquee__item__image: item.image !== null }"
@@ -465,7 +471,7 @@ onUnmounted(() => {
       </ul>
     </div>
     <div
-      class="marquee"
+      class="navigation-arrows"
       v-else-if="
         section.menu &&
         section.menu.children &&
@@ -475,79 +481,83 @@ onUnmounted(() => {
     >
       <div class="container">
         <div class="row">
-          <div class="col-3 col-md-2">
+          <div class="col-6 col-md-6">
             <MetaLink
               v-if="previousPageFromMenu"
               :page="previousPageFromMenu.page"
               css-class="menu-item"
             >
               <svg
-                width="92"
-                height="95"
-                viewBox="0 0 92 95"
+              class="me-2"
+                width="25"
+                height="24"
+                viewBox="0 0 25 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <mask
-                  id="mask0_864_2892"
+                  id="mask0_1087_11205"
                   style="mask-type: alpha"
                   maskUnits="userSpaceOnUse"
                   x="0"
-                  y="0"
-                  width="92"
-                  height="95"
+                  y="-1"
+                  width="25"
+                  height="25"
                 >
                   <rect
-                    width="92"
-                    height="93.4931"
-                    transform="matrix(-1 0 0 1 92 0.753418)"
+                    x="24.8914"
+                    y="23.9995"
+                    width="24"
+                    height="24"
+                    transform="rotate(-180 24.8914 23.9995)"
                     fill="#D9D9D9"
                   />
                 </mask>
-                <g mask="url(#mask0_864_2892)">
+                <g mask="url(#mask0_1087_11205)">
                   <path
-                    d="M24.3419 48.5712H71.6836V46.4287H24.3419L47.4378 22.958L46.0003 21.3998L20.3169 47.4999L46.0003 73.6001L47.4378 72.0419L24.3419 48.5712Z"
+                    d="M8.71636 10.9995L20.8914 10.9995L20.8914 12.9995L8.71636 12.9995L14.3164 18.5995L12.8914 19.9995L4.89136 11.9995L12.8914 3.99951L14.3164 5.39951L8.71636 10.9995Z"
                     fill="#1C1B1F"
                   />
                 </g>
               </svg>
+              <span class="page-name">{{
+                previousPageFromMenu.page.name
+              }}</span>
             </MetaLink>
           </div>
-          <div class="col-6 col-md-8 text-center">
+          <!-- <div class="col-6 col-md-8 text-center">
             <h3 class="explora">{{ section.alias }}</h3>
-          </div>
-          <div class="col-3 col-md-2 text-right">
+          </div> -->
+          <div class="col-6 text-end">
             <MetaLink
               v-if="nextPageFromMenu"
               :page="nextPageFromMenu.page"
               css-class="menu-item"
             >
+              <span class="page-name">{{ nextPageFromMenu.page.name }}</span>
+
               <svg
-                width="92"
-                height="95"
-                viewBox="0 0 92 95"
+              class="ms-2"
+                width="25"
+                height="24"
+                viewBox="0 0 25 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <mask
-                  id="mask0_864_2888"
+                  id="mask0_1087_11184"
                   style="mask-type: alpha"
                   maskUnits="userSpaceOnUse"
                   x="0"
                   y="0"
-                  width="92"
-                  height="95"
+                  width="25"
+                  height="24"
                 >
-                  <rect
-                    y="0.753418"
-                    width="92"
-                    height="93.4931"
-                    fill="#D9D9D9"
-                  />
+                  <rect x="0.170654" width="24" height="24" fill="#D9D9D9" />
                 </mask>
-                <g mask="url(#mask0_864_2888)">
+                <g mask="url(#mask0_1087_11184)">
                   <path
-                    d="M67.6581 48.5712H20.3164V46.4287H67.6581L44.5622 22.958L45.9997 21.3998L71.6831 47.4999L45.9997 73.6001L44.5622 72.0419L67.6581 48.5712Z"
+                    d="M16.3457 13H4.17065V11H16.3457L10.7457 5.4L12.1707 4L20.1707 12L12.1707 20L10.7457 18.6L16.3457 13Z"
                     fill="#1C1B1F"
                   />
                 </g>
@@ -559,7 +569,7 @@ onUnmounted(() => {
     </div>
   </div>
 </template>
-<style scoped lang="scss" >
+<style scoped lang="scss">
 .section-menu {
   background-size: cover;
 
@@ -672,10 +682,10 @@ onUnmounted(() => {
     }
   }
 
-  .section-menu-tags-cloud-placeholder{
+  .section-menu-tags-cloud-placeholder {
     position: absolute;
     top: -350px;
-    right: 10%;    
+    right: 10%;
   }
 
   .explora {
@@ -684,8 +694,20 @@ onUnmounted(() => {
 
     @media screen and (max-width: 768px) {
       line-height: 50px;
-      
     }
+  }
+
+  a .page-name{
+    color: var(--Negre, #000);
+text-align: right;
+font-family: "PP Neue Montreal";
+font-size: 22px;
+font-style: normal;
+font-weight: 500;
+line-height: 38px; /* 172.727% */
+letter-spacing: 0.22px;
+text-decoration: none!important;
+vertical-align: -3px;
   }
 }
 </style>

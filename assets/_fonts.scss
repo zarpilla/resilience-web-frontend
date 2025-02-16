@@ -24,7 +24,16 @@
 
 @font-face {
     font-family: "PP Neue Montreal";
-    font-weight: 500, normal;
+    font-weight: 500;
+    src: url('/fonts/PPNeueMontreal-Medium.woff2') format('woff2'),
+        url('/fonts/PPNeueMontreal-Medium.woff') format('woff'),
+        url('/fonts/PPNeueMontreal-Medium.ttf') format('truetype'),
+        url('/fonts/PPNeueMontreal-Medium.otf') format('opentype');
+}
+
+@font-face {
+    font-family: "PP Neue Montreal";
+    font-weight: normal;
     src: url('/fonts/PPNeueMontreal-Medium.woff2') format('woff2'),
         url('/fonts/PPNeueMontreal-Medium.woff') format('woff'),
         url('/fonts/PPNeueMontreal-Medium.ttf') format('truetype'),
@@ -42,7 +51,14 @@
 
 @font-face {
     font-family: "Queens";
-    font-weight: 400, 500;
+    font-weight: 400;
+    src: url('/fonts/Queens_W-Regular.woff2') format('woff2'),
+        url("/fonts/Queens_W-Regular.woff") format("woff");
+}
+
+@font-face {
+    font-family: "Queens";
+    font-weight: 500;
     src: url('/fonts/Queens_W-Regular.woff2') format('woff2'),
         url("/fonts/Queens_W-Regular.woff") format("woff");
 }
@@ -59,9 +75,36 @@ body {
 
     a {
         cursor: none !important;
+
+        &.menu-item {            
+            text-decoration: none;
+        }
     }
 
     cite {
         font-family: "Queens";
+        font-style: normal;
+    }
+    .cite {
+        * {
+            font-family: "Queens";
+
+            &.no-cite {
+                font-family: "PP Neue Montreal";
+            }
+        }
+        h3{
+            font-family: "Queens"!important;
+        }
+    }
+    .fw-500 {
+        font-weight: 500;
+    }
+    .orange{
+        color: #F5825E;        
+    }
+    .lh-min{
+        line-height: 10px;
+        display: block;
     }
 }

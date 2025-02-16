@@ -2,6 +2,7 @@
 const props = defineProps<{
   section: any;
   sectionIndex: number;
+  type: string;
 }>();
 
 import { computed } from "vue";
@@ -14,9 +15,7 @@ const heightStyle = computed(() => ({
 
 const backgroundImageStyle = computed(() => ({
   backgroundImage: props.section.backgroundImage?.url
-    ? `url(${
-        runtimeConfig.public.apiBase + props.section.backgroundImage.url
-      })`
+    ? `url(${runtimeConfig.public.apiBase + props.section.backgroundImage.url})`
     : "none",
 }));
 
@@ -26,83 +25,45 @@ const backgroundColorStyle = computed(() => ({
     : null,
 }));
 
-const route = useRoute();
-watch(() => route.name, (newValue, oldValue) => console.log("route.name", newValue, oldValue));
-
+const isScope = computed(() => props.type === "scope");
+const isService = computed(() => props.type === "service");
+const isCapability = computed(() => props.type === "capability");
 </script>
-<template>  
-  <div class="section-hero" :class="{ 'first-hero': sectionIndex === 0 && !props.section.styles?.height }">
+<template>
+  <div
+    class="section-hero"
+    :class="{
+      'first-hero': sectionIndex === 0 && !props.section.styles?.height,
+    }"
+  >
     <div class="container">
-      <div class="section-hero-inner d-flex" :class="`align-${section.align}`" :style="[heightStyle, backgroundImageStyle, backgroundColorStyle]">
-        <div>
-          <h1 v-if="section.title && section.titleHeading === 'h1'" v-html="section.title">
-          </h1>
-          <h2 v-if="section.title && section.titleHeading === 'h2'" v-html="section.title">
-          </h2>
-          <h3 v-if="section.title && section.titleHeading === 'h3'" v-html="section.title">
-          </h3>
-          <h4 v-if="section.title && section.titleHeading === 'h4'" v-html="section.title">
-          </h4>
-          <h5 v-if="section.title && section.titleHeading === 'h5'" v-html="section.title">
-          </h5>
-          <p v-if="section.title && section.titleHeading === 'p'" v-html="section.title">
-          </p>
-          <div v-for="(block, index) in section.text" :key="index">
-            <h1 v-if="block.type === 'heading' && block.level === 1">
-              <span
-                v-for="(child, childIndex) in block.children"
-                :key="childIndex"
-                :class="[{ bold: child.bold }, child.css]"
-              >
-                {{ child.text }}
-              </span>
-            </h1>
-            <h2 v-if="block.type === 'heading' && block.level === 2">
-              <span
-                v-for="(child, childIndex) in block.children"
-                :key="childIndex"
-                :class="[{ bold: child.bold }, child.css]"
-              >
-                {{ child.text }}
-              </span>
-            </h2>
-            <h3 v-if="block.type === 'heading' && block.level === 3">
-              <span
-                v-for="(child, childIndex) in block.children"
-                :key="childIndex"
-                :class="[{ bold: child.bold }, child.css]"
-              >
-                {{ child.text }}
-              </span>
-            </h3>
-            <h4 v-if="block.type === 'heading' && block.level === 4">
-              <span
-                v-for="(child, childIndex) in block.children"
-                :key="childIndex"
-                :class="[{ bold: child.bold }, child.css]"
-              >
-                {{ child.text }}
-              </span>
-            </h4>
-            <h5 v-if="block.type === 'heading' && block.level === 5">
-              <span
-                v-for="(child, childIndex) in block.children"
-                :key="childIndex"
-                :class="[{ bold: child.bold }, child.css]"
-              >
-                {{ child.text }}
-              </span>
-            </h5>
-            <p v-if="block.type === 'paragraph'">
-              <span
-                v-for="(child, childIndex) in block.children"
-                :key="childIndex"
-                :class="[{ bold: child.bold }, child.css]"
-              >
-                {{ child.text }}
-              </span>
-            </p>
+      <div class="row" v-if="isScope || isService">
+        <div class="col-12 col-lg-5">
+          <div
+            class="section-hero-inner d-flex"
+            :class="`align-${section.align}`"
+            :style="[heightStyle, backgroundImageStyle, backgroundColorStyle]"
+          >
+            <div class="scope-hero">
+              <b class="scope-title" v-if="isScope">ÀMBITS</b>
+              <b class="scope-title" v-if="isService">SERVEIS</b>
+              <MetaTitleSubTitle :section="section" :type="type" />
+            </div>
           </div>
+        </div>
+        <div class="col-12 col-lg-7"></div>
+      </div>
+      <div
+        v-else
+        class="section-hero-inner d-flex"
+        :class="`align-${section.align}`"
+        :style="[heightStyle, backgroundImageStyle, backgroundColorStyle]"
+      >
+        <div>
+          <div class="scope-hero-capability" v-if="isCapability">
+            <b class="scope-title">CAPABILITATS</b>
+          </div>
+          <MetaTitleSubTitle :section="section" :type="type" />
         </div>
       </div>
     </div>
@@ -115,17 +76,16 @@ watch(() => route.name, (newValue, oldValue) => console.log("route.name", newVal
   &.first-hero {
     @media screen and (max-width: 768px) {
       padding-top: 100px;
-      
     }
   }
   .bold {
-  font-weight: 500;
+    font-weight: 500;
+  }
 }
-}
-.section-hero-inner{
+.section-hero-inner {
   padding: 100px 0;
   @media screen and (max-width: 768px) {
-    padding: 50px 0;    
+    padding: 50px 0;
   }
 }
 .align-bottom-left {
@@ -134,8 +94,57 @@ watch(() => route.name, (newValue, oldValue) => console.log("route.name", newVal
 }
 .align-centered {
   text-align: center;
-  align-items: center;  
+  align-items: center;
   margin: auto;
   justify-content: center;
+}
+.scope-hero {
+  .scope-title {
+    color: var(--Negre, #000);
+    font-family: "PP Neue Montreal";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 70px; /* 437.5% */
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+}
+.scope-hero-capability{
+  .scope-title {
+    font-family: "PP Neue Montreal";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 70px; /* 437.5% */
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+}
+</style>
+<style lang="scss">
+.section-inner-type-scope,
+.section-inner-type-service {
+  .align-centered {
+    text-align: left;
+  }
+  .scope-title {
+    text-align: left !important;
+    margin-top: 2rem;
+  }
+  h1 {
+    margin-bottom: 3rem;
+  }
+  .scope-hero {
+    p {
+      color: var(--Negre, #000);
+      font-family: "Queens";
+      font-size: 26px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 130%; /* 33.8px */
+      letter-spacing: 0.26px;
+    }
+  }
 }
 </style>

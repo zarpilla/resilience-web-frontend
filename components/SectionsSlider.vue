@@ -774,7 +774,7 @@ img {
       letter-spacing: 0.01406rem;
     }
     img {
-      border-radius: 6px 6px 0 0;
+      border-radius: 6px 6px 0 0!important;
     }
     .info {
       padding-bottom: 4rem;

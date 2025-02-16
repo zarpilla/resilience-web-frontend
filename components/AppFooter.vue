@@ -155,6 +155,7 @@ const footer = computed(() =>
 <style lang="scss" scoped>
 footer {
   background-color: #000;
+  border-top: 1px solid #fff;
 
   .media-primary {
     width: 145px;

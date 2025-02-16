@@ -11,6 +11,15 @@ const { $bs } = useNuxtApp() as any;
 
 const expanded = ref<boolean[]>(props.section.bios.map(() => false));
 
+const biosWithoutDuplicatesBySlug = computed(() => {
+  const bios = props.section.bios;
+  const biosWithoutDuplicates = bios.filter(
+    (bio: any, index: number, self: any) =>
+      index === self.findIndex((t: any) => t.slug === bio.slug)
+  );
+  return biosWithoutDuplicates;
+});
+
 onMounted(() => {
   try {
     var collapseElementList = [].slice.call(
@@ -64,14 +73,14 @@ onMounted(() => {
       </div>
       <div class="row mt-5">
         <div
-          v-for="(bio, index) in section.bios"
+          v-for="(bio, index) in biosWithoutDuplicatesBySlug"
           :key="index"
           class="col-12 col-md-4 mb-5"
         >
           <div class="bio-card mb-5">
             <nuxt-link
               :to="localePath({ name: 'bio-slug', params: { slug: bio.slug } })"
-              class="bio-link hoverable"
+              class="bio-link hoverable position-relative"
             >
               <div
                 class="bio-image mb-3"
@@ -81,7 +90,11 @@ onMounted(() => {
                 }) lightgray 50% / cover no-repeat;background: url(${
                   runtimeConfig.public.apiBase + bio.mainImage.url
                 }) lightgray 50% / cover no-repeat;`"
-              ></div>
+              >
+                <div class="bio-title">
+                  <span class='orange lh-min'>“</span>{{ bio.title }}
+                </div>
+              </div>
             </nuxt-link>
             <div class="name">
               <nuxt-link
@@ -389,14 +402,45 @@ onMounted(() => {
       margin-left: 0;
       transition: all 0.1s ease-in-out;
     }
+    .bio-image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    a .bio-title {
+      color: var(--Negre, #000);
+      color: transparent;      
+      font-family: "Queens";
+      font-size: 30px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 120%;
+      text-align: center;
+      width: 100%;
+      text-decoration: none !important;
+      padding: 20px;
+
+      .orange {
+        color: transparent;
+      }
+    }
 
     &:hover {
-      .name a {
-        background: #000;
-        color: #fff !important;
-      }
       .bio-link-arrow {
         margin-left: 10px;
+
+        path {
+          fill: #f5825e;
+        }
+      }
+      .bio-image{
+        background: #fff!important;
+      }
+      a .bio-title {
+        color: var(--Negre, #000);
+        .orange {
+          color: #f5825e;
+        }
       }
     }
   }

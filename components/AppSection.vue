@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{
   section: any;
+  type: string;
 }>();
 
 import { computed } from "vue";
@@ -18,7 +19,7 @@ const sectionIsScroller = computed(() => {
 });
 
 const backgroundImageStyle = computed(() => ({
-  backgroundImage: props.section.styles?.backgroundImage
+  backgroundImage: (props.section.styles?.backgroundImage)
     ? `url(${
         runtimeConfig.public.apiBase + props.section.styles?.backgroundImage.url
       })`
@@ -26,7 +27,7 @@ const backgroundImageStyle = computed(() => ({
 }));
 
 const backgroundImage2Style = computed(() => ({
-  backgroundImage: props.section.styles?.backgroundImage2 && !sectionIsScroller.value
+  backgroundImage: (props.type !== "scope" && props.type !== "service") && props.section.styles?.backgroundImage2 && !sectionIsScroller.value
     ? `url(${
         runtimeConfig.public.apiBase + props.section.styles?.backgroundImage2.url
       })`
@@ -67,7 +68,9 @@ const paddingStyle = computed(() => ({
       props.section.styles?.textColor ?? 'dark'
     } width-container-${props.section.styles?.container ?? 'null'} ${
       section.styles?.cssClass ?? 'css-z'
-    } ${sectionIsScroller ? 'background-attachment-fixed' : ''}`"
+    } ${sectionIsScroller ? 'background-attachment-fixed' : ''} section-inner-type-${props.type} ${
+      section.styles?.borderBottom ? 'border-bottom-black-50' : ''
+    }`"
     :style="[
       backgroundStyle,
       backgroundImageStyle,
@@ -209,5 +212,15 @@ const paddingStyle = computed(() => ({
   width: 50% !important;
   margin-left: auto;
   margin-right: auto;
+}
+.section-inner-type-scope{
+  padding-top: 150px;
+}
+.section-inner-type-scope, .section-inner-type-service{
+  @media screen and (min-width: 769px) {
+    background-position: 50vw 0px!important;
+    background-size: 100%!important;    
+  }
+  
 }
 </style>

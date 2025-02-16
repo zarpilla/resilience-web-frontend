@@ -103,7 +103,7 @@ onBeforeUnmount(() => {
   <div class="main-content">
     <template v-for="(section, i) in page.sections" :key="section.id">
       <div class="section">
-        <AppSection :section="section" :slug="slug">
+        <AppSection :section="section" :slug="slug" :type="props.type">
           <SectionsScroller
             v-if="section.__component === 'sections.scroller'"
             :section="section"
@@ -113,6 +113,7 @@ onBeforeUnmount(() => {
             v-if="section.__component === 'sections.hero'"
             :section="section"
             :section-index="i"
+            :type="props.type"
           ></SectionsHero>
           <SectionsColumns
             v-else-if="section.__component === 'sections.columns'"
@@ -153,6 +154,11 @@ onBeforeUnmount(() => {
             :section="section"
           >
           </SectionsCapabilities>
+          <SectionsTimeline
+            v-else-if="section.__component === 'sections.timeline'"
+            :section="section"
+          >
+          </SectionsTimeline>
         </AppSection>
       </div>
     </template>

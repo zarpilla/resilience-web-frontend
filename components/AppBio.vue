@@ -86,12 +86,12 @@ const columnsHero0 = {
   __component: "sections.hero",
   styles: {
     backgroundColor: "#F2EEEA",
-    height: "70vh",
-    cssClass: "align-bottom-left bio-hero",
+    height: "60vh",
+    cssClass: "align-bottom-left bio-hero cite",
     backgroundImage: page.mainImage,
     container: "small",
   },
-  title: page.title,
+  title: "<span class='orange lh-min'>“</span>" + page.title,
   titleHeading: "h1",
   align: "bottom-left",
   text: [
@@ -104,7 +104,7 @@ const columnsHero0 = {
           text: page.name,
           type: "text",
           bold: true,
-          css: "mb-0",
+          css: "mb-0 no-cite fw-500",
         },
       ],
     },
@@ -115,7 +115,7 @@ const columnsHero0 = {
         {
           text: page.position,
           type: "text",
-          css: "mb-0",
+          css: "mb-0 no-cite",
         },
       ],
     },
@@ -149,28 +149,35 @@ const columnsContent = {
       title: page.excerpt,
       titleHeading: "h3",
       styles: {
-        cssClass: "col-12 col-md-4",
+        cssClass: "col-12 col-md-4 cite",
       },
     },
     {
       id: 3,
+      text: "",
+      styles: {
+        cssClass: "col-12 col-md-1",
+      },
+    },
+    {
+      id: 4,
       text: page.content,
       styles: {
-        cssClass: "col-12 col-md-8",
+        cssClass: "col-12 col-md-7",
       },
     },
   ],
 };
 
 const columnsMedia = {
-  id: 4,
+  id: 5,
   __component: "sections.columns",
   styles: {
     cssClass: "pt-2 my-0",
   },
   columns: [
     {
-      id: 5,
+      id: 6,
       styles: {
         cssClass: "media-border-radius",
       },
