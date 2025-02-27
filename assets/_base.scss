@@ -14,7 +14,7 @@ body {
     position: relative;
     height: unset;
 
-    a{
+    a {
         text-decoration: none;
     }
 }
@@ -438,6 +438,81 @@ a.color-text-light {
             }
         }
     }
+
+
+}
+
+.blog-black {
+    .blog-item {
+        background: #1C1B1F;
+        border-radius: 5px;
+        overflow: hidden;
+
+        .info {
+            padding: 70px 50px;
+
+            @media screen and (max-width: 768px) {
+                padding: 30px;
+            }
+
+            h3 {
+                a {
+                    color: var(--Blanc, #FFF);
+                    font-variant-numeric: lining-nums tabular-nums;
+                    font-family: "PP Neue Montreal";
+                    font-size: 30px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 120%;
+                    /* 36px */
+                    letter-spacing: 0.3px;
+                    color: #fff !important;
+                    text-decoration: none !important;
+                }
+            }
+        }
+
+        .media {
+            border-radius: 5px 0 0 5px !important;
+            transition: transform 0.3s ease-in-out;
+
+
+            &:hover {
+                transform: scale(1.03);
+            }
+        }
+
+        &.blog-onethird {
+            .media {
+                border-radius: 5px 5px 0 0!important;
+            }
+        }
+
+        .meta-short {
+            color: #898989;
+            font-variant-numeric: lining-nums tabular-nums;
+            font-family: "PP Neue Montreal";
+            font-size: 25px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 120%;
+            /* 30px */
+            letter-spacing: 0.25px;
+        }
+
+        .meta-short-normal {
+            color: #898989;
+            font-variant-numeric: lining-nums tabular-nums;
+            font-family: "PP Neue Montreal";
+            font-size: 18.75px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 120%;
+            /* 22.5px */
+            letter-spacing: 0.188px;
+        }
+
+    }
 }
 
 .blog-item {
@@ -455,12 +530,18 @@ a.color-text-light {
 .carousel-blog-item {
     background-color: #FFF;
     border-radius: 20px;
+    overflow: hidden;
 
     img {
         border-radius: 20px 20px 0 0;
         height: 246px;
         object-fit: cover;
         width: 100%;
+        transition: transform 0.3s ease-in-out;
+
+        &:hover {
+            transform: scale(1.03);
+        }
     }
 
     .info {
@@ -576,17 +657,19 @@ img.active-image {
         display: none;
     }
 }
+
 .page-type-scope .main-content {
     @media screen and (min-width: 769px) {
         padding-top: 150px;
     }
 }
 
-a.bio-link .bio-title{
-    text-decoration: none!important;
+a.bio-link .bio-title {
+    text-decoration: none !important;
 }
 
 .orange-titles {
+
     h1,
     h2,
     h3,
