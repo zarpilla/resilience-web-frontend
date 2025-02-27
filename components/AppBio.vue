@@ -228,7 +228,7 @@ const columnsMedia = {
   }
   .main-content > .section > .section-inner {
     background-size: 25%;
-    background-position: 80% bottom;
+    background-position: 75% bottom;
 
     &.bio-hero {      
       @media (max-width: 767px) {

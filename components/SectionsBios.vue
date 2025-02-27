@@ -413,7 +413,7 @@ onMounted(() => {
       font-family: "Queens";
       font-size: 30px;
       font-style: normal;
-      font-weight: 500;
+      font-weight: 600;
       line-height: 120%;
       text-align: center;
       width: 100%;

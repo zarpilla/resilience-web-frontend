@@ -56,32 +56,32 @@ onMounted(() => {
         }
       });
     } else if (props.section.preset === "services" && window.innerWidth > 768) {
-      // get all section-slider-carousel-3 elements
-      let carousels = document.querySelectorAll(
-        ".section-slider-carousel-3-" + props.section.id
-      );
-      carousels.forEach((carousel) => {
-        // get the max height of the items within this carousel and set it to all the items
-        let citems = carousel.querySelectorAll(".carousel-blog-item");
-        let maxHeight = 0;
-        citems.forEach((el) => {
-          const elHeight = el.clientHeight;
-          if (elHeight > maxHeight) {
-            maxHeight = elHeight;
-          }
-        });
-        citems.forEach((el: any) => {
-          el.style.height = `${maxHeight + 25}px`;
-        });
-      });
+      // get all section-slider-carousel-7 elements
+      // let carousels = document.querySelectorAll(
+      //   ".section-slider-carousel-7-" + props.section.id
+      // );
+      // carousels.forEach((carousel) => {
+      //   // get the max height of the items within this carousel and set it to all the items
+      //   let citems = carousel.querySelectorAll(".carousel-blog-item");
+      //   let maxHeight = 0;
+      //   citems.forEach((el) => {
+      //     const elHeight = el.clientHeight;
+      //     if (elHeight > maxHeight) {
+      //       maxHeight = elHeight;
+      //     }
+      //   });
+      //   citems.forEach((el: any) => {
+      //     el.style.height = `${maxHeight + 25}px`;
+      //   });
+      // });
 
       let items = document.querySelectorAll(
-        ".section-slider-carousel-3-" +
+        ".section-slider-carousel-7-" +
           props.section.id +
           " .carousel .carousel-item"
       );
       items.forEach((el) => {
-        const minPerSlide = 7;
+        const minPerSlide = 3;
         let next = el.nextElementSibling;
         for (var i = 1; i < minPerSlide; i++) {
           if (!next) {
@@ -259,19 +259,20 @@ onMounted(() => {
           </div>
         </div>
 
+        SERVICES
         <div
-          :class="`section-slider-carousel-3 section-slider-carousel-3-${section.id} mx-auto my-auto justify-content-center`"
+          :class="`section-slider-carousel-3 section-slider-carousel-3 section-slider-carousel-3-${section.id} mx-auto my-auto justify-content-center`"
         >
-          <div class="zcol-12">
+          <div class="z">
             <div
               :id="`carousel-${section.id}`"
               class="carousel slide"
               data-bs-ride="carousel"
               :data-bs-interval="section.intervalMilliseconds || 8000"
             >
-              <div class="carousel-inner fake-row" role="listbox">
+              <div class="carousel-inner fake-row row" role="listbox">
                 <div
-                  class="carousel-item zcol-12 px-0"
+                  class="carousel-item col-4 px-0"
                   v-for="(item, i) in section.menu.children"
                   :key="i"
                   :class="{ active: i === 0 }"
@@ -697,6 +698,7 @@ img {
   .carousel-inner .carousel-item-end,
   .carousel-inner .carousel-item-start {
     transform: translateX(0);
+    
   }
 
   .metacolor {
@@ -730,6 +732,22 @@ img {
     color: #000 !important;
   }
 }
+
+.section-slider-carousel-7 {
+  @media (min-width: 768px) {
+    .carousel-inner .carousel-item-end.active,
+    .carousel-inner .carousel-item-next {
+      transform: translateX(14.28%); // 100% / 7
+    }
+
+    .carousel-inner .carousel-item-start.active,
+    .carousel-inner .carousel-item-prev {
+      transform: translateX(-14.28%);
+    }
+  }
+}
+
+
 .justify-content-end {
   justify-content: flex-end;
 }

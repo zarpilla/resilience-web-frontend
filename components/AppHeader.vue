@@ -117,6 +117,7 @@ const onClose = () => {
   document.body.style.overflow = "auto";
   // set overflow auto to html
   document.documentElement.style.overflow = "auto";
+  document.body.classList.remove("menu-open");
 };
 
 const modeStore = useModeStore();

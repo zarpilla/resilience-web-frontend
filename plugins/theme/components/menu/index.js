@@ -44,6 +44,7 @@ export default class Menu {
   };
 
   showSubMenuClick = e => {
+    console.log("showSubMenuClick");
     var el = e.target;    
     this.removeAllSelected();
     el.classList.add("selected");
@@ -62,6 +63,9 @@ export default class Menu {
     }
 
     this.removeActiveSubmenus();
+    
+    document.body.classList.remove("menu-open");
+    this.opened = false;
 
     const targetUl = document.querySelector(
       `.subNav ul[data-show='${target}']`
@@ -82,6 +86,7 @@ export default class Menu {
 
   // Move the cursor
   onClick = e => {
+    console.log("onClick");
     if (!this.opened) {
       this.menuFullPage.classList.add("open");
       // document.body.classList.add("dark-mode");
