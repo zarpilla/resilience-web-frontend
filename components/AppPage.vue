@@ -78,10 +78,12 @@ onMounted(() => {
     window.dispatchEvent(new Event("init-theme"));
   }, 200);
 
-  if (page.headerColorMode) {
-    modeStore.setPageHeaderColorMode(page.headerColorMode);
-    document.body.classList.add('header-' + page.headerColorMode);
-  }
+  // console.log('set page.headerColorMode', page.headerColorMode);
+
+  // if (page.headerColorMode) {
+  //   modeStore.setPageHeaderColorMode(page.headerColorMode);
+  //   document.body.classList.add('header-' + page.headerColorMode);
+  // }
 
   if (page.pageCss) {
     document.body.classList.add(page.pageCss);
@@ -99,7 +101,7 @@ onBeforeUnmount(() => {
 </script>
 <template>
   <AppCursor></AppCursor>
-  <AppHeader :slug="slug"></AppHeader>
+  <AppHeader :slug="slug" :color-mode="page.headerColorMode"></AppHeader>
   <div class="main-content">
     <template v-for="(section, i) in page.sections" :key="section.id">
       <div class="section">

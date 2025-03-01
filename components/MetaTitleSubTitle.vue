@@ -35,8 +35,8 @@ const props = defineProps<{
         v-for="(child, childIndex) in block.children"
         :key="childIndex"
         :class="[{ bold: child.bold }, child.css]"
+        v-html="child.text"
       >
-        {{ child.text }}
       </span>
     </h1>
     <h2 v-if="block.type === 'heading' && block.level === 2">
@@ -44,8 +44,8 @@ const props = defineProps<{
         v-for="(child, childIndex) in block.children"
         :key="childIndex"
         :class="[{ bold: child.bold }, child.css]"
+        v-html="child.text"
       >
-        {{ child.text }}
       </span>
     </h2>
     <h3 v-if="block.type === 'heading' && block.level === 3">
@@ -53,8 +53,8 @@ const props = defineProps<{
         v-for="(child, childIndex) in block.children"
         :key="childIndex"
         :class="[{ bold: child.bold }, child.css]"
+        v-html="child.text"
       >
-        {{ child.text }}
       </span>
     </h3>
     <h4 v-if="block.type === 'heading' && block.level === 4">
@@ -62,8 +62,8 @@ const props = defineProps<{
         v-for="(child, childIndex) in block.children"
         :key="childIndex"
         :class="[{ bold: child.bold }, child.css]"
+        v-html="child.text"
       >
-        {{ child.text }}
       </span>
     </h4>
     <h5 v-if="block.type === 'heading' && block.level === 5">
@@ -71,8 +71,8 @@ const props = defineProps<{
         v-for="(child, childIndex) in block.children"
         :key="childIndex"
         :class="[{ bold: child.bold }, child.css]"
+        v-html="child.text"
       >
-        {{ child.text }}
       </span>
     </h5>
     <p v-if="block.type === 'paragraph'">
@@ -80,8 +80,8 @@ const props = defineProps<{
         v-for="(child, childIndex) in block.children"
         :key="childIndex"
         :class="[{ bold: child.bold }, child.css]"
+        v-html="child.text"
       >
-        {{ child.text }}
       </span>
     </p>
   </div>

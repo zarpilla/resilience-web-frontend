@@ -222,7 +222,7 @@ onMounted(() => {
         <div class="col-12 col-md-6">
           <div class="bio-list">
             <div
-              v-for="(bio, index) in section.bios"
+              v-for="(bio, index) in biosWithoutDuplicatesBySlug"
               :key="index"
               class="bio-item"
             >

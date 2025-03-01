@@ -19,6 +19,12 @@ const backgroundImageStyle = computed(() => ({
     : "none",
 }));
 
+const imageStyleArticle = computed(() => {
+  return props.type === "article" && props.section.styles.backgroundImage?.url
+    ? runtimeConfig.public.apiBase + props.section.styles.backgroundImage.url
+    : null;
+});
+
 const backgroundColorStyle = computed(() => ({
   backgroundColor: props.section.styles?.backgroundColor
     ? props.section.styles?.backgroundColor
@@ -28,6 +34,7 @@ const backgroundColorStyle = computed(() => ({
 const isScope = computed(() => props.type === "scope");
 const isService = computed(() => props.type === "service");
 const isCapability = computed(() => props.type === "capability");
+const isArticle = computed(() => props.type === "article");
 </script>
 <template>
   <div
@@ -52,6 +59,31 @@ const isCapability = computed(() => props.type === "capability");
           </div>
         </div>
         <div class="col-12 col-lg-7"></div>
+      </div>
+      <div
+        v-else-if="isArticle"
+        class="section-hero-inner d-flex w-100"
+        :class="`align-${section.align}`"
+        :style="[heightStyle, backgroundImageStyle, backgroundColorStyle]"
+      >
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="scope-hero-caos" v-if="isArticle">
+              <b class="scope-title">CAOS CREATIU</b>
+            </div>
+            <MetaTitleSubTitle :section="section" :type="type" />
+          </div>
+          <div v-if="imageStyleArticle" class="col-12 col-md-1"></div>
+          <div v-if="imageStyleArticle" class="col-12 col-md-5 align-top-right zmt-5">
+            <div class="align-top-right">
+              <img
+                :src="imageStyleArticle"
+                :alt="props.section.styles.backgroundImage.alternativeText"
+                class="article-image"
+              />
+            </div>
+          </div>
+        </div>
       </div>
       <div
         v-else
@@ -92,7 +124,7 @@ const isCapability = computed(() => props.type === "capability");
   text-align: left;
   align-items: flex-end;
 }
-.align-centered {
+.align-top-right .align-centered {
   text-align: center;
   align-items: center;
   margin: auto;
@@ -110,7 +142,7 @@ const isCapability = computed(() => props.type === "capability");
     text-transform: uppercase;
   }
 }
-.scope-hero-capability{
+.scope-hero-capability {
   .scope-title {
     font-family: "PP Neue Montreal";
     font-size: 16px;
@@ -124,7 +156,8 @@ const isCapability = computed(() => props.type === "capability");
 </style>
 <style lang="scss">
 .section-inner-type-scope,
-.section-inner-type-service {
+.section-inner-type-service,
+.section-inner-type-article {
   .align-centered {
     text-align: left;
   }
@@ -146,5 +179,18 @@ const isCapability = computed(() => props.type === "capability");
       letter-spacing: 0.26px;
     }
   }
+}
+.scope-hero-caos {
+  color: var(--Taronja, #f5825e);
+  font-family: "PP Neue Montreal";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 70px; /* 437.5% */
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+.article-image {
+  width: 100%;
 }
 </style>

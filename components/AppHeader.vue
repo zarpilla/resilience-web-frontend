@@ -5,7 +5,7 @@ const switchLocalePath = useSwitchLocalePath();
 const localePath = useLocalePath();
 const { $gsap } = useNuxtApp();
 
-defineProps<{
+const props = defineProps<{
   slug: string;
   colorMode?: "dark" | "light";
 }>();
@@ -122,7 +122,7 @@ const onClose = () => {
 
 const modeStore = useModeStore();
 
-const pageHeaderColorMode = ref("light");
+const pageHeaderColorMode = ref(props.colorMode || "light");
 
 if (header.value) {
   const css = header.value ? header.value.value.css : "";
@@ -147,12 +147,13 @@ if (header.value) {
   }
 }
 
-watch(
-  () => modeStore.pageHeaderColorMode,
-  (value) => {
-    pageHeaderColorMode.value = value;
-  }
-);
+// watch(
+//   () => modeStore.pageHeaderColorMode,
+//   (value) => {
+//     pageHeaderColorMode.value = value;
+//     console.log("pageHeaderColorMode: ", pageHeaderColorMode.value);
+//   }
+// );
 </script>
 <template>
   <header class="d-flex hide-on-footer bg-dark" :class="`text-${colorMode}`">

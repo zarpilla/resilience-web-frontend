@@ -46,6 +46,7 @@ export default class Cursor {
     if (this.textDarks) {
       for (let i = 0; i < this.textDarks.length; i++) {
         this.textDarks[i].addEventListener("mouseenter", () => this.onMouseHoverLightEnter('cursor-text-dark', true));
+        this.textDarks[i].addEventListener("mousemove", () => this.onMouseHoverLightEnter('cursor-text-dark', true));
       }      
     }
     if (this.darkButtons) {

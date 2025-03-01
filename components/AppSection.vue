@@ -216,10 +216,13 @@ const paddingStyle = computed(() => ({
 .section-inner-type-scope{
   padding-top: 150px;
 }
-.section-inner-type-scope, .section-inner-type-service{
+.section-inner-type-scope, .section-inner-type-service, .section-inner-type-article{
   @media screen and (min-width: 769px) {
-    background-position: 50vw 0px!important;
-    background-size: 100%!important;    
+    // background-position: 50vw 0px!important;
+    // background-size: 100%!important;    
+    // background-position: 80% 200px !important;
+    // background-size: 30% auto !important;
+    background-image: none!important;
   }
   
 }
