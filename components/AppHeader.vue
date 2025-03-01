@@ -185,6 +185,7 @@ if (header.value) {
   </header>
   <svg
     class="clickable hoverable zone-color zone-color-stroke menu-click"
+    :class="`text-${colorMode}`"
     @click="clickShowMenu"
     width="32"
     height="27"
