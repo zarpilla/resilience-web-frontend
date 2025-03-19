@@ -40,6 +40,27 @@ page.sections = sectionsData.sections;
 page.metadata = sectionsData.metadata;
 page.localizations = sectionsData.localizations;
 
+const { data: templates } = await useAPI(
+  "/api/pages/templates/" + page.type,
+  {}
+);
+
+const templatesData = templates.value as any;
+
+if (templatesData && templatesData.sections) {
+  // contact templatesData.sections to page sections
+  for (const section of templatesData.sections) {
+    const existingSection = page.sections.find(
+      (s: any) => s.id === section.id
+    );
+    if (!existingSection) {
+      page.sections.push(section);
+    }
+  }
+
+}
+
+
 const headerStore = useHeaderStore();
 const header = computed<any>(() =>
   headerStore.headers.find((h) => h.locale === locale.value)
