@@ -44,7 +44,7 @@ export default class Menu {
   };
 
   showSubMenuClick = e => {
-    console.log("showSubMenuClick");
+    // console.log("showSubMenuClick");
     var el = e.target;    
     this.removeAllSelected();
     el.classList.add("selected");
@@ -86,7 +86,7 @@ export default class Menu {
 
   // Move the cursor
   onClick = e => {
-    console.log("onClick");
+    // console.log("onClick");
     if (!this.opened) {
       this.menuFullPage.classList.add("open");
       // document.body.classList.add("dark-mode");

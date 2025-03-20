@@ -12,7 +12,7 @@ onMounted(() => {
   // for < 1024px, two columns
   // for > 1024px, 4 columns
   // starting from right to left, add items to the columns
-  console.log("props.section.pages", props.section.pages);
+  // console.log("props.section.pages", props.section.pages);
 
   const items: any[] = props.section.pages;
   const columnCount =

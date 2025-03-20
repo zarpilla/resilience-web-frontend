@@ -40,7 +40,7 @@ const addCssIfNotExistsAsPromise = (href: string, id: string): Promise<any> => {
 };
 
 onMounted(() => {
-  console.log("onMounted section", props.section);
+  // console.log("onMounted section", props.section);
   const p1 = addScriptIfNotExistsAsPromise(
     "https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js",
     "timeline-js"
@@ -59,7 +59,7 @@ onMounted(() => {
         font: "PP Neue Montreal",
       }
     );
-    console.log("timeline", timeline);
+    // console.log("timeline", timeline);
   });
 });
 

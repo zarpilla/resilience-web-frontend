@@ -41,7 +41,7 @@ const handleSubmit = async () => {
     },
   });
 
-  console.log('data', data.value.data.id);
+  // console.log('data', data.value.data.id);
 
   if (data.value && data.value.data && data.value.data.id) {
     submittedOk.value = true;

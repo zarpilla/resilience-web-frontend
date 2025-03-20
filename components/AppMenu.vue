@@ -18,7 +18,7 @@ const runtimeConfig = useRuntimeConfig();
 const emits = defineEmits(["close"]);
 
 const emitClose = () => {
-  console.log("emitClose");
+  // console.log("emitClose");
   emits("close");
 };
 

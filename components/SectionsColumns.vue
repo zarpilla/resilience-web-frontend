@@ -15,6 +15,10 @@ const anySectionHasVerticalScroller = computed(() => {
 
 const runtimeConfig = useRuntimeConfig();
 
+const hasColumnsWithFixedOnScroll = props.section.columns && props.section.columns.some((column: any) => column.styles && column.styles?.cssClass && column.styles?.cssClass.includes('fixed-when-scroll'));
+
+const frameImage = ref<number>(140);
+
 onMounted(() => {
   if (anySectionHasVerticalScroller.value) {
     // when the viewport enter at the middle of the section, the .vertical-scroller should be animated from -80vw to 0vw
@@ -47,7 +51,6 @@ onMounted(() => {
     });
   }
 
-  const hasColumnsWithFixedOnScroll = props.section.columns && props.section.columns.some((column: any) => column.styles && column.styles?.cssClass && column.styles?.cssClass.includes('fixed-when-scroll')); 
   if (hasColumnsWithFixedOnScroll) {
     $gsap.to('.fixed-when-scroll > div', {
       position: 'fixed',
@@ -60,6 +63,12 @@ onMounted(() => {
         scrub: true,
         pin: true,
         // markers: true,
+        onUpdate: (self) => {
+          console.log(self.progress);
+          // frameImgae betwween 140 and 279
+          frameImage.value = Math.round(140 + (279 - 140) * self.progress);
+        }
+      
       },
     });
   }
@@ -68,6 +77,7 @@ onMounted(() => {
 </script>
 <template>
   <div class="section-columns" :class="{ 'has-vertical-scroller': anySectionHasVerticalScroller}">
+
     <div class="container">
       <div
         v-if="section.columns && section.columns.length"
@@ -88,6 +98,7 @@ onMounted(() => {
               : 'none',
           }"
         >
+        
           <h1
             v-if="column.title && column.titleHeading === 'h1'"
             v-html="column.title"
@@ -115,9 +126,15 @@ onMounted(() => {
 
           <MetaText :text="column.text" :styles="column.styles" />
 
+
+          <div v-if="hasColumnsWithFixedOnScroll && columnIndex === 0">
+            <img :src="`/images/frames/frame_${frameImage}.png`" alt="" />
+          </div>
+
           <div v-if="column.media" class="media">
             <MetaMedia :media="column.media" />
           </div>
+
 
           <div
             v-if="column.c2a"
@@ -130,6 +147,7 @@ onMounted(() => {
             v-if="column.verticalScroller"
             class="vertical-scroller d-flex flex-wrap"
           >
+          
             <div class="column-0">
               <MetaMedia
               v-if="column.verticalScroller.children.length > 0"

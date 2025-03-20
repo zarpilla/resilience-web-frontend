@@ -137,6 +137,7 @@ onBeforeUnmount(() => {
             :section="section"
             :section-index="i"
             :type="props.type"
+            :slug="slug"
           ></SectionsHero>
           <SectionsColumns
             v-else-if="section.__component === 'sections.columns'"
