@@ -64,7 +64,6 @@ onMounted(() => {
         pin: true,
         // markers: true,
         onUpdate: (self) => {
-          console.log(self.progress);
           // frameImgae betwween 140 and 279
           frameImage.value = Math.round(140 + (279 - 140) * self.progress);
         }
