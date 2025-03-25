@@ -26,7 +26,9 @@ export default class Cursor {
       return
     }
 
-    this.smallBall.style.display = "none";
+    if (this.smallBall) {
+      this.smallBall.style.display = "none";
+    }
     
     // Listeners
     document.body.addEventListener("mousemove", this.onMouseMove);

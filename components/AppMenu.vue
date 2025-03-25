@@ -54,7 +54,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div class="full-page-menu text-dark">
+  <div class="full-page-menu">
     <div class="container container-menu">
       <div class="row">
         <div class="col-12">

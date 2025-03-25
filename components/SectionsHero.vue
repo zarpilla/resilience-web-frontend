@@ -169,7 +169,7 @@ const addLetters = (word: string): Promise<void> => {
 };
 
 onMounted(() => {
-  if (isHome && texts && props.sectionIndex === 0) {
+  if (isHome && texts.value && props.sectionIndex === 0) {
     home1.value = (texts?.value as any).value.data.home1;
     home2.value = (texts?.value as any).value.data.home2;
     homeTitleTransition();
@@ -184,7 +184,7 @@ onUnmounted(() => {
   <div
     class="section-hero"
     :class="{
-      'first-hero': sectionIndex === 0 && !props.section.styles?.height,
+      'first-hero': props.sectionIndex === 0,
     }"
   >
     <div class="container">
@@ -290,7 +290,7 @@ onUnmounted(() => {
   text-align: left;
   align-items: flex-end;
 }
-.align-top-right .align-centered {
+.align-top-right .align-centered, .align-centered {
   text-align: center;
   align-items: center;
   margin: auto;

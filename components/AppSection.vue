@@ -2,6 +2,7 @@
 const props = defineProps<{
   section: any;
   type: string;
+  index: number;
 }>();
 
 import { computed } from "vue";
@@ -70,7 +71,7 @@ const paddingStyle = computed(() => ({
       section.styles?.cssClass ?? 'css-z'
     } ${sectionIsScroller ? 'background-attachment-fixed' : ''} section-inner-type-${props.type} ${
       section.styles?.borderBottom ? 'border-bottom-black-50' : ''
-    }`"
+    } section-inner-index-${props.index}`"
     :style="[
       backgroundStyle,
       backgroundImageStyle,
@@ -126,12 +127,12 @@ const paddingStyle = computed(() => ({
   }
   @media (min-width: 1200px) {
     .container {
-      max-width: 1046px !important;
+      max-width: 894px !important;
     }
   }
   @media (min-width: 1400px) {
     .container {
-      max-width: 1046px !important;
+      max-width: 894px !important;
     }
   }
 }
@@ -218,7 +219,7 @@ const paddingStyle = computed(() => ({
 }
 .section-inner-type-scope, .section-inner-type-service{
   @media screen and (min-width: 769px) {
-    background-position: 50vw 0px!important;
+    // background-position: 50vw 0px!important;
     background-size: 100%!important; 
   }  
 }

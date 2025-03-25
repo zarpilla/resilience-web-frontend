@@ -10,10 +10,10 @@ export const useTextStore = defineStore("textStore", {
   }),
   actions: {
     async fetch(locale: string) {
-      const { data: header } = await useAPI("/api/text", { query: { locale } });
+      const { data: texts } = await useAPI("/api/text", { query: { locale } });
       this.texts.push({
         locale: locale,
-        value: JSON.parse(JSON.stringify(header.value)),
+        value: JSON.parse(JSON.stringify(texts.value)),
       });
     },
   },

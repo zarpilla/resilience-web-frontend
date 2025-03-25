@@ -10,12 +10,12 @@ export default class Menu {
   start = () => {
     this.clicked = "";
     this.icoMenu = document.querySelector(".icoMenu");
-    this.menuFullPage = document.querySelector(".menu-full-page");
+    this.menuFullPage = document.querySelector(".full-page-menu");
     this.goTo = document.querySelectorAll(".goto");
     this.showSubMenu = document.querySelectorAll(".show-sub-menu");
 
     this.opened = false;
-    this.menuFullPageLinks = document.querySelectorAll(".menu-full-page h3");
+    this.menuFullPageLinks = document.querySelectorAll(".full-page-menu h3");
     this.subNavUls = document.querySelectorAll(".subNav ul");
 
     // console.log('this.icoMenu', this.icoMenu)
@@ -65,6 +65,7 @@ export default class Menu {
     this.removeActiveSubmenus();
     
     document.body.classList.remove("menu-open");
+    //document.body.classList.remove("text-dark");
     this.opened = false;
 
     const targetUl = document.querySelector(
@@ -92,6 +93,7 @@ export default class Menu {
       // document.body.classList.add("dark-mode");
       document.body.classList.add("no-overflow");
       document.body.classList.add("menu-opened");
+      //this.menuFullPage.classList.add("text-dark");
       window.dispatchEvent(new Event("menu-open"));
       gsap.set(this.menuFullPage, {
         duration: 0.5,
@@ -101,6 +103,7 @@ export default class Menu {
       // document.body.classList.remove("dark-mode");
       document.body.classList.remove("no-overflow");
       document.body.classList.remove("menu-opened");
+      //this.menuFullPage.classList.remove("text-dark");
       window.dispatchEvent(new Event("menu-close"));
       gsap.to(this.menuFullPage, {
         duration: 0.5,
@@ -119,6 +122,7 @@ export default class Menu {
     // document.body.classList.remove("dark-mode");
     document.body.classList.remove("no-overflow");
     document.body.classList.remove("menu-opened");
+    //this.menuFullPage.classList.remove("text-dark");
 
     window.dispatchEvent(new Event("menu-close"));
 

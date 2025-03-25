@@ -10,8 +10,8 @@ const runtimeConfig = useRuntimeConfig();
   <div
     v-for="(block, index) in text"
     :key="index"
-    :style="`padding: ${styles?.padding ?? '0'};
-          margin: ${styles?.margin ?? 'inherit'}`"
+    :style="`padding: ${styles?.padding ?? ''};
+          margin: ${styles?.margin ?? ''}`"
   >
     <h1 v-if="block.type === 'heading' && block.level === 1" :class="block.css">
       <span

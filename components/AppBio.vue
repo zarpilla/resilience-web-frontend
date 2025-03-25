@@ -27,6 +27,15 @@ if (pages.value && documents.data && documents.data.length === 0) {
 
 const page = documents.data[0];
 
+
+
+const { data: templates } = await useAPI(
+  "/api/pages/templates/bio",
+  {}
+);
+
+const templatesData = templates.value as any;
+
 const headerStore = useHeaderStore();
 const header = computed<any>(() =>
   headerStore.headers.find((h) => h.locale === locale.value)
@@ -86,10 +95,10 @@ const columnsHero0 = {
   __component: "sections.hero",
   styles: {
     backgroundColor: "#F2EEEA",
-    height: "60vh",
+    height: "75vh",
     cssClass: "align-bottom-left bio-hero cite",
     backgroundImage: page.mainImage,
-    container: "small",
+    zcontainer: "small",
   },
   title: "<span class='orange lh-min'>“</span>" + page.title,
   titleHeading: "h1",
@@ -185,25 +194,120 @@ const columnsMedia = {
     },
   ],
 };
+
+const columnsMore = {
+  id: 7,
+  __component: "sections.columns",
+  styles: {
+    cssClass: "pt-2 my-0",
+  },
+  columns: [
+    {
+      id: 8,
+      text: page.more1,
+      titleHeading: "h3",
+      styles: {
+        cssClass: "col-12 col-md-6",
+      },
+    },    
+    {
+      id: 10,
+      text: page.more2,
+      styles: {
+        cssClass: "col-12 col-md-6",
+      },
+    },
+  ],
+};
 </script>
 <template>
   <AppCursor></AppCursor>
   <AppHeader color-mode="dark" :slug="slug"></AppHeader>
   <div class="main-content">
     <div class="section">
-      <AppSection :section="columnsHero0">
-        <SectionsHero :section="columnsHero0" :section-index="0"></SectionsHero>
+       <AppSection :section="columnsHero0" type="bio" :index="0">
+        <SectionsHero :section="columnsHero0" :section-index="1" type="bio" slug="bio-item"></SectionsHero>
       </AppSection>
-      <AppSection :section="columnsImage">
-        <SectionsColumns :section="columnsImage"></SectionsColumns>
+      
+      <AppSection :section="columnsImage" type="bio" :index="1">
+        <SectionsColumns :section="columnsImage" type="bio" slug="bio-item"></SectionsColumns>
       </AppSection>
-      <AppSection :section="columnsContent">
-        <SectionsColumns :section="columnsContent"></SectionsColumns>
+      
+      <AppSection :section="columnsContent" type="bio" :index="2">
+        <SectionsColumns :section="columnsContent" type="bio" slug="bio-item"></SectionsColumns>
       </AppSection>
 
-      <AppSection :section="columnsMedia">
-        <SectionsColumns :section="columnsMedia"></SectionsColumns>
+      <AppSection :section="columnsMedia" type="bio" :index="3">
+        <SectionsColumns :section="columnsMedia" type="bio" slug="bio-item"></SectionsColumns>
+      </AppSection> 
+
+      <AppSection :section="columnsMore" type="bio" v-if="page.more1 || page.more2" :index="4">
+        <SectionsColumns :section="columnsMore" type="bio" slug="bio-item"></SectionsColumns>
       </AppSection>
+
+      <template v-for="(section, i) in templatesData.sections" :key="section.id">
+      <div class="section">
+        <AppSection :section="section" :slug="slug" type="bio" :index="i + 5">
+          <SectionsScroller
+            v-if="section.__component === 'sections.scroller'"
+            :section="section"
+          >
+          </SectionsScroller>
+          <SectionsHero
+            v-if="section.__component === 'sections.hero'"
+            :section="section"
+            :section-index="i + 5"
+            type="bio"
+            :slug="slug"
+          ></SectionsHero>
+          <SectionsColumns
+            v-else-if="section.__component === 'sections.columns'"
+            :section="section"
+          ></SectionsColumns>
+          <SectionsMenu
+            v-else-if="section.__component === 'sections.menu'"
+            :section="section"
+          >
+          </SectionsMenu>
+          <SectionsSlider
+            v-else-if="section.__component === 'sections.slider'"
+            :section="section"
+          >
+          </SectionsSlider>
+          <SectionsBlurbs
+            v-else-if="section.__component === 'sections.blurbs'"
+            :section="section"
+          >
+          </SectionsBlurbs>
+          <SectionsBios
+            v-else-if="section.__component === 'sections.bios'"
+            :section="section"
+          >
+          </SectionsBios>
+          <SectionsBlog
+            v-else-if="section.__component === 'sections.blog'"
+            :section="section"
+          >
+          </SectionsBlog>
+          <SectionsMasonry
+            v-else-if="section.__component === 'sections.masonry'"
+            :section="section"
+          >
+          </SectionsMasonry>
+          <SectionsCapabilities
+            v-else-if="section.__component === 'sections.capabilities'"
+            :section="section"
+          >
+          </SectionsCapabilities>
+          <SectionsTimeline
+            v-else-if="section.__component === 'sections.timeline'"
+            :section="section"
+          >
+          </SectionsTimeline>
+        </AppSection>
+      </div>
+      </template>
+      
     </div>
   </div>
   <AppFooter :slug="slug"></AppFooter>
@@ -256,17 +360,5 @@ const columnsMedia = {
     }
   }
 
-  @media (min-width: 768px) {
-  }
-  @media (min-width: 992px) {
-    .main-content .container {
-      max-width: 700px !important;
-    }
-  }
-  @media (min-width: 1200px) {
-    .main-content .container {
-      max-width: 1046px !important;
-    }
-  }
 }
 </style>

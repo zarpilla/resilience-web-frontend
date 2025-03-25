@@ -3,7 +3,13 @@ const props = defineProps<{
   section: any;
 }>();
 
-import { computed } from "vue";
+const { locale } = useI18n();
+
+
+const textStore = useTextStore();
+const texts = computed(() =>
+  textStore.texts.find((h) => h.locale === locale.value)
+);
 
 onMounted(() => {
   setItemsHeight();
@@ -105,6 +111,30 @@ const setItemsHeight = () => {
                 }"
               >
                 <div class="info">
+
+                  <div class="more-info d-flex align-items-center mb-3">
+                    <div class="typology w-100">
+                      <div class="typology-label">
+                        {{ texts?.value?.data.tipology }}
+                      </div>
+                      {{ blogPage.page.typology ? blogPage.page.typology.name : '' }}
+                    </div>                    
+                    <div class="author w-100">
+                      <div class="typology-label">
+                        {{ texts?.value?.data.author }}
+                      </div>
+                      {{ blogPage.page.author }}
+                    </div>
+                    <div class="author w-100">
+                      <div class="typology-label">
+                        {{ texts?.value?.data.year }}
+                      </div>
+                      {{ blogPage.page.year ? blogPage.page.year.name : '' }}
+                    </div>
+
+                  </div>
+
+                  
                   <h3
                     :class="{
                       'mb-4': blogPage.width === 'threethirds',

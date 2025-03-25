@@ -140,6 +140,10 @@ p {
     /* 27px */
     letter-spacing: 0.36px;
 
+    .bold {
+        font-weight: 600;
+    }
+
     @media screen and (max-width: 768px) {
         font-size: 18px;
         line-height: 24px;
@@ -294,7 +298,8 @@ body:not(.page-slug-home) {
 }
 
 .text-light a.zone-color,
-.text-light .zone-color {
+.text-light .zone-color,
+.text-light.zone-color {
     color: #fff !important;
 
     &.zone-color-stroke>* {
@@ -670,6 +675,75 @@ img.active-image {
             }
         }
     }
+    .first-hero {
+        background: linear-gradient(to right, #fff 50%, #fff0 50%);
+    }
+}
+
+.page-type-service {    
+    
+    .main-content .first-hero {
+        .scope-hero {
+            padding-right: 50px;
+        }
+    }
+    &.page-slug-avaluacio {
+        .main-content .first-hero {
+            background: linear-gradient(to right, #d9c05d 41%, #fff0 41%);
+        }
+    }
+    &.page-slug-comunicacio-consultoria {
+        .main-content .first-hero {
+            background: linear-gradient(to right, #b06047 41%, #fff0 41%);            
+        }
+    }
+    &.page-slug-disseny {
+        .main-content .first-hero {
+            background: linear-gradient(to right, #9a5567 41%, #fff0 41%);
+        }
+    }
+    &.page-slug-estrategia {
+        .main-content .first-hero {
+            background: linear-gradient(to right, #bbc4c3 41%, #fff0 41%);
+        }
+    }
+    &.page-slug-facilitacio {
+        .main-content .first-hero {
+            background: linear-gradient(to right, #999b65 41%, #fff0 41%);
+        }
+    }
+    &.page-slug-participacio {
+        .main-content .first-hero {
+            background: linear-gradient(to right, #6e5655 41%, #fff0 41%);
+        }
+    }
+    &.page-slug-recerca {
+        .main-content .first-hero {
+            background: linear-gradient(to right, #b2896e 41%, #fff0 41%);
+        }
+    }
+    /*
+      .metacolor-0 {
+    background: #d9c05d;
+  }
+  .metacolor-1 {
+    background: #b06047;
+  }
+  .metacolor-2 {
+    background: #9a5567;
+  }
+  .metacolor-3 {
+    background: #bbc4c3;
+  }
+  .metacolor-4 {
+    background: #999b65;
+  }
+  .metacolor-5 {
+    background: #6e5655;
+  }
+  .metacolor-6 {
+    background: #b2896e;
+  }*/
 }
 
 .page-type-article .main-content {

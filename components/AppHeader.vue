@@ -19,21 +19,33 @@ const runtimeConfig = useRuntimeConfig();
 
 const showMenu = ref(false);
 
+const cursorCss = ref("cursor-text-light");
+
 const clickShowMenu = () => {
   showMenu.value = !showMenu.value;
+  const cursor = document.querySelector(".cursor");
   if (showMenu.value) {
+    cursorCss.value = cursor?.classList.contains("cursor-text-dark")
+      ? "cursor-text-dark"
+      : "cursor-text-light";
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
     document.body.classList.add("menu-open");
+    //document.body.classList.add("text-dark");
     const appMenu = document.querySelector(".app-menu");
     appMenu?.classList.add("text-dark");
+    cursor?.classList.add("cursor-text-dark");
+    cursor?.classList.remove("cursor-text-light");
     convertToCross();
   } else {
     document.body.style.overflow = "auto";
     document.documentElement.style.overflow = "auto";
     document.body.classList.remove("menu-open");
+    //document.body.classList.remove("text-dark");
     const appMenu = document.querySelector(".app-menu");
     appMenu?.classList.remove("text-dark");
+    cursor?.classList.remove("cursor-text-dark");    
+    cursor?.classList.add(cursorCss.value);    
     revertToLines();
   }
 };

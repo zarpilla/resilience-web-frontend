@@ -57,7 +57,6 @@ if (templatesData && templatesData.sections) {
       page.sections.push(section);
     }
   }
-
 }
 
 
@@ -126,7 +125,7 @@ onBeforeUnmount(() => {
   <div class="main-content">
     <template v-for="(section, i) in page.sections" :key="section.id">
       <div class="section">
-        <AppSection :section="section" :slug="slug" :type="props.type">
+        <AppSection :section="section" :slug="slug" :type="props.type" :index="i">
           <SectionsScroller
             v-if="section.__component === 'sections.scroller'"
             :section="section"
