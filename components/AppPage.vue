@@ -43,8 +43,10 @@ const { data: templateInfo } = await useAPI(
   {}
 );
 
-if (templateInfo.value && pageSections.length >= 2) {
-  let section = JSON.parse(JSON.stringify(pageSections[2]));
+const sectionInfoIndex = props.type === "resource" ? 2 : 1;
+
+if (templateInfo.value && pageSections.length >= sectionInfoIndex) {
+  let section = JSON.parse(JSON.stringify(pageSections[sectionInfoIndex]));
   if (section.__component === "sections.columns") {
     
     const templateInfoData = templateInfo.value as any;
@@ -54,9 +56,9 @@ if (templateInfo.value && pageSections.length >= 2) {
       const templateColumn1 = templateInfoData.sections[0].columns[1];
       section.columns.unshift(templateColumn1);
       section.columns.unshift(templateColumn0);
-      pageSections[2] = section;
+      pageSections[sectionInfoIndex] = section;
 
-      pageSections[2].styles.container = 'normal';
+      pageSections[sectionInfoIndex].styles.container = 'normal';
     }
   }
 }
