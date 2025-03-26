@@ -17,7 +17,7 @@ const populate = {
 const { data: pages } = await useAPI("/api/pages", {
   query: {
     "filters[slug][$eq]": props.slug,
-    "filters[type][$eq]": props.type,    
+    "filters[type][$eq]": props.type,
     ...populate,
   },
 });
@@ -36,7 +36,32 @@ const { data: sections } = await useAPI(
 );
 
 const sectionsData = sections.value as any;
-page.sections = sectionsData.sections;
+const pageSections = [...sectionsData.sections];
+
+const { data: templateInfo } = await useAPI(
+  "/api/pages/templates/" + page.type + "-information",
+  {}
+);
+
+if (templateInfo.value && pageSections.length >= 2) {
+  let section = JSON.parse(JSON.stringify(pageSections[2]));
+  if (section.__component === "sections.columns") {
+    
+    const templateInfoData = templateInfo.value as any;
+
+    if (templateInfoData.sections) {
+      const templateColumn0 = templateInfoData.sections[0].columns[0];
+      const templateColumn1 = templateInfoData.sections[0].columns[1];
+      section.columns.unshift(templateColumn1);
+      section.columns.unshift(templateColumn0);
+      pageSections[2] = section;
+
+      pageSections[2].styles.container = 'normal';
+    }
+  }
+}
+
+page.sections = pageSections;
 page.metadata = sectionsData.metadata;
 page.localizations = sectionsData.localizations;
 
@@ -50,15 +75,12 @@ const templatesData = templates.value as any;
 if (templatesData && templatesData.sections) {
   // contact templatesData.sections to page sections
   for (const section of templatesData.sections) {
-    const existingSection = page.sections.find(
-      (s: any) => s.id === section.id
-    );
+    const existingSection = page.sections.find((s: any) => s.id === section.id);
     if (!existingSection) {
       page.sections.push(section);
     }
   }
 }
-
 
 const headerStore = useHeaderStore();
 const header = computed<any>(() =>
@@ -93,17 +115,9 @@ useSeoMeta({
 const modeStore = useModeStore();
 
 onMounted(() => {
-
   setTimeout(() => {
     window.dispatchEvent(new Event("init-theme"));
   }, 200);
-
-  // console.log('set page.headerColorMode', page.headerColorMode);
-
-  // if (page.headerColorMode) {
-  //   modeStore.setPageHeaderColorMode(page.headerColorMode);
-  //   document.body.classList.add('header-' + page.headerColorMode);
-  // }
 
   if (page.pageCss) {
     document.body.classList.add(page.pageCss);
@@ -112,7 +126,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   if (page.headerColorMode) {
-    document.body.classList.remove('header-' + page.headerColorMode);
+    document.body.classList.remove("header-" + page.headerColorMode);
   }
   if (page.pageCss) {
     document.body.classList.remove(page.pageCss);
@@ -125,7 +139,12 @@ onBeforeUnmount(() => {
   <div class="main-content">
     <template v-for="(section, i) in page.sections" :key="section.id">
       <div class="section">
-        <AppSection :section="section" :slug="slug" :type="props.type" :index="i">
+        <AppSection
+          :section="section"
+          :slug="slug"
+          :type="props.type"
+          :index="i"
+        >
           <SectionsScroller
             v-if="section.__component === 'sections.scroller'"
             :section="section"
@@ -189,7 +208,7 @@ onBeforeUnmount(() => {
   <AppFooter :slug="slug"></AppFooter>
 </template>
 <style scoped lang="scss">
-.main-content{
-  width: 100vw;  
+.main-content {
+  width: 100vw;
 }
 </style>
