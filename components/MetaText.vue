@@ -58,11 +58,21 @@ const runtimeConfig = useRuntimeConfig();
       >
       </span>
     </h5>
-    <p v-if="block.type === 'paragraph'" :class="block.css">
+    <p v-if="block.type === 'paragraph'" :class="block.css" class="paragraph">
       <template v-for="(child, childIndex) in block.children">
+        <div
+          :class="[{ bold: child.bold }, child.css]"
+          v-if="child.type === 'text' && child.text.startsWith('<h4')"
+          v-html="child.text"
+        ></div>
+        <div
+          :class="[{ bold: child.bold }, child.css]"
+          v-else-if="child.type === 'text' && child.text.startsWith('<h5')"
+          v-html="child.text"
+        ></div>
         <span
           :class="[{ bold: child.bold }, child.css]"
-          v-if="child.type === 'text' && child.text !== '<hr>'"
+          v-else-if="child.type === 'text' && child.text !== '<hr>'"
           v-html="child.text.replace(/\n/g, '<br>')"
         ></span>
         <hr
