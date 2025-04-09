@@ -44,7 +44,7 @@ onMounted(() => {
   <div class="section-bios">
     <div class="container" v-if="section.preset === 'grid'">
       <div class="row">
-        <div class="col-12 col-md-6 offset-md-3 text-center mb-5">
+        <div class="col-12 col-md-5 offset-md-3 text-center mb-5">
           <h1
             v-if="section.title && section.titleHeading === 'h1'"
             v-html="section.title"
@@ -168,7 +168,7 @@ onMounted(() => {
     </div>
     <div class="container" v-if="section.preset === 'list'">
       <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-5">
           <h1
             v-if="section.title && section.titleHeading === 'h1'"
             v-html="section.title"
@@ -219,7 +219,7 @@ onMounted(() => {
             v-html="section.subtitle"
           ></p>
         </div>
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-7">
           <div class="bio-list">
             <div
               v-for="(bio, index) in biosWithoutDuplicatesBySlug"
@@ -400,7 +400,7 @@ onMounted(() => {
   .bio-card {
     .bio-link-arrow {
       margin-left: 0;
-      transition: all 0.1s ease-in-out;
+      transition: all 0.15s ease-in-out;
     }
     .bio-image {
       display: flex;

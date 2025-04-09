@@ -34,7 +34,7 @@ onMounted(() => {
         <div class="subtitle-outter mb-4" v-if="section.subtitle">
           <h3 class="subtitle">{{ section.subtitle }}</h3>
         </div>
-        <h2 class="mb-4 w-100 w-md-50">{{ section.title }}</h2>
+        <h2 class="mb-4 w-100 w-md-50" v-if="section.title" v-html="section.title"></h2>
       </div>
 
       <div class="row gx-blog masonry-row">

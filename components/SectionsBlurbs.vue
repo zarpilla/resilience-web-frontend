@@ -5,23 +5,19 @@ const props = defineProps<{
 }>();
 
 onMounted(() => {
-
   // const dots = ".blurb-effect-dots path, .blurb-effect-dots circle, .blurb-effect-dots ellipse, .blurb-effect-null path, .blurb-effect-null circle, .blurb-effect-null ellipse";
   // // when the viewport enter at the middle of the section, get all .blur circle, .blur path and .blur ellipse and set opacity to 1 randomnly, during 5 seconds, using $gsap
   // const elements = $gsap.utils.toArray(dots);
-
   // // set elements opacity to 0.2
   // $gsap.set(dots, {
   //   opacity: 0,
   // });
-
   // // set elements opacity to 1 at a random start time between 1 and 8 seconds
   // elements.forEach((element: any) => {
   //   $gsap.to(element, {
   //     opacity: 1,
   //     duration: 0.5,
   //     delay: Math.random() * 5 + 1,
-
   //     scrollTrigger: {
   //       trigger: ".section-blurbs",
   //       start: "top bottom",
@@ -32,13 +28,9 @@ onMounted(() => {
   //     // yoyo: true,
   //   });
   // });
-
-
   // // scrolltrigger to animate the circleMask when .section-blurbs is in the viewport
   // $gsap.set("#circleMask,#circleMaskTWO,#circleMask3", {scale:0, transformOrigin:"center center"});
   // $gsap.set("#toBeRevealed", {scale:0, transformOrigin:"center center"});
-  
-
   // $ScrollTrigger.create({
   //   trigger: ".section-blurbs",
   //   start: "top bottom",
@@ -61,16 +53,9 @@ onMounted(() => {
   //     // $gsap.to("#circleMask3", {scale:0, transformOrigin:"center center", duration:9, ease:'power3.in'});
   //   },
   // });
-
-
-  
-
   // $gsap.to("#circleMask", {scale:10, transformOrigin:"center center", duration:5, ease:'power3.in'});
-
   // $gsap.to("#circleMaskTWO", {scale:5, transformOrigin:"40% 20%", duration:5, ease:'power3.in'});
-
   // $gsap.to("#circleMask3", {scale:10, transformOrigin:"center center", duration:9, ease:'power3.in'});
-
 });
 
 const runtimeConfig = useRuntimeConfig();
@@ -96,7 +81,7 @@ const runtimeConfig = useRuntimeConfig();
             :alt="column.image.alternativeText"
             class="mb-3"
           />
-                      
+
           <h1
             v-if="column.title && column.titleHeading === 'h1'"
             v-html="column.title"
@@ -195,9 +180,13 @@ const runtimeConfig = useRuntimeConfig();
 .section-blurbs {
   .col {
     text-align: center;
+    @media screen and (max-width: 768px) {
+      margin-bottom: 2rem;      
+    }
   }
   img {
-    height: 120px;
+    height: 142px;
+    margin-bottom: 2rem !important;
   }
   .blurb {
     height: 140px;
@@ -215,7 +204,15 @@ const runtimeConfig = useRuntimeConfig();
   }
 
   p {
-    font-size: 21px;
+    margin: 0 2rem;
+    color: var(--Negre, #000);
+    text-align: center;
+    font-family: "PP Neue Montreal";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 21px; /* 105% */
+    margin-top: 1rem;
   }
 }
 </style>

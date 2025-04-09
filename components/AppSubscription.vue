@@ -114,14 +114,16 @@ const formModel = reactive({
         <span class="error" v-if="errorGprd">*</span>
       </label>
     </div>
+    <div>
     <button
       type="submit"
-      class="btn mt-5 zbtn-with-arrow-right w-100 btn-dark d-flex px-4"
+      class="btn mt-5 zbtn-with-arrow-right w-100 btn-dark btn-with-arrow-right btn-dark-hover d-flex px-4"
     >
       <span class="me-auto">
         {{ buttonText }}
       </span>
-      <svg
+      <span class="button__label"></span>
+      <!-- <svg
         class="valign"
         width="16"
         height="16"
@@ -133,8 +135,9 @@ const formModel = reactive({
           d="M-3.0598e-07 9L12.175 9L6.575 14.6L8 16L16 8L8 -3.49691e-07L6.575 1.4L12.175 7L-3.93402e-07 7L-3.0598e-07 9Z"
           fill="black"
         />
-      </svg>
+      </svg> -->
     </button>
+  </div>
   </form>
   <div v-else>
     <p v-if="submittedOk === true">

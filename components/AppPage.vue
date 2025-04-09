@@ -7,11 +7,9 @@ const props = defineProps<{
 }>();
 
 const populate = {
-  // "populate[metadata][shareImage]": "*",
-  // "populate[localizations]": "*",
-  // "populate[sections][populate]": "*",
   status: "published",
   locale,
+  populate: "*",
 };
 
 const { data: pages } = await useAPI("/api/pages", {
@@ -48,17 +46,55 @@ const sectionInfoIndex = props.type === "resource" ? 2 : 1;
 if (templateInfo.value && pageSections.length >= sectionInfoIndex) {
   let section = JSON.parse(JSON.stringify(pageSections[sectionInfoIndex]));
   if (section.__component === "sections.columns") {
-    
     const templateInfoData = templateInfo.value as any;
 
     if (templateInfoData.sections) {
       const templateColumn0 = templateInfoData.sections[0].columns[0];
       const templateColumn1 = templateInfoData.sections[0].columns[1];
+      if (templateColumn0.text && templateColumn0.text.length) {
+        const type = page.typology?.name;
+        const author = page.author;
+        const year = page.year?.name;
+        const tags = page.tags;
+        const tagsString = tags
+          ? tags.map((tag: any) => tag.name).join(", ")
+          : "-";
+        const scopes = page.scopes;
+        const scopesString = scopes
+          ? scopes.map((scope: any) => scope.name).join(", ")
+          : "-";
+        for (const textNode of templateColumn0.text) {
+          if (textNode && textNode.children) {
+            for (const child of textNode.children) {
+              if (child && child.text) {
+                if (child.text.includes("{type}")) {
+                  child.text = child.text.replace("{type}", type ?? "-");
+                }
+                if (child.text.includes("{authors}")) {
+                  child.text = child.text.replace("{authors}", author ?? "-");
+                }
+                if (child.text.includes("{year}")) {
+                  child.text = child.text.replace("{year}", year ?? "-");
+                }
+                if (child.text.includes("{tags}")) {
+                  child.text = child.text.replace("{tags}", tagsString ?? "-");
+                }
+                if (child.text.includes("{scopes}")) {
+                  child.text = child.text.replace(
+                    "{scopes}",
+                    scopesString ?? "-"
+                  );
+                }
+              }
+            }
+          }
+        }
+      }
       section.columns.unshift(templateColumn1);
       section.columns.unshift(templateColumn0);
-      pageSections[sectionInfoIndex] = section;
 
-      pageSections[sectionInfoIndex].styles.container = 'normal';
+      pageSections[sectionInfoIndex] = section;
+      pageSections[sectionInfoIndex].styles.container = "normal";
     }
   }
 }

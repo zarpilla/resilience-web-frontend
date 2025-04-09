@@ -62,9 +62,13 @@ const runtimeConfig = useRuntimeConfig();
       <template v-for="(child, childIndex) in block.children">
         <span
           :class="[{ bold: child.bold }, child.css]"
-          v-if="child.type === 'text'"
+          v-if="child.type === 'text' && child.text !== '<hr>'"
           v-html="child.text.replace(/\n/g, '<br>')"
         ></span>
+        <hr
+          class="hr"
+          v-if="child.type === 'text' && child.text === '<hr>'"          
+        ></hr>
         <template v-else-if="child.type === 'link'">
           <a :href="child.url" :class="child.css" class="link hoverable">
             <template

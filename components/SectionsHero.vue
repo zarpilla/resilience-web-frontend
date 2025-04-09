@@ -59,8 +59,9 @@ const homeTitleTransition = async () => {
 
   if (home0El && home1El && home2El) {
     // Fade in home0 and home2 with GSAP
-    await $gsap.to(home0El, { opacity: 1, duration: 1, delay: 0.5 });
-    await $gsap.to(home2El, { opacity: 1, duration: 1, delay: 0.5 });
+    await $gsap.to(home0El, { opacity: 1, duration: 1, delay: 0 });
+    await $gsap.to(home1El, { opacity: 1, duration: 1, delay: 0.5 });
+    await $gsap.to(home2El, { opacity: 1, duration: 1, delay: 1 });
 
     // Wait for home2El animation to complete
     // await $gsap.to(home2El, { duration: 1, delay: 3.5 });
@@ -249,11 +250,10 @@ onUnmounted(() => {
           </div>
           <template v-if="isHome">
             <h1 class="home-h1">
-              <span id="home0" style="opacity: 0">{{
+              <div id="home0" style="opacity: 0">{{
                 texts?.value.data.home0
-              }}</span>
-              <span id="home1" style="opacity: 0">&nbsp;{{ home1 }}</span>
-              <br />
+              }}</div>
+              <div id="home1" style="opacity: 0">{{ home1 }}</div>              
               <span id="home2" style="opacity: 0">{{ home2 }}</span>
             </h1>
             <!-- <span>{{texts?.value.data.home3}}</span>

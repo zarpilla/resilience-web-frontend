@@ -207,14 +207,14 @@ const columnsMore = {
       text: page.more1,
       titleHeading: "h3",
       styles: {
-        cssClass: "col-12 col-md-6",
+        cssClass: "col-12 col-md-5",
       },
     },    
     {
       id: 10,
       text: page.more2,
       styles: {
-        cssClass: "col-12 col-md-6",
+        cssClass: "col-12 col-md-7",
       },
     },
   ],
@@ -331,7 +331,7 @@ const columnsMore = {
     height: 100%;
   }
   .main-content > .section > .section-inner {
-    background-size: 25%;
+    background-size: 32%;
     background-position: 75% bottom;
 
     &.bio-hero {      

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { horizontalLoop } from "../utils/horizontal-loop";
+const { $gsap } = useNuxtApp();
 const props = defineProps<{
   section: any;
 }>();
@@ -15,8 +17,20 @@ const backgroundStyle = computed(() => ({
 
 const { $bs } = useNuxtApp() as any;
 
+const loop = ref<any>(null);
+
 onMounted(() => {
   try {
+    // const boxes = gsap.utils.toArray(`#carousel-${props.section.id} .carousel-box`);
+
+    // if (boxes.length === 0) {
+    //   return;
+    // }
+    // const box0: any = boxes[0];
+    // this.itemWidth = box0.offsetWidth;
+
+    //loop.value = horizontalLoop(boxes, { paused: true });
+
     if (props.section.preset === "three" && window.innerWidth > 768) {
       // get all section-slider-carousel-3 elements
       let carousels = document.querySelectorAll(
@@ -33,7 +47,7 @@ onMounted(() => {
           }
         });
         citems.forEach((el: any) => {
-          el.style.height = `${maxHeight + 25}px`;
+          el.style.height = `${maxHeight + 50}px`;
         });
       });
 
@@ -55,55 +69,49 @@ onMounted(() => {
           next = next.nextElementSibling;
         }
       });
+
+      // var myCarousel = document.querySelector(`#carousel-${props.section.id}`);
+      // const carousel = new $bs.Carousel(myCarousel);
     } else if (props.section.preset === "services" && window.innerWidth > 768) {
-      // get all section-slider-carousel-3 elements
-      let carousels = document.querySelectorAll(
-        ".section-slider-carousel-3-" + props.section.id
+      const boxes = $gsap.utils.toArray(
+        `#carousel-${props.section.id} .a-carousel-item`
       );
-      carousels.forEach((carousel) => {
-        // get the max height of the items within this carousel and set it to all the items
-        let citems = carousel.querySelectorAll(".carousel-blog-item");
-        let maxHeight = 0;
-        citems.forEach((el) => {
-          const elHeight = el.clientHeight;
-          if (elHeight > maxHeight) {
-            maxHeight = elHeight;
-          }
-        });
-        citems.forEach((el: any) => {
-          el.style.height = `${maxHeight + 25}px`;
-        });
-      });
+      console.log("boxes", boxes);
 
-      let items = document.querySelectorAll(
-        ".section-slider-carousel-3-" +
-          props.section.id +
-          " .carousel .carousel-item"
-      );
-      items.forEach((el) => {
-        const minPerSlide = 7;
-        let next = el.nextElementSibling;
-        for (var i = 1; i < minPerSlide; i++) {
-          if (!next) {
-            // wrap carousel by using first child
-            next = items[0];
-          }
-          let cloneChild: any = next.cloneNode(true);
-          el.appendChild(cloneChild.children[0]);
-          next = next.nextElementSibling;
-        }
-      });
+      // if (boxes.length === 0) {
+      //   return;
+      // }
+      // const box0: any = boxes[0];
+      // this.itemWidth = box0.offsetWidth;
+
+      loop.value = horizontalLoop($gsap, boxes, { paused: true });
+
+      const next = document
+      .querySelector(".a-carousel-next")
+
+      if (next) {
+        next.addEventListener("click", () =>
+          loop.value.next({ duration: 0.4, ease: "power1.inOut" })
+        );
+      }
+      const prev = document.querySelector(".a-carousel-prev");
+      if (prev) {
+        prev.addEventListener("click", () =>
+          loop.value.previous({ duration: 0.4, ease: "power1.inOut" })
+        );
+      }
+
+    } else {
+      // var myCarousel = document.querySelector(`#carousel-${props.section.id}`);
+      // const carousel = new $bs.Carousel(myCarousel);
     }
-
-    var myCarousel = document.querySelector(`#carousel-${props.section.id}`);
-    const carousel = new $bs.Carousel(myCarousel);
   } catch (e) {
     console.log("Bootstrap error: ", e);
   }
 });
 </script>
 <template>
-  <div class="section-slider">
+  <div class="section-slider" :id="`section-slider-${section.id}`">
     <div
       class="container"
       :class="{
@@ -131,7 +139,7 @@ onMounted(() => {
                 data-bs-ride="carousel"
                 :data-bs-interval="section.intervalMilliseconds || 8000"
               >
-                <div class="carousel-inner">
+                <div class="carousel-inner d-flex">
                   <div
                     class="carousel-item"
                     v-for="(item, i) in section.menu.children"
@@ -220,41 +228,46 @@ onMounted(() => {
         </div>
       </template>
       <template v-else-if="section.preset === 'services'">
-        <div class="container">
+        <div class="container mb-5">
           <div class="row text-left">
-            <h2 class="mb-3 text-left me-auto ms-0" v-html="section.title"></h2>
-            <div class="subtitle-outter mb-4">
-              <div class="subtitle-none" v-html="section.subTitle"></div>
+            <div class="col-12 col-md-4">
+              <h2
+                class="mb-3 text-left me-auto ms-0"
+                v-html="section.title"
+              ></h2>
+              <div class="subtitle-outter mb-4">
+                <div class="subtitle-none" v-html="section.subTitle"></div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="row text-left mb-0 mb-md-5">
-          <div class="col-12 col-md-9">
-            <div class="d-flex justify-content-center justify-content-md-end">
-              <button
-                class="carousel-control-prev carousel-control-prev-3 hoverable"
-                type="button"
-                :data-bs-target="`#carousel-${section.id}`"
-                data-bs-slide="prev"
+            <div class="col-12 col-md-8 position-relative">
+              <div
+                class="d-flex justify-content-center justify-content-md-end buttons-services"
               >
-                <span
-                  class="carousel-control-prev-icon"
-                  aria-hidden="true"
-                ></span>
-                <span class="visually-hidden">Previous</span>
-              </button>
-              <button
-                class="carousel-control-next carousel-control-next-3 hoverable"
-                type="button"
-                :data-bs-target="`#carousel-${section.id}`"
-                data-bs-slide="next"
-              >
-                <span
-                  class="carousel-control-next-icon"
-                  aria-hidden="true"
-                ></span>
-                <span class="visually-hidden">Next</span>
-              </button>
+                <button
+                  class="carousel-control-prev carousel-control-prev-3 hoverable a-carousel-prev"
+                  type="button"
+                  :zdata-bs-target="`#carousel-${section.id}`"
+                  zdata-bs-slide="prev"
+                >
+                  <span
+                    class="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button
+                  class="carousel-control-next carousel-control-next-3 hoverable a-carousel-next"
+                  type="button"
+                  :zdata-bs-target="`#carousel-${section.id}`"
+                  zdata-bs-slide="next"
+                >
+                  <span
+                    class="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -265,19 +278,18 @@ onMounted(() => {
           <div class="zcol-12">
             <div
               :id="`carousel-${section.id}`"
-              class="carousel slide"
-              data-bs-ride="carousel"
-              :data-bs-interval="section.intervalMilliseconds || 8000"
+              class="a-carousel slide"
+              zdata-bs-ride="carousel"
+              :zdata-bs-interval="section.intervalMilliseconds || 8000"
             >
-              <div class="carousel-inner fake-row" role="listbox">
+              <div class="a-carousel-inner d-flex a-fake-row" role="listbox">
                 <div
-                  class="carousel-item zcol-12 px-0"
+                  class="a-carousel-item zcol-12 px-0"
                   v-for="(item, i) in section.menu.children"
                   :key="i"
-                  :class="{ active: i === 0 }"
                 >
-                  <div class="col-md-auto mb-4 blog-twofifths">
-                    <div class="carousel-blog-item-services mx-custom">
+                  <div class="z">
+                    <div class="carousel-blog-item-services mx-services">
                       <div
                         class="metacolor mb-4"
                         :class="`metacolor-${i % 7}`"
@@ -285,11 +297,39 @@ onMounted(() => {
                       <div>
                         <div class="info">
                           <h3 class="mb-0">
-                            <MetaLink
-                              :page="item.page"
-                              :text="item.page.name"
-                              css-class="n-link"
-                            >
+                            <MetaLink :page="item.page" css-class="n-link">
+                              <span>{{ item.page.name }}</span>
+                              <svg
+                                class="svg-hoverable ms-2"
+                                width="25"
+                                height="25"
+                                viewBox="0 0 25 25"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <mask
+                                  id="mask0_1229_11482"
+                                  style="mask-type: alpha"
+                                  maskUnits="userSpaceOnUse"
+                                  x="0"
+                                  y="0"
+                                  width="25"
+                                  height="25"
+                                >
+                                  <rect
+                                    width="24"
+                                    height="24"
+                                    transform="matrix(-1 0 0 1 24.4922 0.418091)"
+                                    fill="#D9D9D9"
+                                  />
+                                </mask>
+                                <g mask="url(#mask0_1229_11482)">
+                                  <path
+                                    d="M6.89219 18.4181L16.4922 8.81809V17.4181H18.4922V5.41809H6.49219V7.41809H15.0922L5.49219 17.0181L6.89219 18.4181Z"
+                                    fill="#1C1B1F"
+                                  />
+                                </g>
+                              </svg>
                             </MetaLink>
                           </h3>
                         </div>
@@ -324,13 +364,15 @@ onMounted(() => {
       </template>
       <template v-else>
         <div class="row text-left mb-0 mb-md-5">
-          <div class="col-12 col-md-3">
-            <div class="z">
+          <div class="col-12 col-md-4">
+            <div class="the-sub-title">
               <h3>{{ section.subTitle }}</h3>
             </div>
           </div>
-          <div class="col-12 col-md-9">
-            <div class="d-flex justify-content-center justify-content-md-end">
+          <div class="col-12 col-md-8">
+            <div
+              class="d-flex w-100 justify-content-center justify-content-md-end"
+            >
               <button
                 class="carousel-control-prev carousel-control-prev-3 hoverable"
                 type="button"
@@ -369,16 +411,16 @@ onMounted(() => {
               data-bs-ride="carousel"
               :data-bs-interval="section.intervalMilliseconds || 8000"
             >
-              <div class="carousel-inner fake-row" role="listbox">
+              <div class="carousel-inner fake-row d-flex" role="listbox">
                 <div
                   class="carousel-item zcol-12 px-0"
                   v-for="(item, i) in section.menu.children"
                   :key="i"
                   :class="{ active: i === 0 }"
                 >
-                  <div class="col-md-4 mb-4 blog-onethird">
+                  <div class="zcol-md-4 mb-4 blog-onethird">
                     <div class="carousel-blog-item mx-custom">
-                      <div>
+                      <div class="carousel-blog-item-media">
                         <MetaLink :page="item.page">
                           <MetaMedia
                             css="media"
@@ -429,7 +471,7 @@ onMounted(() => {
                           </h3>
 
                           <div
-                            class="meta-description mt-4"
+                            class="meta-description mt-3"
                             v-if="item?.page.metadata?.metaDescriptionShort"
                           >
                             {{ item?.page.metadata?.metaDescriptionShort }}
@@ -449,7 +491,7 @@ onMounted(() => {
 </template>
 <style scoped lang="scss">
 .section-slider > .container {
-  padding-top: 60px;
+  // padding-top: 60px;
   padding-bottom: 60px;
 }
 .subtitle {
@@ -474,7 +516,7 @@ onMounted(() => {
   font-weight: 400;
   line-height: 2.375rem; /* 126.667% */
   letter-spacing: 0.01875rem;
-  width: 33.3%;
+  margin-bottom: 50px;
   @media screen and (max-width: 768px) {
     width: 100%;
   }
@@ -584,6 +626,45 @@ img {
     }
   }
 }
+.blog-onethird {
+  width: 33.3333%;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+}
+.a-carousel-item {
+  width: 324px;
+  @media screen and (min-width: 2200px) {
+    width: 364px;
+  }
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+  padding-bottom: 82px;
+
+  h3, h3 a, h3 a span {
+    color: var(--negre, #000);
+    font-family: "PP Neue Montreal";
+    font-size: 25px!important;
+    font-style: normal!important;
+    font-weight: 500!important;
+    line-height: 30px!important; /* 120% */
+    letter-spacing: 0.25px!important;
+  }
+}
+.a-fake-row {
+  flex-wrap: nowrap;
+  width: fit-content;
+}
+.circle-bottom {
+  position: absolute;
+  right: -11px;
+  bottom: -11px;
+}
+.buttons-services {
+  @media screen and (min-width: 768px) {
+    margin-top: 110px;
+  }
+}
 </style>
 
 <style lang="scss">
@@ -608,20 +689,25 @@ img {
 
 .carousel-control-next-icon,
 .carousel-control-prev-icon {
-  width: 4rem;
-  height: 4rem;
+  width: 6rem;
+  height: 6rem;
 }
 .carousel-control-next,
 .carousel-control-prev {
   opacity: 1;
   width: 10%;
   cursor: none !important;
+  @media screen and (max-width: 768px) {
+    width: 30%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
 }
 
 .carousel-control-prev {
   transition: all 0.3s ease-in-out;
   &:hover {
-    left: 10px !important;
+    left: 0px !important;
   }
 }
 .carousel-control-next {
@@ -640,9 +726,9 @@ img {
   position: relative !important;
 }
 .carousel-control-prev-3 {
-  left: 20px;
+  left: 10px;
   @media screen and (max-width: 768px) {
-    left: -20px;
+    left: -10px;
   }
 }
 .carousel-control-next-3 {
@@ -739,24 +825,28 @@ img {
     margin-left: 18px !important;
   }
 }
+.mx-services {
+  margin-right: 42px !important;
+  margin-left: 42px !important;
+}
 .fake-row {
   padding: 0 !important;
   @media screen and (min-width: 769px) {
-    width: 100%;
-    margin-left: -10px;
-    margin-right: -10px;
+    width: 102%;
+    margin-left: -16px;
+    margin-right: -16px;
   }
 }
 
 .slider-three-black {
   h3 {
-    color: var(--Blanc, #fff);
-    font-family: "PP Neue Montreal";
-    font-size: 2.5rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 2.8125rem; /* 112.5% */
-    letter-spacing: 0.025rem;
+    color: var(--Blanc, #fff)!important;
+    font-family: "PP Neue Montreal"!important;
+    font-size: 40px!important;
+    font-style: normal!important;
+    font-weight: 400!important;
+    line-height: 45px!important; /* 112.5% */
+    letter-spacing: 0.4px!important;
   }
   .carousel-blog-item {
     border-radius: 0.3125rem;
@@ -773,8 +863,12 @@ img {
       line-height: 120%; /* 1.6875rem */
       letter-spacing: 0.01406rem;
     }
+    .carousel-blog-item-media {
+      height: 246px;
+      overflow: hidden;
+    }
     img {
-      border-radius: 6px 6px 0 0!important;
+      border-radius: 6px 6px 0 0 !important;
     }
     .info {
       padding-bottom: 4rem;
@@ -789,6 +883,36 @@ img {
       line-height: 120%; /* 1.40625rem */
       letter-spacing: 0.01175rem;
     }
+  }
+}
+.slider-three-black-kaos {
+  .the-sub-title h3 {
+    color: var(--Taronja, #f5825e) !important;
+    font-family: "PP Neue Montreal" !important;
+    font-size: 40px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 45px !important; /* 112.5% */
+    letter-spacing: 0.4px !important;
+  }
+  .carousel-blog-item-media {
+    height: 480px !important;
+    border-radius: 0 !important;
+  }
+  .carousel-blog-item img {
+    height: 480px;
+    border-radius: 0 !important;
+  }
+  .carousel-blog-item {
+    background: #000;
+    border-radius: 0 !important;
+
+    .info {
+      padding: 30px 0 0 0;
+    }
+  }
+  .arrow {
+    display: none;
   }
 }
 </style>

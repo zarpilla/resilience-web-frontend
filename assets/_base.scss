@@ -31,7 +31,9 @@ body {
 }
 
 .container-xxl {
-    max-width: calc(100% - 80px);
+    max-width: 100%;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 
     @media screen and (max-width: 768px) {
         max-width: 100%;
@@ -147,6 +149,34 @@ p {
     @media screen and (max-width: 768px) {
         font-size: 18px;
         line-height: 24px;
+    }
+}
+
+.article-details {
+    p {
+        color: var(--Negre, #000);
+        font-family: "PP Neue Montreal";
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 150%;
+        /* 27px */
+        letter-spacing: 0.18px;
+    }
+
+    p .bold {
+        color: #898989;
+        font-family: "PP Neue Montreal";
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 150%;
+        /* 27px */
+        letter-spacing: 0.18px;
+    }
+
+    hr {
+        color: #898989;
     }
 }
 
@@ -489,7 +519,7 @@ a.color-text-light {
 
         &.blog-onethird {
             .media {
-                border-radius: 5px 5px 0 0!important;
+                border-radius: 5px 5px 0 0 !important;
             }
         }
 
@@ -667,61 +697,71 @@ img.active-image {
     @media screen and (min-width: 769px) {
         padding-top: 150px;
     }
+
     @media screen and (max-width: 768px) {
         .section:first-child {
             .section-inner {
-                height: 100vh!important;
+                height: 100vh !important;
                 background-position-y: 60vh;
             }
         }
     }
+
     .first-hero {
         background: linear-gradient(to right, #fff 50%, #fff0 50%);
     }
 }
 
-.page-type-service {    
-    
+.page-type-service {
+
     .main-content .first-hero {
         .scope-hero {
             padding-right: 50px;
         }
     }
+
     &.page-slug-avaluacio {
         .main-content .first-hero {
             background: linear-gradient(to right, #d9c05d 41%, #fff0 41%);
         }
     }
+
     &.page-slug-comunicacio-consultoria {
         .main-content .first-hero {
-            background: linear-gradient(to right, #b06047 41%, #fff0 41%);            
+            background: linear-gradient(to right, #b06047 41%, #fff0 41%);
         }
     }
+
     &.page-slug-disseny {
         .main-content .first-hero {
             background: linear-gradient(to right, #9a5567 41%, #fff0 41%);
         }
     }
+
     &.page-slug-estrategia {
         .main-content .first-hero {
             background: linear-gradient(to right, #bbc4c3 41%, #fff0 41%);
         }
     }
+
     &.page-slug-facilitacio {
         .main-content .first-hero {
             background: linear-gradient(to right, #999b65 41%, #fff0 41%);
         }
     }
+
     &.page-slug-participacio {
         .main-content .first-hero {
             background: linear-gradient(to right, #6e5655 41%, #fff0 41%);
         }
     }
+
     &.page-slug-recerca {
         .main-content .first-hero {
             background: linear-gradient(to right, #b2896e 41%, #fff0 41%);
         }
     }
+
     /*
       .metacolor-0 {
     background: #d9c05d;
@@ -747,16 +787,15 @@ img.active-image {
 }
 
 .page-type-article .main-content {
-    
+
     .section:first-child {
         .section-hero-inner {
             width: 50%;
             padding-right: 100px;
         }
     }
-    @media screen and (max-width: 768px) {
-        
-    }
+
+    @media screen and (max-width: 768px) {}
 }
 
 a.bio-link .bio-title {
@@ -773,4 +812,17 @@ a.bio-link .bio-title {
     h6 {
         color: #F5825E !important;
     }
+}
+
+.hoverable .svg-hoverable {
+    transition: transform 0.15s ease-in-out;
+    transform: translateX(0px) translateY(0px);
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+
+}
+
+.hoverable:hover .svg-hoverable {
+    transform: translateX(5px) translateY(-5px);
 }

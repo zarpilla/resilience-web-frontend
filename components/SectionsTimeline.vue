@@ -75,4 +75,14 @@ onUnmounted(() => {});
     </div>
   </div>
 </template>
-<style lang="scss"></style>
+<style lang="scss">
+.section-timeline *{
+color: #000!important;
+text-shadow: none!important;
+
+.tl-slide.tl-full-image-background p, .tl-slide.tl-full-color-background p, .tl-slide.tl-full-image-background h1, .tl-slide.tl-full-color-background h1, .tl-slide.tl-full-image-background h2, .tl-slide.tl-full-color-background h2, .tl-slide.tl-full-image-background h3, .tl-slide.tl-full-color-background h3, .tl-slide.tl-full-image-background h4, .tl-slide.tl-full-color-background h4, .tl-slide.tl-full-image-background h5, .tl-slide.tl-full-color-background h5, .tl-slide.tl-full-image-background h6, .tl-slide.tl-full-color-background h6{
+  color: #000!important;
+  text-shadow: none!important;
+}
+}
+</style>
