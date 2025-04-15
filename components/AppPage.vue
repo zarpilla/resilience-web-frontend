@@ -8,7 +8,7 @@ const props = defineProps<{
 
 const populate = {
   status: "published",
-  locale,
+  locale: locale.value,
   populate: "*",
 };
 
@@ -38,7 +38,11 @@ const pageSections = [...sectionsData.sections];
 
 const { data: templateInfo } = await useAPI(
   "/api/pages/templates/" + page.type + "-information",
-  {}
+  {
+    query: {
+      locale: locale.value,
+    },
+  }
 );
 
 const sectionInfoIndex = props.type === "resource" ? 2 : 1;
