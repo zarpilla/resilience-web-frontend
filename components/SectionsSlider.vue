@@ -76,14 +76,7 @@ onMounted(() => {
       const boxes = $gsap.utils.toArray(
         `#carousel-${props.section.id} .a-carousel-item`
       );
-      console.log("boxes", boxes);
-
-      // if (boxes.length === 0) {
-      //   return;
-      // }
-      // const box0: any = boxes[0];
-      // this.itemWidth = box0.offsetWidth;
-
+      
       loop.value = horizontalLoop($gsap, boxes, { paused: true });
 
       const next = document
@@ -174,7 +167,7 @@ onMounted(() => {
                               ></MetaLink>
                             </h3>
                             <div class="meta-description mt-4">
-                              {{ item?.page.metadata?.metaDescription }}
+                              {{ item?.page?.metadata?.metaDescription }}
                             </div>
                             <div class="mt-4">
                               <MetaLink
@@ -337,10 +330,10 @@ onMounted(() => {
                         <div class="meta-description mt-4">
                           <MetaLink
                             :page="item.page"
-                            :text="item?.page.metadata?.metaDescription"
+                            :text="item?.page?.metadata?.metaDescription"
                             css-class="text-link"
                           >
-                            {{ item?.page.metadata?.metaDescription }}
+                            {{ item?.page?.metadata?.metaDescription }}
                           </MetaLink>
                         </div>
                       </div>
@@ -424,7 +417,7 @@ onMounted(() => {
                         <MetaLink :page="item.page">
                           <MetaMedia
                             css="media"
-                            :media="item.page.metadata.shareImage"
+                            :media="item.page?.metadata?.shareImage"
                           />
                         </MetaLink>
                       </div>
@@ -474,7 +467,7 @@ onMounted(() => {
                             class="meta-description mt-3"
                             v-if="item?.page.metadata?.metaDescriptionShort"
                           >
-                            {{ item?.page.metadata?.metaDescriptionShort }}
+                            {{ item?.page?.metadata?.metaDescriptionShort }}
                           </div>
                         </div>
                       </div>

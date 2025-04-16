@@ -10,7 +10,7 @@ const populate = {
   //"populate[mainImage]": "*",
   //"populate[largeImage]": "*",
   status: "published",
-  locale,
+  locale: locale.value,
 };
 const { data: pages } = await useAPI("/api/bios", {
   query: {
@@ -31,7 +31,11 @@ const page = documents.data[0];
 
 const { data: templates } = await useAPI(
   "/api/pages/templates/bio",
-  {}
+  {
+    query: {
+      locale: locale.value,
+    },
+  }
 );
 
 const templatesData = templates.value as any;

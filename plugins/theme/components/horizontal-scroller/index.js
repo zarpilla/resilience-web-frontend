@@ -147,7 +147,7 @@ export default class HorizontalScroller {
 
   destroy() {
     if (this.loop){
-      console.log("destroying loop");
+      // console.log("destroying loop");
       this.loop.kill();      
     }
   }

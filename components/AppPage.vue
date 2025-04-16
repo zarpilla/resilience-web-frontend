@@ -30,7 +30,7 @@ const page = documents.data[0];
 
 const { data: sections } = await useAPI(
   "/api/pages/sections/" + page.documentId,
-  {}
+  { query: { locale: locale.value } }
 );
 
 const sectionsData = sections.value as any;
@@ -109,7 +109,11 @@ page.localizations = sectionsData.localizations;
 
 const { data: templates } = await useAPI(
   "/api/pages/templates/" + page.type,
-  {}
+  {
+    query: {
+      locale: locale.value,
+    },
+  }
 );
 
 const templatesData = templates.value as any;
