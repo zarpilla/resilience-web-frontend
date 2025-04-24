@@ -15,30 +15,98 @@ const anySectionHasVerticalScroller = computed(() => {
 
 const runtimeConfig = useRuntimeConfig();
 
-const hasColumnsWithFixedOnScroll = props.section.columns && props.section.columns.some((column: any) => column.styles && column.styles?.cssClass && column.styles?.cssClass.includes('fixed-when-scroll'));
+const hasColumnsWithFixedOnScroll =
+  props.section.columns &&
+  props.section.columns.some(
+    (column: any) =>
+      column.styles &&
+      column.styles?.cssClass &&
+      column.styles?.cssClass.includes("fixed-when-scroll")
+  );
 
 const frameImage = ref<number>(140);
 
 onMounted(() => {
   if (anySectionHasVerticalScroller.value) {
     // when the viewport enter at the middle of the section, the .vertical-scroller should be animated from -80vw to 0vw
-    $gsap.set('.vertical-scroller', { x: '150vw' });
-    $gsap.to('.vertical-scroller', {
-      x: '0vw',
-      ease: 'none',
+    $gsap.set(".vertical-scroller", { x: "150vw" });
+    $gsap.to(".vertical-scroller", {
+      x: "0vw",
+      ease: "none",
       scrollTrigger: {
-        trigger: '.has-vertical-scroller',
-        start: 'top center',
-        end: 'bottom center',
+        trigger: ".has-vertical-scroller",
+        start: "top center",
+        end: "bottom center",
         //scrub: true,
       },
     });
+
+    const seconds = 10;
+    // When vertical scroller has more than 5 images (allImages), randomize the src of the images (images) with the src of all the images (allImages)
+    const verticalScrollerImages = document.querySelectorAll(
+      ".vertical-scroller-image"
+    );
+    const allHiddenImages = document.querySelectorAll(
+      ".vertical-scroller-image-hidden"
+    );
+
+    if (allHiddenImages.length > 5) {
+      // Create an array of all image sources from hidden images
+      const allImageSources = Array.from(allHiddenImages).map((img) =>
+        img.getAttribute("src")
+      );
+
+      // Set up interval to randomize images
+      setInterval(() => {
+        // Shuffle the array of image sources
+        const shuffledSources = [...allImageSources].sort(
+          () => Math.random() - 0.5
+        );
+        // Update each visible image with a random source
+        verticalScrollerImages.forEach((imageWrapper, index) => {
+          if (index < 5) {
+            const img = imageWrapper;
+            const originalSrc = img.getAttribute("src") || "";
+            const originalSrcSet = img.getAttribute("srcset");
+            const newSrc = shuffledSources[index] || originalSrc;
+            if (img) {
+              // Animate the change with a fade effect
+              $gsap.to(img, {
+                opacity: 0,
+                duration: 0.5,
+                // random delaybetween 0 and 2 seconds
+                delay: Math.random() * 10,
+                onComplete: () => {
+                  /* ts-ignore */
+                  img.setAttribute("src", newSrc);
+                  img.setAttribute(
+                    "srcset",
+                    originalSrcSet?.replace(originalSrc, newSrc) ?? ""
+                  );
+                  /* ts-ignore */
+                  $gsap.to(img, {
+                    opacity: 1,
+                    duration: 0.5,
+                  });
+                },
+              });
+            }
+          }
+        });
+      }, seconds * 1000);
+    }
   }
 
-  const hasColumnsWithTextSlider = props.section.styles?.cssClass && props.section.styles?.cssClass.includes('columns-with-text-slider');   
-  const columnsWithTextSlider = document.querySelectorAll( '.columns-with-text-slider');
+  const hasColumnsWithTextSlider =
+    props.section.styles?.cssClass &&
+    props.section.styles?.cssClass.includes("columns-with-text-slider");
+  const columnsWithTextSlider = document.querySelectorAll(
+    ".columns-with-text-slider"
+  );
   if (hasColumnsWithTextSlider && columnsWithTextSlider) {
-    const elements = document.querySelectorAll('.columns-with-text-slider .text-slider');
+    const elements = document.querySelectorAll(
+      ".columns-with-text-slider .text-slider"
+    );
     const tl = $gsap.timeline({ repeat: -1 });
     elements.forEach((element, index) => {
       $gsap.set(element, { opacity: 0 });
@@ -46,37 +114,37 @@ onMounted(() => {
     elements.forEach((element, index) => {
       const nextElement = elements[index + 1] || elements[0];
       tl.to(element, { opacity: 1, duration: 0 })
-      .to(element, { opacity: 0, duration: 1 }, "+=3")
-      .to(nextElement, { opacity: 1, duration: 1 }, "-=1");
+        .to(element, { opacity: 0, duration: 1 }, "+=3")
+        .to(nextElement, { opacity: 1, duration: 1 }, "-=1");
     });
   }
 
   if (hasColumnsWithFixedOnScroll) {
-    $gsap.to('.fixed-when-scroll > div', {
-      position: 'fixed',
-      ease: 'none',
+    $gsap.to(".fixed-when-scroll > div", {
+      position: "fixed",
+      ease: "none",
       scrollTrigger: {
-        trigger: '.fixed-when-scroll > div',
-        start: 'top+=200px center',
-        end: 'bottom-=250px center',
-        endTrigger: '.fixed-when-scroll',
+        trigger: ".fixed-when-scroll > div",
+        start: "top+=200px center",
+        end: "bottom-=250px center",
+        endTrigger: ".fixed-when-scroll",
         scrub: true,
         pin: true,
         // markers: true,
         onUpdate: (self) => {
           // frameImgae betwween 140 and 279
           frameImage.value = Math.round(140 + (279 - 140) * self.progress);
-        }
-      
+        },
       },
     });
   }
 });
-
 </script>
 <template>
-  <div class="section-columns" :class="{ 'has-vertical-scroller': anySectionHasVerticalScroller}">
-
+  <div
+    class="section-columns"
+    :class="{ 'has-vertical-scroller': anySectionHasVerticalScroller }"
+  >
     <div class="container">
       <div
         v-if="section.columns && section.columns.length"
@@ -97,7 +165,6 @@ onMounted(() => {
               : 'none',
           }"
         >
-        
           <h1
             v-if="column.title && column.titleHeading === 'h1'"
             v-html="column.title"
@@ -125,7 +192,6 @@ onMounted(() => {
 
           <MetaText :text="column.text" :styles="column.styles" />
 
-
           <div v-if="hasColumnsWithFixedOnScroll && columnIndex === 0">
             <img :src="`/images/frames/frame_${frameImage}.png`" alt="" />
           </div>
@@ -133,7 +199,6 @@ onMounted(() => {
           <div v-if="column.media" class="media">
             <MetaMedia :media="column.media" />
           </div>
-
 
           <div
             v-if="column.c2a"
@@ -146,37 +211,43 @@ onMounted(() => {
             v-if="column.verticalScroller"
             class="vertical-scroller d-flex flex-wrap"
           >
-          
             <div class="column-0">
               <MetaMedia
-              v-if="column.verticalScroller.children.length > 0"
-              :css="`vertical-scroller-image vertical-scroller-image-0 media-border-radius`"              
-              :media="column.verticalScroller.children[0].image"
-            />
+                v-if="column.verticalScroller.children.length > 0"
+                :css="`vertical-scroller-image vertical-scroller-image-0 media-border-radius`"
+                :media="column.verticalScroller.children[0].image"
+              />
             </div>
             <div class="column-1">
               <MetaMedia
-              v-if="column.verticalScroller.children.length > 1"
-              :css="`vertical-scroller-image vertical-scroller-image-1 media-border-radius`"              
-              :media="column.verticalScroller.children[1].image"
-            />
-            <MetaMedia
-              v-if="column.verticalScroller.children.length > 2"
-              :css="`vertical-scroller-image vertical-scroller-image-2 media-border-radius`"              
-              :media="column.verticalScroller.children[2].image"
-            />
+                v-if="column.verticalScroller.children.length > 1"
+                :css="`vertical-scroller-image vertical-scroller-image-1 media-border-radius`"
+                :media="column.verticalScroller.children[1].image"
+              />
+              <MetaMedia
+                v-if="column.verticalScroller.children.length > 2"
+                :css="`vertical-scroller-image vertical-scroller-image-2 media-border-radius`"
+                :media="column.verticalScroller.children[2].image"
+              />
             </div>
             <div class="column-2">
               <MetaMedia
-              v-if="column.verticalScroller.children.length > 3"
-              :css="`vertical-scroller-image vertical-scroller-image-3 media-border-radius`"              
-              :media="column.verticalScroller.children[3].image"
-            />
-            <MetaMedia
-              v-if="column.verticalScroller.children.length > 4"
-              :css="`vertical-scroller-image vertical-scroller-image-4 media-border-radius`"              
-              :media="column.verticalScroller.children[4].image"
-            />
+                v-if="column.verticalScroller.children.length > 3"
+                :css="`vertical-scroller-image vertical-scroller-image-3 media-border-radius`"
+                :media="column.verticalScroller.children[3].image"
+              />
+              <MetaMedia
+                v-if="column.verticalScroller.children.length > 4"
+                :css="`vertical-scroller-image vertical-scroller-image-4 media-border-radius`"
+                :media="column.verticalScroller.children[4].image"
+              />
+
+              <MetaMedia
+                v-for="image in column.verticalScroller.children"
+                :key="image.id"
+                :css="`vertical-scroller-image-hidden d-none`"
+                :media="image.image"
+              />
             </div>
           </div>
         </div>
@@ -201,16 +272,16 @@ onMounted(() => {
   margin-bottom: 120px;
 
   @media screen and (max-width: 768px) {
-      position: relative;
-      left: inherit;
-      width: 100%;
+    position: relative;
+    left: inherit;
+    width: 100%;
   }
 
-  > div{
-    width: calc(33% - 10px);    
+  > div {
+    width: calc(33% - 10px);
   }
 }
-.link{
+.link {
   text-decoration: underline;
   color: #000;
 }
@@ -218,45 +289,45 @@ onMounted(() => {
 
 <style lang="scss">
 .vertical-scroller-image {
-  width: 100%!important;
+  width: 100% !important;
   border-radius: 20px;
-  margin-bottom: 0!important;
+  margin-bottom: 0 !important;
 }
-.vertical-scroller-image-0{
+.vertical-scroller-image-0 {
   margin-top: 80px;
-  height: 450px!important;
+  height: 450px !important;
   object-fit: cover;
   @media screen and (max-width: 768px) {
-    height: 250px!important;    
+    height: 250px !important;
     margin-top: 30px;
   }
 }
-.vertical-scroller-image-1{
-  height: 250px!important;
+.vertical-scroller-image-1 {
+  height: 250px !important;
   @media screen and (max-width: 768px) {
-    height: 150px!important;    
+    height: 150px !important;
   }
 }
-.vertical-scroller-image-2{
-  margin-top: 20px;  
-  height: 340px!important;
+.vertical-scroller-image-2 {
+  margin-top: 20px;
+  height: 340px !important;
   @media screen and (max-width: 768px) {
-    height: 150px!important;    
+    height: 150px !important;
   }
 }
-.vertical-scroller-image-3{
+.vertical-scroller-image-3 {
   margin-top: 60px;
   @media screen and (max-width: 768px) {
-    height: 150px!important;    
+    height: 150px !important;
   }
 }
-.vertical-scroller-image-4{
+.vertical-scroller-image-4 {
   margin-top: 20px;
   @media screen and (max-width: 768px) {
-    height: 120px!important;    
+    height: 120px !important;
   }
 }
-.has-vertical-scroller{
+.has-vertical-scroller {
   overflow: hidden;
 }
 </style>

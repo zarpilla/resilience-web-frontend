@@ -206,7 +206,11 @@ onBeforeUnmount(() => {
           <SectionsColumns
             v-else-if="section.__component === 'sections.columns'"
             :section="section"
-          ></SectionsColumns>
+          ></SectionsColumns>          
+          <SectionsTabs
+            v-else-if="section.__component === 'sections.tabs'"
+            :section="section"
+          ></SectionsTabs>
           <SectionsMenu
             v-else-if="section.__component === 'sections.menu'"
             :section="section"

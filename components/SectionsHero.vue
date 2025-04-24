@@ -272,11 +272,11 @@ onUnmounted(() => {
 .section-hero {
   background-size: cover;
 
-  &.first-hero {
-    @media screen and (max-width: 768px) {
-      padding-top: 100px;
-    }
-  }
+  // &.first-hero {
+  //   @media screen and (max-width: 768px) {
+  //     padding-top: 100px;
+  //   }
+  // }
   .bold {
     font-weight: 500;
   }
