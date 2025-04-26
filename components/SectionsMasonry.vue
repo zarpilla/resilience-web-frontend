@@ -23,8 +23,8 @@ onMounted(() => {
   let column = columnCount - 1;
   for (let i = 0; i < items.length; i++) {
     columns.value[column].push(items[i]);
-    column = (column + 1) % columnCount;
-  }
+    column = (column - 1 + columnCount) % columnCount;
+}
 });
 </script>
 <template>
@@ -37,7 +37,7 @@ onMounted(() => {
         <h2 class="mb-4 w-100 w-md-50" v-if="section.title" v-html="section.title"></h2>
       </div>
 
-      <div class="row gx-blog masonry-row">
+      <div class="row gx-blog masonry-row">        
         <div
           v-for="(column, i) in columns"
           :key="i"

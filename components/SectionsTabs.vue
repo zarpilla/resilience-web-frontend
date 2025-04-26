@@ -11,7 +11,9 @@ const widthStyle = computed(() => ({
 
 const activeTab = ref(0);
 
-onMounted(() => {});
+onMounted(() => {
+  //https://codepen.io/akapowl/pen/rNeqQzW/4a8ca13036ba9f2f80919f671da1fed0
+});
 </script>
 <template>
   <div class="section-tabs">

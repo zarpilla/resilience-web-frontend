@@ -142,7 +142,7 @@ onMounted(() => {
                     <div class="carousel-item-inner">
                       <div class="row">
                         <div class="col-12 col-md-7 py-0 px-0 pe-md-0">
-                          <MetaLink :page="item.page" css-class="hoverable">
+                          <MetaLink :page="item.page" css-class="hoverable" v-if="item?.page?.metadata">
                             <NuxtImg
                               :src="
                                 runtimeConfig.public.apiBase +
@@ -166,7 +166,7 @@ onMounted(() => {
                                 css-class="hoverable"
                               ></MetaLink>
                             </h3>
-                            <div class="meta-description mt-4">
+                            <div class="meta-description mt-4" v-if="item?.page?.metadata">
                               {{ item?.page?.metadata?.metaDescription }}
                             </div>
                             <div class="mt-4">
@@ -327,7 +327,7 @@ onMounted(() => {
                           </h3>
                         </div>
 
-                        <div class="meta-description mt-4">
+                        <div class="meta-description mt-4" v-if="item?.page?.metadata">
                           <MetaLink
                             :page="item.page"
                             :text="item?.page?.metadata?.metaDescription"
@@ -407,7 +407,7 @@ onMounted(() => {
               <div class="carousel-inner fake-row d-flex" role="listbox">
                 <div
                   class="carousel-item zcol-12 px-0"
-                  v-for="(item, i) in section.menu.children"
+                  v-for="(item, i) in section.menu.children.filter((item: any) => item.page)"
                   :key="i"
                   :class="{ active: i === 0 }"
                 >
@@ -416,6 +416,7 @@ onMounted(() => {
                       <div class="carousel-blog-item-media">
                         <MetaLink :page="item.page">
                           <MetaMedia
+                          v-if="item.page && item.page.metadata && item.page.metadata.shareImage"
                             css="media"
                             :media="item.page?.metadata?.shareImage"
                           />

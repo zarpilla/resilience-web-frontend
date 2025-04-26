@@ -197,6 +197,14 @@ body.page-type-article .section-sections-hero.section-inner-index-0 .first-hero 
     min-height: 750px
 }
 
+body.page-type-service .section-sections-hero.section-inner-index-0 {
+    min-height: 650px
+}
+
+body.page-type-service .section-sections-hero.section-inner-index-0 .section-hero-inner {
+    min-height: 650px;
+}
+
 body:not(.page-slug-home) {
 
     h1 {
@@ -579,6 +587,13 @@ a.color-text-light {
     }
 }
 
+.image-at-150 .media .img {
+    max-width: 125%;
+    width: 125%;
+    margin-top: -25%;
+    margin-left: -30%;
+}
+
 .carousel-blog-item {
     background-color: #FFF;
     border-radius: 20px;
@@ -701,7 +716,10 @@ a.color-text-light {
 
 
 img.active-image {
-    max-width: fit-content;
+
+    width: 273px;
+    height: 178px;
+
     border-radius: 20px;
     pointer-events: none;
 
@@ -726,6 +744,46 @@ img.active-image {
 
     .first-hero {
         background: linear-gradient(to right, #fff 50%, #fff0 50%);
+    }
+
+    .section-sections-columns:not(.h3-normal) {
+        h3 {
+            color: var(--negre, #000);
+            font-family: "PP Neue Montreal";
+            font-size: 33px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 120%;
+            /* 39.6px */
+            letter-spacing: 0.33px;
+            margin-bottom: 60px !important;
+        }
+    }
+}
+
+.page-type-capability .main-content {
+    .section-sections-columns:not(.h3-normal) {
+        h2 {
+            color: var(--Negre, #000);
+            font-family: "PP Neue Montreal";
+            font-size: 33px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 120%;
+            /* 39.6px */
+            letter-spacing: 0.33px;
+        }
+
+        h3 {
+            color: var(--Negre, #000);
+            font-family: "PP Neue Montreal";
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 130%;
+            /* 31.2px */
+            letter-spacing: 0.24px;
+        }
     }
 }
 

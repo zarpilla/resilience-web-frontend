@@ -87,7 +87,7 @@ onMounted(() => {
               >
                 <h2>
                   <a
-                    class="toogle-menu hoverable"
+                    class="toogle-menu hoverable collapsed"
                     data-bs-toggle="collapse"
                     :href="`#collapse-menu-${item.id}`"
                     role="button"

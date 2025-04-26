@@ -26,20 +26,40 @@ const hasColumnsWithFixedOnScroll =
 
 const frameImage = ref<number>(140);
 
+const createParallaxEffect = () => {
+  // Target the parent container of all vertical scroller images
+  const verticalScrollerContainers =
+    document.querySelectorAll(".vertical-scroller");
+
+  if (!verticalScrollerContainers.length) return;
+
+  verticalScrollerContainers.forEach((container) => {
+    // Using fromTo instead of to to ensure proper reversal
+    $gsap.fromTo(
+      container,
+      { y: 80 }, // Starting position
+      {
+        y: -80, // End position when scrolled down
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".has-vertical-scroller",
+          start: "top bottom", // When the top of the trigger hits the bottom of the viewport
+          end: "bottom top", // When the bottom of the trigger hits the top of the viewport
+          scrub: true, // Smooth scrubbing, takes 1 second to "catch up" to the scrollbar
+          // markers: true,    // Uncomment for debugging
+          invalidateOnRefresh: true, // Recalculate on window resize
+        },
+      }
+    );
+
+  });
+};
+
 onMounted(() => {
   if (anySectionHasVerticalScroller.value) {
-    // when the viewport enter at the middle of the section, the .vertical-scroller should be animated from -80vw to 0vw
-    $gsap.set(".vertical-scroller", { x: "150vw" });
-    $gsap.to(".vertical-scroller", {
-      x: "0vw",
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".has-vertical-scroller",
-        start: "top center",
-        end: "bottom center",
-        //scrub: true,
-      },
-    });
+    // with gsap, I'd like a litte parallax effect on the vertical scroller images
+
+    createParallaxEffect();
 
     const seconds = 10;
     // When vertical scroller has more than 5 images (allImages), randomize the src of the images (images) with the src of all the images (allImages)
@@ -203,7 +223,7 @@ onMounted(() => {
           <div
             v-if="column.c2a"
             :style="`padding: ${column?.styles?.padding ?? '0'};
-          margin: ${column?.styles?.margin ?? 'inherit'}`"
+          ${column?.styles?.margin ? 'margin:' + column?.styles?.margin : ''}`"
           >
             <MetaC2A :c2a="column.c2a" :section="section" />
           </div>
@@ -266,9 +286,9 @@ onMounted(() => {
 }
 .vertical-scroller {
   gap: 10px;
-  width: 50vw;
+  width: 50%;
   position: absolute;
-  left: 52vw;
+  left: 50%;
   margin-bottom: 120px;
 
   @media screen and (max-width: 768px) {
@@ -278,7 +298,7 @@ onMounted(() => {
   }
 
   > div {
-    width: calc(33% - 10px);
+    width: 240px;
   }
 }
 .link {
@@ -289,43 +309,24 @@ onMounted(() => {
 
 <style lang="scss">
 .vertical-scroller-image {
-  width: 100% !important;
+  width: 240px !important;
+  height: 260px !important;
   border-radius: 20px;
   margin-bottom: 0 !important;
+  object-fit: cover;
 }
 .vertical-scroller-image-0 {
-  margin-top: 80px;
-  height: 450px !important;
-  object-fit: cover;
-  @media screen and (max-width: 768px) {
-    height: 250px !important;
-    margin-top: 30px;
-  }
-}
-.vertical-scroller-image-1 {
-  height: 250px !important;
-  @media screen and (max-width: 768px) {
-    height: 150px !important;
-  }
+  margin-top: 120px;
 }
 .vertical-scroller-image-2 {
   margin-top: 20px;
-  height: 340px !important;
-  @media screen and (max-width: 768px) {
-    height: 150px !important;
-  }
 }
+
 .vertical-scroller-image-3 {
   margin-top: 60px;
-  @media screen and (max-width: 768px) {
-    height: 150px !important;
-  }
 }
 .vertical-scroller-image-4 {
   margin-top: 20px;
-  @media screen and (max-width: 768px) {
-    height: 120px !important;
-  }
 }
 .has-vertical-scroller {
   overflow: hidden;

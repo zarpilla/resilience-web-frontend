@@ -99,7 +99,7 @@ const columnsHero0 = {
   __component: "sections.hero",
   styles: {
     backgroundColor: "#F2EEEA",
-    height: "75vh",
+    //height: "75vh",
     cssClass: "align-bottom-left bio-hero cite",
     backgroundImage: page.mainImage,
     zcontainer: "small",
@@ -335,7 +335,7 @@ const columnsMore = {
     height: 100%;
   }
   .main-content > .section > .section-inner {
-    background-size: 32%;
+    background-size: 650px auto;
     background-position: 75% bottom;
 
     &.bio-hero {      
@@ -346,6 +346,12 @@ const columnsMore = {
         background-position: top center;
       }
     }
+  }
+  .section-inner-index-0{
+    .section-hero-inner{
+      padding-top: 200px;
+    }
+
   }
   .section-hero-inner {
     background-color: inherit !important;

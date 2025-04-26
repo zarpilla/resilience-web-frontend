@@ -165,7 +165,7 @@ const runtimeConfig = useRuntimeConfig();
           <div
             v-if="column.c2a"
             :style="`padding: ${column?.styles?.padding ?? '0'};
-          margin: ${column?.styles?.margin ?? 'inherit'}`"
+          ${column?.styles?.margin ? 'margin:' + column?.styles?.margin : ''}`"
           >
             <MetaC2A :c2a="column.c2a" :section="section" />
           </div>

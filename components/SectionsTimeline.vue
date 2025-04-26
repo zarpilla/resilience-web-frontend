@@ -76,13 +76,34 @@ onUnmounted(() => {});
   </div>
 </template>
 <style lang="scss">
-.section-timeline *{
-color: #000!important;
-text-shadow: none!important;
+.section-timeline * {
+  color: #000 !important;
+  text-shadow: none !important;
 
-.tl-slide.tl-full-image-background p, .tl-slide.tl-full-color-background p, .tl-slide.tl-full-image-background h1, .tl-slide.tl-full-color-background h1, .tl-slide.tl-full-image-background h2, .tl-slide.tl-full-color-background h2, .tl-slide.tl-full-image-background h3, .tl-slide.tl-full-color-background h3, .tl-slide.tl-full-image-background h4, .tl-slide.tl-full-color-background h4, .tl-slide.tl-full-image-background h5, .tl-slide.tl-full-color-background h5, .tl-slide.tl-full-image-background h6, .tl-slide.tl-full-color-background h6{
-  color: #000!important;
-  text-shadow: none!important;
-}
+  .tl-slide.tl-full-image-background p,
+  .tl-slide.tl-full-color-background p,
+  .tl-slide.tl-full-image-background h1,
+  .tl-slide.tl-full-color-background h1,
+  .tl-slide.tl-full-image-background h2,
+  .tl-slide.tl-full-color-background h2,
+  .tl-slide.tl-full-image-background h3,
+  .tl-slide.tl-full-color-background h3,
+  .tl-slide.tl-full-image-background h4,
+  .tl-slide.tl-full-color-background h4,
+  .tl-slide.tl-full-image-background h5,
+  .tl-slide.tl-full-color-background h5,
+  .tl-slide.tl-full-image-background h6,
+  .tl-slide.tl-full-color-background h6 {
+    color: #000 !important;
+    text-shadow: none !important;
+  }
+  .tl-slide.tl-full-image-background .tl-caption, .tl-slide.tl-full-color-background .tl-caption, .tl-slide.tl-full-image-background .tl-credit, .tl-slide.tl-full-color-background .tl-credit {
+    color: #000 !important;
+    text-shadow: none !important;
+  }
+  
+  .tl-slide .tl-slide-content-container .tl-slide-content .tl-text{
+    padding: 0 40px 0 40px;
+  }
 }
 </style>

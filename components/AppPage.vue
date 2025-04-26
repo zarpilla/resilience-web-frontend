@@ -186,6 +186,7 @@ onBeforeUnmount(() => {
     <template v-for="(section, i) in page.sections" :key="section.id">
       <div class="section">
         <AppSection
+          v-if="section.__component !== 'sections.template'"
           :section="section"
           :slug="slug"
           :type="props.type"

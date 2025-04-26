@@ -74,7 +74,7 @@ const footer = computed(() =>
             <div
               class="col-12 col-md-6 main-text py-5 px-120px text-title text-center text-md-start bt-mob bb-mob"
             >
-              {{ footer?.value.middle2Text }}
+            <span v-html="footer?.value.middle2Text"></span>              
               <div class="mt-5">
                 <AppSubscription
                   :email-text="footer?.value.subscriptionForm.email"

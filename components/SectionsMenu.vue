@@ -488,7 +488,7 @@ onUnmounted(() => {
               css-class="menu-item"
             >
               <svg
-              class="me-2"
+                class="me-2"
                 width="25"
                 height="24"
                 viewBox="0 0 25 24"
@@ -537,7 +537,7 @@ onUnmounted(() => {
               <span class="page-name">{{ nextPageFromMenu.page.name }}</span>
 
               <svg
-              class="ms-2"
+                class="ms-2"
                 width="25"
                 height="24"
                 viewBox="0 0 25 24"
@@ -684,8 +684,13 @@ onUnmounted(() => {
 
   .section-menu-tags-cloud-placeholder {
     position: absolute;
-    top: -350px;
-    right: 10%;
+    top: -240px;
+    left: 50%;
+
+    
+    img {
+      width: 273px;
+      height: 178px;}
   }
 
   .explora {
@@ -697,17 +702,17 @@ onUnmounted(() => {
     }
   }
 
-  a .page-name{
+  a .page-name {
     color: var(--Negre, #000);
-text-align: right;
-font-family: "PP Neue Montreal";
-font-size: 22px;
-font-style: normal;
-font-weight: 500;
-line-height: 38px; /* 172.727% */
-letter-spacing: 0.22px;
-text-decoration: none!important;
-vertical-align: -3px;
+    text-align: right;
+    font-family: "PP Neue Montreal";
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 38px; /* 172.727% */
+    letter-spacing: 0.22px;
+    text-decoration: none !important;
+    vertical-align: -3px;
   }
 }
 </style>
