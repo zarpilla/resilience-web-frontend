@@ -303,7 +303,12 @@ const setItemsHeight = () => {
 
   .blog-hr {
       margin-bottom: 40px;
-      color: #898989
+      color: #898989;
+
+      hr{
+        opacity: 1;
+        color: #898989;
+      }
     }
   .more-info {
     gap: 16px;

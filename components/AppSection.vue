@@ -20,7 +20,7 @@ const sectionIsScroller = computed(() => {
 });
 
 const backgroundImageStyle = computed(() => ({
-  backgroundImage: (props.section.styles?.backgroundImage)
+  backgroundImage: props.section.styles?.backgroundImage
     ? `url(${
         runtimeConfig.public.apiBase + props.section.styles?.backgroundImage.url
       })`
@@ -28,13 +28,17 @@ const backgroundImageStyle = computed(() => ({
 }));
 
 const backgroundImage2Style = computed(() => ({
-  backgroundImage: (props.type !== "scope" && props.type !== "service") && props.section.styles?.backgroundImage2 && !sectionIsScroller.value
-    ? `url(${
-        runtimeConfig.public.apiBase + props.section.styles?.backgroundImage2.url
-      })`
-    : "none",
+  backgroundImage:
+    props.type !== "scope" &&
+    props.type !== "service" &&
+    props.section.styles?.backgroundImage2 &&
+    !sectionIsScroller.value
+      ? `url(${
+          runtimeConfig.public.apiBase +
+          props.section.styles?.backgroundImage2.url
+        })`
+      : "none",
 }));
-
 
 const backgroundColorStyle = computed(() => ({
   backgroundColor: props.section.styles?.backgroundColor
@@ -69,7 +73,11 @@ const paddingStyle = computed(() => ({
       props.section.styles?.textColor ?? 'dark'
     } width-container-${props.section.styles?.container ?? 'null'} ${
       section.styles?.cssClass ?? 'css-z'
-    } ${sectionIsScroller ? 'background-attachment-fixed' : ''} section-inner-type-${props.type} ${
+    } ${section.styles?.paddingTop === false ? 'pt-0' : 'pt-z'} ${
+      section.styles?.paddingBottom === false ? 'pb-0' : 'pb-z'
+    } ${
+      sectionIsScroller ? 'background-attachment-fixed' : ''
+    } section-inner-type-${props.type} ${
       section.styles?.borderBottom ? 'border-bottom-black-50' : ''
     } section-inner-index-${props.index}`"
     :style="[
@@ -81,8 +89,7 @@ const paddingStyle = computed(() => ({
       paddingStyle,
     ]"
   >
-    <div
-    class="section-inner-2" :style="[backgroundImage2Style]">
+    <div class="section-inner-2" :style="[backgroundImage2Style]">
       <slot></slot>
     </div>
   </div>
@@ -96,10 +103,10 @@ const paddingStyle = computed(() => ({
 .section-inner-2 {
   background-size: 52%;
   background-repeat: no-repeat;
-  background-position: right;  
+  background-position: right;
   @media screen and (max-width: 768px) {
     background-size: 100%;
-    background-position: center;    
+    background-position: center;
   }
 }
 .width-auto {
@@ -161,7 +168,6 @@ const paddingStyle = computed(() => ({
   }
 }
 
-
 .width-container-small {
   margin-left: auto;
   margin-right: auto;
@@ -184,7 +190,6 @@ const paddingStyle = computed(() => ({
     }
   }
 }
-
 
 .width-pct80 .container .row {
   width: 80% !important;
@@ -214,18 +219,19 @@ const paddingStyle = computed(() => ({
   margin-left: auto;
   margin-right: auto;
 }
-.section-inner-type-scope{
+.section-inner-type-scope {
   padding-top: 150px;
 }
-.section-inner-type-scope, .section-inner-type-service{
+.section-inner-type-scope,
+.section-inner-type-service {
   @media screen and (min-width: 769px) {
     // background-position: 50vw 0px!important;
-    background-size: 100%!important; 
-  }  
+    background-size: 100% !important;
+  }
 }
-.section-inner-type-article{
-  @media screen and (min-width: 769px) {    
-    background-image: none!important;
-  }  
+.section-inner-type-article {
+  @media screen and (min-width: 769px) {
+    background-image: none !important;
+  }
 }
 </style>

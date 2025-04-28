@@ -144,7 +144,6 @@ const addLetters = (word: string): Promise<void> => {
     if (!home2El) return resolve();
 
     const addNextLetter = () => {
-      
       const currentLength = home2El.innerText.replace(/\u00A0/g, " ").length; // Replace non-breaking spaces for comparison
 
       if (currentLength < word.length) {
@@ -219,7 +218,11 @@ onUnmounted(() => {
         <div class="row">
           <div class="col-12 col-md-6">
             <div class="scope-hero-caos" v-if="isArticle">
-              <b class="scope-title">{{ texts?.value.data.articles }}</b>
+              <b class="scope-title">
+                <MetaLink
+                  :page="texts?.value.data.articlesPage"
+                  :text="texts?.value.data.articles"></MetaLink>                
+              </b>
             </div>
             <MetaTitleSubTitle :section="section" :type="type" />
           </div>
@@ -250,10 +253,10 @@ onUnmounted(() => {
           </div>
           <template v-if="isHome">
             <h1 class="home-h1">
-              <div id="home0" style="opacity: 0">{{
-                texts?.value.data.home0
-              }}</div>
-              <div id="home1" style="opacity: 0">{{ home1 }}</div>              
+              <div id="home0" style="opacity: 0">
+                {{ texts?.value.data.home0 }}
+              </div>
+              <div id="home1" style="opacity: 0">{{ home1 }}</div>
               <span id="home2" style="opacity: 0">{{ home2 }}</span>
             </h1>
             <!-- <span>{{texts?.value.data.home3}}</span>
@@ -291,7 +294,8 @@ onUnmounted(() => {
   text-align: left;
   align-items: flex-end;
 }
-.align-top-right .align-centered, .align-centered {
+.align-top-right .align-centered,
+.align-centered {
   text-align: center;
   align-items: center;
   margin: auto;
@@ -351,7 +355,7 @@ onUnmounted(() => {
     }
   }
 }
-.scope-hero-caos {
+.scope-hero-caos a{
   color: var(--Taronja, #f5825e);
   font-family: "PP Neue Montreal";
   font-size: 16px;
@@ -363,5 +367,43 @@ onUnmounted(() => {
 }
 .article-image {
   width: 100%;
+}
+.page-type-article {
+  .section-inner-index-0{
+    height: auto!important;
+  }
+  .first-hero {
+    h1 {
+      color: var(--Blanc, #fff);
+      font-family: "PP Neue Montreal";
+      font-size: 50px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 110%; /* 55px */
+      letter-spacing: 0.5px;
+      margin-bottom: 2rem;
+    }
+    h3 {
+      color: var(--Blanc, #fff);
+      font-family: "Queens Trial";
+      font-size: 26px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 130%; /* 33.8px */
+      letter-spacing: 0.26px;
+    }
+
+    .align-bottom-left{
+      align-items: flex-start;
+
+      .col-12:first-child {
+        align-self: flex-end;
+        padding-bottom: 4rem;
+      }
+    }
+    .section-hero-inner {
+      height: auto!important;
+    }
+  }
 }
 </style>
