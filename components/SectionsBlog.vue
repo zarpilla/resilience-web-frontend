@@ -141,77 +141,73 @@ const setItemsHeight = () => {
                         'mb-0': blogPage.width !== 'threethirds',
                       }"
                     >
-                      <svg
-                        v-if="blogPage.width === 'threethirds'"
-                        class="mb-1"
-                        width="41"
-                        height="41"
-                        viewBox="0 0 41 41"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <mask
-                          id="mask0_1232_16488"
-                          style="mask-type: alpha"
-                          maskUnits="userSpaceOnUse"
-                          x="0"
-                          y="0"
+                      <MetaLink :page="blogPage.page" css-class="n-link">
+                        <svg
+                          v-if="blogPage.width === 'threethirds'"
+                          class="mb-1"
                           width="41"
                           height="41"
+                          viewBox="0 0 41 41"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          <rect
-                            x="0.525391"
-                            y="0.736328"
-                            width="40"
-                            height="40"
-                            fill="#D9D9D9"
-                          />
-                        </mask>
-                        <g mask="url(#mask0_1232_16488)">
-                          <path
-                            d="M10.8033 30.5696L8.85876 28.625L25.6367 11.8475H10.3588V9.06958H30.3588V29.0696H27.5808V13.7917L10.8033 30.5696Z"
-                            fill="#F5825E"
-                          />
-                        </g>
-                      </svg>
-                      <svg
-                        v-if="blogPage.width !== 'threethirds'"
-                        width="31"
-                        height="31"
-                        viewBox="0 0 31 31"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <mask
-                          id="mask0_1236_17892"
-                          style="mask-type: alpha"
-                          maskUnits="userSpaceOnUse"
-                          x="0"
-                          y="0"
+                          <mask
+                            id="mask0_1232_16488"
+                            style="mask-type: alpha"
+                            maskUnits="userSpaceOnUse"
+                            x="0"
+                            y="0"
+                            width="41"
+                            height="41"
+                          >
+                            <rect
+                              x="0.525391"
+                              y="0.736328"
+                              width="40"
+                              height="40"
+                              fill="#D9D9D9"
+                            />
+                          </mask>
+                          <g mask="url(#mask0_1232_16488)">
+                            <path
+                              d="M10.8033 30.5696L8.85876 28.625L25.6367 11.8475H10.3588V9.06958H30.3588V29.0696H27.5808V13.7917L10.8033 30.5696Z"
+                              fill="#F5825E"
+                            />
+                          </g>
+                        </svg>
+                        <svg
+                          v-if="blogPage.width !== 'threethirds'"
                           width="31"
                           height="31"
+                          viewBox="0 0 31 31"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          <rect
-                            x="0.525391"
-                            y="0.0761719"
-                            width="30"
-                            height="30"
-                            fill="#D9D9D9"
-                          />
-                        </mask>
-                        <g mask="url(#mask0_1236_17892)">
-                          <path
-                            d="M8.23383 22.4512L6.77539 20.9927L19.3588 8.40961H7.90039V6.32617H22.9004V21.3262H20.817V9.86773L8.23383 22.4512Z"
-                            fill="#F5825E"
-                          />
-                        </g>
-                      </svg>
-                      <br />
-                      <MetaLink
-                        :page="blogPage.page"
-                        :text="blogPage.page.name"
-                        css-class="n-link"
-                      >
+                          <mask
+                            id="mask0_1236_17892"
+                            style="mask-type: alpha"
+                            maskUnits="userSpaceOnUse"
+                            x="0"
+                            y="0"
+                            width="31"
+                            height="31"
+                          >
+                            <rect
+                              x="0.525391"
+                              y="0.0761719"
+                              width="30"
+                              height="30"
+                              fill="#D9D9D9"
+                            />
+                          </mask>
+                          <g mask="url(#mask0_1236_17892)">
+                            <path
+                              d="M8.23383 22.4512L6.77539 20.9927L19.3588 8.40961H7.90039V6.32617H22.9004V21.3262H20.817V9.86773L8.23383 22.4512Z"
+                              fill="#F5825E"
+                            />
+                          </g>
+                        </svg>
+                        <div v-text="blogPage.page.name"></div>
                       </MetaLink>
                     </h3>
 
@@ -248,7 +244,7 @@ const setItemsHeight = () => {
             </div>
           </div>
           <div class="blog-hr">
-            <hr>
+            <hr />
           </div>
         </div>
       </div>
@@ -261,7 +257,6 @@ const setItemsHeight = () => {
     background: #fff;
     border-radius: 20px;
     margin-bottom: 40px;
-
 
     .media {
       border-radius: 20px 0 0 20px;
@@ -302,14 +297,14 @@ const setItemsHeight = () => {
   }
 
   .blog-hr {
-      margin-bottom: 40px;
-      color: #898989;
+    margin-bottom: 40px;
+    color: #898989;
 
-      hr{
-        opacity: 1;
-        color: #898989;
-      }
+    hr {
+      opacity: 1;
+      color: #898989;
     }
+  }
   .more-info {
     gap: 16px;
   }
@@ -345,6 +340,19 @@ const setItemsHeight = () => {
     margin-left: 40px;
     margin-right: 40px;
     width: calc(100% - 80px);
+
+    a {
+      svg {
+        transition: transform 0.15s ease-in-out;
+        transform: translateX(0px) translateY(0px);
+        will-change: transform;
+        backface-visibility: hidden;
+        perspective: 1000px;
+      }
+      &:hover svg {
+        transform: translateX(5px) translateY(-5px);
+      }
+    }
   }
 }
 .blog-item {

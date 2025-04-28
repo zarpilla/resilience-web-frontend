@@ -38,6 +38,7 @@ const isScope = computed(() => props.type === "scope");
 const isService = computed(() => props.type === "service");
 const isCapability = computed(() => props.type === "capability");
 const isArticle = computed(() => props.type === "article");
+const isResource = computed(() => props.type === "resource");
 
 const textStore = useTextStore();
 const texts = computed(() =>
@@ -221,7 +222,8 @@ onUnmounted(() => {
               <b class="scope-title">
                 <MetaLink
                   :page="texts?.value.data.articlesPage"
-                  :text="texts?.value.data.articles"></MetaLink>                
+                  :text="texts?.value.data.articles"
+                ></MetaLink>
               </b>
             </div>
             <MetaTitleSubTitle :section="section" :type="type" />
@@ -251,6 +253,15 @@ onUnmounted(() => {
           <div class="scope-hero-capability" v-if="isCapability">
             <b class="scope-title">{{ texts?.value.data.capabilities }}</b>
           </div>
+          <div class="scope-hero-resources" v-if="isResource">
+            <b class="scope-title">
+              <MetaLink
+                :page="texts?.value.data.resourcesPage"
+                :text="texts?.value.data.resources"
+              ></MetaLink>
+            </b>
+          </div>
+
           <template v-if="isHome">
             <h1 class="home-h1">
               <div id="home0" style="opacity: 0">
@@ -355,8 +366,19 @@ onUnmounted(() => {
     }
   }
 }
-.scope-hero-caos a{
+.scope-hero-caos a {
   color: var(--Taronja, #f5825e);
+  font-family: "PP Neue Montreal";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 70px; /* 437.5% */
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+.scope-hero-resources a {
+  color: var(--Negre, #000);
+  text-align: center;
   font-family: "PP Neue Montreal";
   font-size: 16px;
   font-style: normal;
@@ -369,8 +391,8 @@ onUnmounted(() => {
   width: 100%;
 }
 .page-type-article {
-  .section-inner-index-0{
-    height: auto!important;
+  .section-inner-index-0 {
+    height: auto !important;
   }
   .first-hero {
     h1 {
@@ -393,7 +415,7 @@ onUnmounted(() => {
       letter-spacing: 0.26px;
     }
 
-    .align-bottom-left{
+    .align-bottom-left {
       align-items: flex-start;
 
       .col-12:first-child {
@@ -402,7 +424,7 @@ onUnmounted(() => {
       }
     }
     .section-hero-inner {
-      height: auto!important;
+      height: auto !important;
     }
   }
 }

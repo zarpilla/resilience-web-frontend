@@ -74,7 +74,7 @@ const footer = computed(() =>
             <div
               class="col-12 col-md-6 main-text py-5 px-120px text-title text-center text-md-start bt-mob bb-mob"
             >
-            <span v-html="footer?.value.middle2Text"></span>              
+              <span v-html="footer?.value.middle2Text"></span>
               <div class="mt-5">
                 <AppSubscription
                   :email-text="footer?.value.subscriptionForm.email"
@@ -85,12 +85,16 @@ const footer = computed(() =>
                 ></AppSubscription>
               </div>
             </div>
-            <div class="col-12 col-md-3 text-center text-md-start py-5 ps-5 pe-0 bl-white">
+            <div
+              class="col-12 col-md-3 text-center text-md-start py-5 ps-5 pe-0 bl-white"
+            >
               <div>
                 <div class="text-title pb-4">
                   {{ footer?.value.middle3Title }}
                 </div>
-                <div class="main-text d-flex flex-wrap media-logos-footer-wrapper">
+                <div
+                  class="main-text d-flex flex-wrap media-logos-footer-wrapper"
+                >
                   <div
                     v-for="(logo, index) in footer?.value.middle3Logos"
                     :key="index"
@@ -225,13 +229,13 @@ footer {
     letter-spacing: 0.18px;
     text-decoration: none;
   }
-  .bt-mob{
+  .bt-mob {
     border-top: 1px solid #fff;
     @media screen and (min-width: 768px) {
       border-top: 0;
     }
   }
-  .bb-mob{
+  .bb-mob {
     border-bottom: 1px solid #fff;
     @media screen and (min-width: 768px) {
       border-bottom: 0;
@@ -242,32 +246,41 @@ footer {
     display: table-cell;
     vertical-align: middle;
   }
-  .media-logos-footer a img{
+  .media-logos-footer a img {
     display: table-cell;
     vertical-align: middle;
   }
 }
 </style>
 <style lang="scss">
-  .media-logos-footer-wrapper {
-    display: table-cell;
-    vertical-align: middle;
-    height: 80px;
+footer {
+  .media-primary {
+    width: 145px;
+    max-width: 145px;
   }
-  .media-logos-footer a img{
-    display: table-cell;
-    vertical-align: middle;
-    height: 80px;
+  .media-secondary {
+    width: 125px;
+    max-width: 125px;
   }
-  .media-logos-footer a{
-    display: table-cell;
-    vertical-align: middle;
-    height: 80px;
-  }
-  .media-logos-footer{
-    display: table-cell;
-    vertical-align: middle;
-    height: 80px;
-  }
-
+}
+.media-logos-footer-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+  height: 80px;
+}
+.media-logos-footer a img {
+  display: table-cell;
+  vertical-align: middle;
+  height: 80px;
+}
+.media-logos-footer a {
+  display: table-cell;
+  vertical-align: middle;
+  height: 80px;
+}
+.media-logos-footer {
+  display: table-cell;
+  vertical-align: middle;
+  height: 80px;
+}
 </style>
