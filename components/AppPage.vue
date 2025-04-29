@@ -64,6 +64,7 @@ if (templateInfo.value && pageSections.length >= sectionInfoIndex) {
           ? tags.map((tag: any) => tag.name).join(", ")
           : "-";
         const scopes = page.scopes;
+        console.log('scopes', scopes)
         const scopesString = scopes
           ? scopes.map((scope: any) => scope.name).join(", ")
           : "-";

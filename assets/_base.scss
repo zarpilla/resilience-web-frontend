@@ -114,6 +114,28 @@ h2 {
     }
 }
 
+.h2-capability h2 {
+    color: var(--Negre, #000) !important;
+    font-family: "PP Neue Montreal";
+    font-size: 40px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 120% !important;
+    /* 48px */
+    letter-spacing: 0.4px !important;
+}
+
+.h2-capability h3 {
+    color: var(--Negre, #000) !important;
+    font-family: "PP Neue Montreal" !important;
+    font-size: 26px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 120% !important;
+    /* 31.2px */
+    letter-spacing: 0.26px !important;
+}
+
 h3,
 h3 a {
     color: var(--blanc, #FFF);
@@ -153,6 +175,9 @@ p {
 }
 
 .article-details {
+
+    margin-bottom: 3rem;
+    
     p {
         color: var(--Negre, #000);
         font-family: "PP Neue Montreal";
@@ -226,6 +251,19 @@ body:not(.page-slug-home) {
         @media screen and (max-width: 768px) {
             font-size: 50px;
             line-height: 50px;
+        }
+    }
+
+    &.page-type-bio {
+
+        h1 {
+            color: var(--Negre, #000);
+            font-size: 60px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 110%;
+            /* 66px */
+            letter-spacing: 0.6px;
         }
     }
 
@@ -764,11 +802,22 @@ img.active-image {
             /* 39.6px */
             letter-spacing: 0.33px;
             margin-bottom: 60px !important;
+
+            cite {
+                color: var(--Negre, #000);
+                font-size: 35px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 120%;                
+                /* 42px */
+                letter-spacing: 0;
+            }
         }
     }
 }
 
-.page-type-article .main-content, .page-type-capability .main-content {
+.page-type-article .main-content,
+.page-type-capability .main-content {
     .section-sections-columns:not(.h3-normal) {
         h2 {
             color: var(--Negre, #000);
@@ -790,9 +839,34 @@ img.active-image {
             line-height: 130%;
             /* 31.2px */
             letter-spacing: 0.24px;
+
+            cite {
+                color: var(--Negre, #000);
+                font-size: 35px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 120%;
+                /* 42px */
+                letter-spacing: 0;
+            }
         }
     }
 }
+
+.page-type-article .section-inner-index-0 {
+    @media screen and (max-width: 768px) {
+        background-image: none !important;
+        
+    }
+}
+
+.page-type-capability .section-inner-index-0 .section-inner-2{
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+// .page-type-capability .main-content .first-hero {
+
+// }
 
 .page-type-service {
 

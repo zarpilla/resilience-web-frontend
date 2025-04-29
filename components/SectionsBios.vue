@@ -413,12 +413,12 @@ onMounted(() => {
       font-family: "Queens";
       font-size: 30px;
       font-style: normal;
-      font-weight: 600;
+      font-weight: 500;
       line-height: 120%;
       text-align: center;
       width: 100%;
       text-decoration: none !important;
-      padding: 20px;
+      padding: 50px;
 
       .orange {
         color: transparent;
