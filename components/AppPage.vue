@@ -64,7 +64,6 @@ if (templateInfo.value && pageSections.length >= sectionInfoIndex) {
           ? tags.map((tag: any) => tag.name).join(", ")
           : "-";
         const scopes = page.scopes;
-        console.log('scopes', scopes)
         const scopesString = scopes
           ? scopes.map((scope: any) => scope.name).join(", ")
           : "-";
@@ -108,14 +107,11 @@ page.sections = pageSections;
 page.metadata = sectionsData.metadata;
 page.localizations = sectionsData.localizations;
 
-const { data: templates } = await useAPI(
-  "/api/pages/templates/" + page.type,
-  {
-    query: {
-      locale: locale.value,
-    },
-  }
-);
+const { data: templates } = await useAPI("/api/pages/templates/" + page.type, {
+  query: {
+    locale: locale.value,
+  },
+});
 
 const templatesData = templates.value as any;
 
@@ -208,7 +204,7 @@ onBeforeUnmount(() => {
           <SectionsColumns
             v-else-if="section.__component === 'sections.columns'"
             :section="section"
-          ></SectionsColumns>          
+          ></SectionsColumns>
           <SectionsTabs
             v-else-if="section.__component === 'sections.tabs'"
             :section="section"

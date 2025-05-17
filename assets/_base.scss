@@ -177,7 +177,7 @@ p {
 .article-details {
 
     margin-bottom: 3rem;
-    
+
     p {
         color: var(--Negre, #000);
         font-family: "PP Neue Montreal";
@@ -247,6 +247,7 @@ body:not(.page-slug-home) {
         font-style: normal;
         font-weight: 500;
         line-height: 70px;
+        letter-spacing: 0.7px;
 
         @media screen and (max-width: 768px) {
             font-size: 50px;
@@ -773,7 +774,7 @@ img.active-image {
     }
 }
 
-.page-type-scope .main-content {
+.zpage-type-scope .main-content {
     @media screen and (min-width: 769px) {
         padding-top: 150px;
     }
@@ -808,12 +809,26 @@ img.active-image {
                 font-size: 35px;
                 font-style: normal;
                 font-weight: 500;
-                line-height: 120%;                
+                line-height: 120%;
                 /* 42px */
                 letter-spacing: 0;
             }
         }
     }
+}
+
+.page-type-scope .main-content,
+.page-type-capability .main-content {
+
+    .section-inner-index-0,
+    .first-hero,
+    .first-hero .section-hero-inner {
+        min-height: 358px;
+    }
+}
+
+.page-type-scope .section-inner-index-0 .section-inner-2 {
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .page-type-article .main-content,
@@ -856,11 +871,11 @@ img.active-image {
 .page-type-article .section-inner-index-0 {
     @media screen and (max-width: 768px) {
         background-image: none !important;
-        
+
     }
 }
 
-.page-type-capability .section-inner-index-0 .section-inner-2{
+.page-type-capability .section-inner-index-0 .section-inner-2 {
     background-color: rgba(0, 0, 0, 0.3);
 }
 
@@ -981,4 +996,26 @@ a.bio-link .bio-title {
 
 .hoverable:hover .svg-hoverable {
     transform: translateX(5px) translateY(-5px);
+}
+
+.on-ens-trobaras h1 {
+    color: var(--negre, #000);
+    font-family: "PP Neue Montreal";
+    font-size: 30px !important;
+    font-style: normal;
+    font-weight: 700 !important;
+    line-height: 38px !important;
+    /* 126.667% */
+    letter-spacing: 0.3px !important;
+}
+
+.on-ens-trobaras h3 {
+    color: var(--negre, #000);
+    font-family: "PP Neue Montreal";
+    font-size: 30px !important;
+    font-style: normal;
+    font-weight: 400 !important;
+    line-height: 38px !important;
+    letter-spacing: 0.3px !important;
+    margin-bottom: 0px !important;
 }

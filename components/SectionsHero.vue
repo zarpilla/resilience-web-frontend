@@ -190,7 +190,7 @@ onUnmounted(() => {
     }"
   >
     <div class="container">
-      <div class="row" v-if="isScope || isService">
+      <div class="row" v-if="isService">
         <div class="col-12 col-lg-5">
           <div
             class="section-hero-inner d-flex"
@@ -250,8 +250,13 @@ onUnmounted(() => {
         :style="[heightStyle, backgroundImageStyle, backgroundColorStyle]"
       >
         <div>
-          <div class="scope-hero-capability" v-if="isCapability">
-            <b class="scope-title">{{ texts?.value.data.capabilities }}</b>
+          <div class="scope-hero-capability" v-if="isCapability || isScope">
+            <b class="scope-title" v-if="isScope">{{
+              texts?.value.data.scopes
+            }}</b>
+            <b class="scope-title" v-else>{{
+              texts?.value.data.capabilities
+            }}</b>
           </div>
           <div class="scope-hero-resources" v-if="isResource">
             <b class="scope-title">
@@ -341,7 +346,7 @@ onUnmounted(() => {
 }
 </style>
 <style lang="scss">
-.section-inner-type-scope,
+.zsection-inner-type-scope,
 .section-inner-type-service,
 .section-inner-type-article {
   .align-centered {
