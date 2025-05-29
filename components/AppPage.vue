@@ -249,6 +249,16 @@ onBeforeUnmount(() => {
             :section="section"
           >
           </SectionsTimeline>
+          <SectionsVideo
+            v-else-if="section.__component === 'sections.video'"
+            :section="section"
+          >
+          </SectionsVideo>
+          <SectionsEcosystem
+            v-else-if="section.__component === 'sections.ecosystem'"
+            :section="section"
+          >
+          </SectionsEcosystem>
         </AppSection>
       </div>
     </template>

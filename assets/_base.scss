@@ -1024,3 +1024,10 @@ a.bio-link .bio-title {
     letter-spacing: 0.3px !important;
     margin-bottom: 0px !important;
 }
+
+.media-border-20 {
+    img,
+    iframe {
+        border-radius: 20px;
+    }
+}
