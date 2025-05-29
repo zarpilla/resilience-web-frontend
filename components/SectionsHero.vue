@@ -28,6 +28,12 @@ const imageStyleArticle = computed(() => {
     : null;
 });
 
+const imageStyleService = computed(() => {
+  return props.type === "service" && props.section.styles.backgroundImage?.url
+    ? runtimeConfig.public.apiBase + props.section.styles.backgroundImage.url
+    : null;
+});
+
 const backgroundColorStyle = computed(() => ({
   backgroundColor: props.section.styles?.backgroundColor
     ? props.section.styles?.backgroundColor
@@ -191,16 +197,13 @@ onUnmounted(() => {
   >
     <div class="container">
       <div class="row" v-if="isService">
-        <div class="col-12 col-lg-5">
+        <div class="col-12 col-lg-4">
           <div
             class="section-hero-inner d-flex"
             :class="`align-${section.align}`"
             :style="[heightStyle, backgroundImageStyle, backgroundColorStyle]"
           >
             <div class="scope-hero">
-              <b class="scope-title" v-if="isScope">{{
-                texts?.value.data.scopes
-              }}</b>
               <b class="scope-title" v-if="isService">{{
                 texts?.value.data.services
               }}</b>
@@ -208,7 +211,19 @@ onUnmounted(() => {
             </div>
           </div>
         </div>
-        <div class="col-12 col-lg-7"></div>
+        <div v-if="imageStyleService" class="col-12 col-md-1"></div>
+        <div
+          v-if="imageStyleService"
+          class="col-12 col-lg-7 align-top-right zmt-5"
+        >
+          <div class="section-hero-inner-image d-flex align-centered">
+            <img
+              :src="imageStyleService"
+              :alt="props.section.styles.backgroundImage.alternativeText"
+              class="service-image"
+            />
+          </div>
+        </div>
       </div>
       <div
         v-else-if="isArticle"
@@ -399,38 +414,62 @@ onUnmounted(() => {
   .section-inner-index-0 {
     height: auto !important;
   }
-  .first-hero {
-    h1 {
-      color: var(--Blanc, #fff);
-      font-family: "PP Neue Montreal";
-      font-size: 50px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: 110%; /* 55px */
-      letter-spacing: 0.5px;
-      margin-bottom: 2rem;
-    }
-    h3 {
-      color: var(--Blanc, #fff);
-      font-family: "Queens Trial";
-      font-size: 26px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 130%; /* 33.8px */
-      letter-spacing: 0.26px;
-    }
 
-    .align-bottom-left {
-      align-items: flex-start;
+  h1 {
+    color: var(--Negre, #000);
+    font-family: "PP Neue Montreal";
+    font-size: 60px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 70px !important; /* 116.667% */
+    letter-spacing: 0.6px !important;
+  }
 
-      .col-12:first-child {
-        align-self: flex-end;
-        padding-bottom: 4rem;
+  .section-hero {
+    &.first-hero {
+      h1 {
+        color: var(--Blanc, #fff) !important;
+        font-family: "PP Neue Montreal";
+        font-size: 50px !important;
+        font-style: normal !important;
+        font-weight: 500 !important;
+        line-height: 110% !important; /* 55px */
+        letter-spacing: 0.5px !important;
+        margin-bottom: 2rem !important;
+      }
+      h3 {
+        color: var(--Blanc, #fff);
+        font-family: "Queens Trial";
+        font-size: 26px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 130%; /* 33.8px */
+        letter-spacing: 0.26px;
+      }
+
+      .align-bottom-left {
+        align-items: flex-start;
+
+        .col-12:first-child {
+          align-self: flex-end;
+          padding-bottom: 4rem;
+        }
+      }
+      .section-hero-inner {
+        height: auto !important;
       }
     }
-    .section-hero-inner {
-      height: auto !important;
-    }
+  }
+}
+.page-type-service {
+  .service-image {
+    width: 100%;
+    height: auto;
+    min-height: 450px;
+    object-fit: cover;
+    object-position: center;
+    max-width: 100%;
+    border-radius: 20px;
   }
 }
 </style>

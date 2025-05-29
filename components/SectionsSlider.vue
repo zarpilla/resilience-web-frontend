@@ -364,7 +364,7 @@ onMounted(() => {
           </div>
           <div class="col-12 col-md-8">
             <div
-              class="d-flex w-100 justify-content-center justify-content-md-end"
+              class="d-flex w-100 justify-content-center justify-content-md-end the-arrows"
             >
               <button
                 class="carousel-control-prev carousel-control-prev-3 hoverable"
@@ -888,6 +888,9 @@ img {
     font-weight: 400 !important;
     line-height: 45px !important; /* 112.5% */
     letter-spacing: 0.4px !important;
+  }
+  .the-arrows{
+    margin-top: -24px;
   }
   .carousel-blog-item-media {
     height: 480px !important;

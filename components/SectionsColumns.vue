@@ -299,6 +299,9 @@ onMounted(() => {
 
   > div {
     width: 240px;
+    @media screen and (max-width: 1550px) {      
+      width: calc(33.33% - 20px);
+    }
   }
 }
 .link {

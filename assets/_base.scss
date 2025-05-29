@@ -230,11 +230,16 @@ p {
 // }
 
 body.page-type-service .section-sections-hero.section-inner-index-0 {
-    min-height: 650px
+    min-height: 650px;
+    background-image: none !important;
 }
 
 body.page-type-service .section-sections-hero.section-inner-index-0 .section-hero-inner {
     min-height: 650px;
+}
+
+body.page-type-service .section-sections-hero.section-inner-index-0 .section-hero-inner-image {
+    min-height: 100%;
 }
 
 body:not(.page-slug-home) {
