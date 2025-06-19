@@ -12,6 +12,8 @@ const populate = {
   populate: "*",
 };
 
+console.log("Loading page with slug:", props.slug, "and type:", props.type);
+
 const { data: pages } = await useAPI("/api/pages", {
   query: {
     "filters[slug][$eq]": props.slug,
@@ -19,6 +21,8 @@ const { data: pages } = await useAPI("/api/pages", {
     ...populate,
   },
 });
+
+console.log("Pages data:", pages.value);
 
 const documents = pages.value as any;
 

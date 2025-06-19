@@ -10,7 +10,167 @@ const texts = computed(() =>
   textStore.texts.find((h) => h.locale === locale.value)
 );
 
+const filterStore = useFilterStore();
+const filter = computed(() => filterStore.filter);
+
+const expanded = ref<boolean>(false);
+
+const selectedScope = ref<number>(0);
+const selectedTypology = ref<number>(0);
+const selectedYear = ref<number>(0);
+
+const currentPage = ref(1);
+const isLoading = ref(false);
+
+const toggleScope = async (scope: number) => {
+  selectedScope.value = selectedScope.value === scope ? 0 : scope;
+  const resourcesSearched = await queryResources();
+  if (resourcesSearched && (resourcesSearched as any).data) {
+    resources.value = resourcesSearched;
+    props.section.blogPage = (resourcesSearched as any).data.map((resource: any) => ({
+      width: 'threethirds',
+      page: resource
+    }));
+  }
+};
+
+const toggleTypology = async (typology: number) => {
+  selectedTypology.value = selectedTypology.value === typology ? 0 : typology;
+  const resourcesSearched = await queryResources();
+  if (resourcesSearched && (resourcesSearched as any).data) {
+    resources.value = resourcesSearched;
+    props.section.blogPage = (resourcesSearched as any).data.map((resource: any) => ({
+      width: 'threethirds',
+      page: resource
+    }));
+  }
+};
+
+const toggleYear = async (year: number) => {
+  selectedYear.value = selectedYear.value === year ? 0 : year;
+  const resourcesSearched = await queryResources();
+  if (resourcesSearched && (resourcesSearched as any).data) {
+    resources.value = resourcesSearched;
+    props.section.blogPage = (resourcesSearched as any).data.map((resource: any) => ({
+      width: 'threethirds',
+      page: resource
+    }));
+  }
+};
+
+const queryResources = async () => {
+  const query: any = {
+    locale: locale.value,
+    "filters[type][$eq]": "resource",
+    "populate[0]": "scopes",
+    "populate[1]": "year",
+    "populate[2]": "typology",
+    "populate[3]": "metadata",
+    "populate[4]": "metadata.shareImage",
+    "pagination[page]": 1,
+    "pagination[pageSize]": 25,
+  };
+  
+  if (selectedScope.value) {
+    query["filters[scopes][$eq]"] = selectedScope.value;
+  }
+  if (selectedTypology.value) {
+    query["filters[typology][$eq]"] = selectedTypology.value;
+  }
+  if (selectedYear.value) {
+    query["filters[year][$eq]"] = selectedYear.value;
+  }
+  
+  const { data: resourcesInfo } = await useAPI("/api/pages", {
+    query: query,
+  });
+
+  currentPage.value = 1;
+
+  return resourcesInfo.value;
+};
+
+// Initialize resources data on component load
+const initializeResources = async () => {
+  const resourcesData = await queryResources();
+  if (resourcesData && (resourcesData as any).data) {
+    resources.value = resourcesData;
+    // Update section blogPage with the initial resources
+    props.section.blogPage = (resourcesData as any).data.map((resource: any) => ({
+      width: 'onethird', // Default width, adjust as needed
+      page: resource
+    }));
+  }
+};
+
+const resources = ref<any>(null);
+
+const loadMoreButtonIsVisible = computed(() => {
+  return (
+    resources.value &&
+    (resources.value as any).data &&
+    (resources.value as any).data.length > 0 &&
+    (resources.value as any).meta.pagination.pageCount > currentPage.value
+  );
+});
+
+const loadMore = async () => {
+  if (isLoading.value) return;
+  
+  isLoading.value = true;
+  currentPage.value += 1;
+  
+  try {
+    const query: any = {
+      locale: locale.value,
+      "filters[type][$eq]": "resource",
+      "populate[0]": "scopes",
+      "populate[1]": "year", 
+      "populate[2]": "typology",
+      "populate[3]": "metadata",
+      "populate[4]": "metadata.shareImage",
+      "pagination[page]": currentPage.value,
+      "pagination[pageSize]": 25,
+    };
+    
+    if (selectedScope.value) {
+      query["filters[scopes][$eq]"] = selectedScope.value;
+    }
+    if (selectedTypology.value) {
+      query["filters[typology][$eq]"] = selectedTypology.value;
+    }
+    if (selectedYear.value) {
+      query["filters[year][$eq]"] = selectedYear.value;
+    }
+    
+    const { data: moreResources } = await useAPI("/api/pages", {
+      query: query,
+    });
+    
+    if (moreResources.value && (moreResources.value as any).data) {
+      // Append new resources to existing ones
+      (resources.value as any).data.push(...(moreResources.value as any).data);
+      (resources.value as any).meta = (moreResources.value as any).meta;
+      
+      // Update section blogPage with all resources
+      props.section.blogPage = (resources.value as any).data.map((resource: any) => ({
+        width: 'onethird', // Default width, adjust as needed
+        page: resource
+      }));
+    }
+  } catch (error) {
+    console.error('Error loading more resources:', error);
+  } finally {
+    isLoading.value = false;
+  }
+};
+
 onMounted(() => {
+  // Initialize resources if filtering is enabled
+  if (props.section.filter) {
+    initializeResources();
+  }
+  
   setItemsHeight();
 
   window.addEventListener("resize", () => {
@@ -68,7 +228,114 @@ const setItemsHeight = () => {
 <template>
   <div class="section-blog">
     <div class="container">
-      <div class="row gx-blog zgx-5">
+      <!-- Filter Section -->
+      <div
+        class="row masonry-filter"
+        v-if="filter && props.section.filter"
+        :class="{ expanded: expanded }"
+      >
+        <div class="d-flex">
+          <div
+            class="collapse-toogle hoverable"
+            data-bs-toggle="collapse"
+            :href="`#collapse-section${section.id}-blog`"
+            role="button"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+            @click="expanded = !expanded"
+          >
+            {{ texts?.value.data.filter }}
+            <svg
+              class="arrow"
+              width="17"
+              height="17"
+              viewBox="0 0 17 17"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.75 0.0874023L7.75 12.2624L2.15 6.6624L0.75 8.0874L8.75 16.0874L16.75 8.0874L15.35 6.6624L9.75 12.2624L9.75 0.0874023L7.75 0.0874023Z"
+                fill="#F5825E"
+              />
+            </svg>
+          </div>
+          <div class="clear-filters ms-auto">
+            <span
+              class="filter-clear hoverable"
+              v-show="selectedScope || selectedTypology || selectedYear"
+              @click="
+                selectedScope = 0;
+                selectedTypology = 0;
+                selectedYear = 0;
+                toggleScope(0);
+              "
+            >
+              {{ texts?.value.data.filterClear }}
+            </span>
+          </div>
+        </div>
+
+        <div class="collapse" :id="`collapse-section${section.id}-blog`">
+          <div class="row mt-4 filter-block">
+            <div class="d-flex">
+              <div class="filter-title">
+                {{ texts?.value.data.filterScopes }}
+              </div>
+              <div class="filter-values d-flex flex-wrap">
+                <div v-for="(item, index) in filter.scopes" :key="index">
+                  <span
+                    class="badge bg-filter me-2"
+                    @click="toggleScope(item.id)"
+                    :class="{ selected: selectedScope === item.id }"
+                  >
+                    {{ item.name }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row filter-block">
+            <div class="d-flex">
+              <div class="filter-title">
+                {{ texts?.value.data.filterType }}
+              </div>
+              <div class="filter-values d-flex flex-wrap">
+                <div v-for="(item, index) in filter.typologies" :key="index">
+                  <span
+                    class="badge bg-filter me-2"
+                    @click="toggleTypology(item.id)"
+                    :class="{
+                      selected: selectedTypology === item.id,
+                    }"
+                  >
+                    {{ item.name }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row filter-block">
+            <div class="d-flex">
+              <div class="filter-title">
+                {{ texts?.value.data.filterYear }}
+              </div>
+              <div class="filter-values d-flex flex-wrap">
+                <div v-for="(item, index) in filter.years" :key="index">
+                  <span
+                    class="badge bg-filter me-2"
+                    @click="toggleYear(item.id)"
+                    :class="{ selected: selectedYear === item.id }"
+                  >
+                    {{ item.name }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row gx-blog zgx-5" :class="{ 'mt-5': !props.section.filter}">
         <div
           v-for="(blogPage, i) in section.blogPage"
           :key="i"
@@ -248,6 +515,25 @@ const setItemsHeight = () => {
           </div>
         </div>
       </div>
+
+      <!-- Load More Button -->
+      <div class="row mt-5" v-if="section.filter && loadMoreButtonIsVisible">
+        <div class="col-12 text-center">
+          <div class="cta">
+            <a
+              class="hoverable btn btn-dark btn-dark-border-white btn-100 mt-4 zw-100 btn-with-arrow-down button button--stroke"
+              data-block="button"
+              @click="loadMore"
+              :disabled="isLoading"
+            >
+              <span class="button__flair"></span>
+              <span class="button__label">{{
+                texts?.value.data.loadMore || "Carregar més"
+              }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -362,5 +648,93 @@ const setItemsHeight = () => {
 }
 .gx-blog {
   --bs-gutter-x: 38px !important;
+}
+
+.masonry-filter {
+  border-bottom: 1px solid #898989;
+  padding-bottom: 20px;
+  margin-bottom: 60px;
+
+  &.expanded {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  
+  .collapse-toogle {
+    color: var(--Blanc, #fff);
+    font-family: "PP Neue Montreal";
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 33px */
+    letter-spacing: 0.22px;
+
+    &:hover {
+      color: var(--Taronja, #f5825e);
+    }
+
+    .arrow {
+      margin-left: 0.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    &:not(.collapsed) {
+      .arrow {
+        transform: rotate(180deg);
+      }
+    }
+  }
+  
+  .filter-block {
+    border-top: 1px solid #898989;
+    padding-top: 20px;
+  }
+
+  .filter-title {
+    color: #898989;
+    font-family: "PP Neue Montreal";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 22.5px */
+    letter-spacing: 0.15px;
+    margin-right: 20px;
+    min-width: 80px;
+  }
+
+  .badge.bg-filter {
+    border-radius: 25.651px;
+    background: #1c1b1f;
+    padding: 9px 16.527px 8px 17.473px;
+    margin-bottom: 20px;
+
+    color: var(--Blanc, #fff);
+    font-family: "PP Neue Montreal";
+    font-size: 15.391px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 19.666px; /* 127.778% */
+    letter-spacing: 0.154px;
+    margin-right: 10px !important;
+
+    &:hover,
+    &.selected {
+      color: var(--Taronja, #f5825e);
+    }
+  }
+
+  .filter-clear {
+    color: #898989;
+    font-family: "PP Neue Montreal";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 22.5px */
+    letter-spacing: 0.15px;
+
+    &:hover {
+      color: var(--Taronja, #f5825e);
+    }
+  }
 }
 </style>
