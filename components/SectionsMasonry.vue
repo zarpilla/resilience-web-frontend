@@ -69,7 +69,7 @@ const queryArticles = async () => {
   // Reset current page when filtering
   currentPage.value = 1;
 
-  console.log("pagesInfo.value", pagesInfo.value);
+  // console.log("pagesInfo.value", pagesInfo.value);
 
   return pagesInfo.value;
 };

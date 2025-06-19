@@ -12,7 +12,7 @@ const populate = {
   populate: "*",
 };
 
-console.log("Loading page with slug:", props.slug, "and type:", props.type);
+// console.log("Loading page with slug:", props.slug, "and type:", props.type);
 
 const { data: pages } = await useAPI("/api/pages", {
   query: {
@@ -22,7 +22,7 @@ const { data: pages } = await useAPI("/api/pages", {
   },
 });
 
-console.log("Pages data:", pages.value);
+// console.log("Pages data:", pages.value);
 
 const documents = pages.value as any;
 
