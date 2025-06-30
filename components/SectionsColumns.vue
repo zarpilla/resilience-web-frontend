@@ -285,8 +285,8 @@ onMounted(() => {
   font-weight: bold;
 }
 .vertical-scroller {
-  gap: 10px;
-  width: 50%;
+  gap: 20px;
+  width: 780px;
   position: absolute;
   left: 50%;
   margin-bottom: 120px;

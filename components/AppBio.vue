@@ -336,7 +336,7 @@ const columnsMore = {
   }
   .main-content > .section > .section-inner {
     background-size: 650px auto;
-    background-position: 75% bottom;
+    background-position: 75% bottom;    
 
     &.bio-hero {      
       @media (max-width: 767px) {
@@ -355,9 +355,10 @@ const columnsMore = {
   }
   .section-hero-inner {
     background-color: inherit !important;
-    width: 50%;
+    width: 45%;
+    height: 650px !important;
     @media (max-width: 767px) {
-        height: auto !important;
+        height: auto !important;        
         padding-top: 140px;
       }
   }
