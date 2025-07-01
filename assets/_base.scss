@@ -836,6 +836,24 @@ img.active-image {
     }
 }
 
+.page-type-resource .main-content {
+    
+
+    .section-sections-columns:not(.h3-normal) {
+        h3 {
+            color: var(--negre, #000);
+            font-family: "PP Neue Montreal";
+            font-size: 33px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 120%;
+            /* 39.6px */
+            letter-spacing: 0.33px;
+            margin-bottom: 30px !important;
+        }
+    }
+}
+
 .page-type-scope .main-content,
 .page-type-capability .main-content {
 
@@ -843,6 +861,14 @@ img.active-image {
     .first-hero,
     .first-hero .section-hero-inner {
         min-height: 358px;
+    }
+}
+
+.all-media-same-height {
+    img {
+        height: 380px;
+        width: 100%;
+        object-fit: cover;
     }
 }
 

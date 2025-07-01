@@ -58,6 +58,25 @@ const runtimeConfig = useRuntimeConfig();
       >
       </span>
     </h5>
+    <h6 v-if="block.type === 'heading' && block.level === 6" :class="block.css">
+      <span
+        v-for="(child, childIndex) in block.children"
+        :key="childIndex"
+        v-html="child.text"
+        :class="[{ bold: child.bold }, child.css]"
+      >
+      </span>
+    </h6>
+    <ul v-if="block.type === 'list'" :class="block.css">
+      <li
+        v-for="(child, childIndex) in block.children"
+        :key="childIndex"
+        :class="[{ bold: child.bold }, child.css]"
+        
+      >
+      <span v-for="(child2, childIndex2) in child.children" v-html="child2.text" :key="childIndex2"></span>
+    </li>
+    </ul>
     <p v-if="block.type === 'paragraph'" :class="block.css" class="paragraph">
       <template v-for="(child, childIndex) in block.children">
         <div

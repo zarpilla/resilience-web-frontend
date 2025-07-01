@@ -102,6 +102,10 @@ const runtimeConfig = useRuntimeConfig();
             v-if="column.title && column.titleHeading === 'h5'"
             v-html="column.title"
           ></h5>
+          <h6
+            v-if="column.title && column.titleHeading === 'h6'"
+            v-html="column.title"
+          ></h6>
           <p
             v-if="column.title && column.titleHeading === 'p'"
             v-html="column.title"

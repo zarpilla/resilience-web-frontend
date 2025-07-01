@@ -6,7 +6,7 @@ const props = defineProps<{
 }>();
 
 const populate = {
-  "populate": "*",
+  populate: "*",
   //"populate[mainImage]": "*",
   //"populate[largeImage]": "*",
   status: "published",
@@ -27,16 +27,11 @@ if (pages.value && documents.data && documents.data.length === 0) {
 
 const page = documents.data[0];
 
-
-
-const { data: templates } = await useAPI(
-  "/api/pages/templates/bio",
-  {
-    query: {
-      locale: locale.value,
-    },
-  }
-);
+const { data: templates } = await useAPI("/api/pages/templates/bio", {
+  query: {
+    locale: locale.value,
+  },
+});
 
 const templatesData = templates.value as any;
 
@@ -139,16 +134,16 @@ const columnsImage = {
   id: 1,
   __component: "sections.columns",
   styles: {
-    backgroundColor: "#f0f0f0",    
-    cssClass: "bio-image d-block d-md-none",    
+    backgroundColor: "#f0f0f0",
+    cssClass: "bio-image d-block d-md-none",
   },
   columns: [
     {
-      id: 1,      
+      id: 1,
       styles: {
         cssClass: "col col-6 align-bottom-left",
       },
-      media: page.mainImage
+      media: page.mainImage,
     },
   ],
 };
@@ -183,7 +178,7 @@ const columnsContent = {
 };
 
 const columnsMedia = {
-  id: 5,
+  id: 3,
   __component: "sections.columns",
   styles: {
     cssClass: "pt-2 my-0",
@@ -199,26 +194,34 @@ const columnsMedia = {
   ],
 };
 
+console.log("page", page.more2);
+
 const columnsMore = {
-  id: 7,
+  id: 4,
   __component: "sections.columns",
   styles: {
     cssClass: "pt-2 my-0",
   },
   columns: [
     {
-      id: 8,
+      id: 7,
       text: page.more1,
-      titleHeading: "h3",
       styles: {
         cssClass: "col-12 col-md-5",
       },
-    },    
+    },
     {
-      id: 10,
+      id: 8,
+      text: "",
+      styles: {
+        cssClass: "col-12 col-md-2",
+      },
+    },
+    {
+      id: 9,
       text: page.more2,
       styles: {
-        cssClass: "col-12 col-md-7",
+        cssClass: "col-12 col-md-5",
       },
     },
   ],
@@ -229,89 +232,117 @@ const columnsMore = {
   <AppHeader color-mode="dark" :slug="slug"></AppHeader>
   <div class="main-content">
     <div class="section">
-       <AppSection :section="columnsHero0" type="bio" :index="0">
-        <SectionsHero :section="columnsHero0" :section-index="1" type="bio" slug="bio-item"></SectionsHero>
+      <AppSection :section="columnsHero0" type="bio" :index="0">
+        <SectionsHero
+          :section="columnsHero0"
+          :section-index="1"
+          type="bio"
+          slug="bio-item"
+        ></SectionsHero>
       </AppSection>
-      
+
       <AppSection :section="columnsImage" type="bio" :index="1">
-        <SectionsColumns :section="columnsImage" type="bio" slug="bio-item"></SectionsColumns>
+        <SectionsColumns
+          :section="columnsImage"
+          type="bio"
+          slug="bio-item"
+        ></SectionsColumns>
       </AppSection>
-      
+
       <AppSection :section="columnsContent" type="bio" :index="2">
-        <SectionsColumns :section="columnsContent" type="bio" slug="bio-item"></SectionsColumns>
+        <SectionsColumns
+          :section="columnsContent"
+          type="bio"
+          slug="bio-item"
+        ></SectionsColumns>
       </AppSection>
 
       <AppSection :section="columnsMedia" type="bio" :index="3">
-        <SectionsColumns :section="columnsMedia" type="bio" slug="bio-item"></SectionsColumns>
-      </AppSection> 
-
-      <AppSection :section="columnsMore" type="bio" v-if="page.more1 || page.more2" :index="4">
-        <SectionsColumns :section="columnsMore" type="bio" slug="bio-item"></SectionsColumns>
+        <SectionsColumns
+          :section="columnsMedia"
+          type="bio"
+          slug="bio-item"
+        ></SectionsColumns>
       </AppSection>
 
-      <template v-for="(section, i) in templatesData.sections" :key="section.id">
-      <div class="section">
-        <AppSection :section="section" :slug="slug" type="bio" :index="i + 5">
-          <SectionsScroller
-            v-if="section.__component === 'sections.scroller'"
-            :section="section"
-          >
-          </SectionsScroller>
-          <SectionsHero
-            v-if="section.__component === 'sections.hero'"
-            :section="section"
-            :section-index="i + 5"
-            type="bio"
-            :slug="slug"
-          ></SectionsHero>
-          <SectionsColumns
-            v-else-if="section.__component === 'sections.columns'"
-            :section="section"
-          ></SectionsColumns>
-          <SectionsMenu
-            v-else-if="section.__component === 'sections.menu'"
-            :section="section"
-          >
-          </SectionsMenu>
-          <SectionsSlider
-            v-else-if="section.__component === 'sections.slider'"
-            :section="section"
-          >
-          </SectionsSlider>
-          <SectionsBlurbs
-            v-else-if="section.__component === 'sections.blurbs'"
-            :section="section"
-          >
-          </SectionsBlurbs>
-          <SectionsBios
-            v-else-if="section.__component === 'sections.bios'"
-            :section="section"
-          >
-          </SectionsBios>
-          <SectionsBlog
-            v-else-if="section.__component === 'sections.blog'"
-            :section="section"
-          >
-          </SectionsBlog>
-          <SectionsMasonry
-            v-else-if="section.__component === 'sections.masonry'"
-            :section="section"
-          >
-          </SectionsMasonry>
-          <SectionsCapabilities
-            v-else-if="section.__component === 'sections.capabilities'"
-            :section="section"
-          >
-          </SectionsCapabilities>
-          <SectionsTimeline
-            v-else-if="section.__component === 'sections.timeline'"
-            :section="section"
-          >
-          </SectionsTimeline>
-        </AppSection>
-      </div>
+      <AppSection
+        :section="columnsMore"
+        type="bio"
+        v-if="page.more1 || page.more2"
+        :index="4"
+      >
+        <SectionsColumns
+          :section="columnsMore"
+          type="bio"
+          slug="bio-item"
+        ></SectionsColumns>
+      </AppSection>
+
+      <template
+        v-for="(section, i) in templatesData.sections"
+        :key="section.id"
+      >
+        <div class="section">
+          <AppSection :section="section" :slug="slug" type="bio" :index="i + 5">
+            <SectionsScroller
+              v-if="section.__component === 'sections.scroller'"
+              :section="section"
+            >
+            </SectionsScroller>
+            <SectionsHero
+              v-if="section.__component === 'sections.hero'"
+              :section="section"
+              :section-index="i + 5"
+              type="bio"
+              :slug="slug"
+            ></SectionsHero>
+            <SectionsColumns
+              v-else-if="section.__component === 'sections.columns'"
+              :section="section"
+            ></SectionsColumns>
+            <SectionsMenu
+              v-else-if="section.__component === 'sections.menu'"
+              :section="section"
+            >
+            </SectionsMenu>
+            <SectionsSlider
+              v-else-if="section.__component === 'sections.slider'"
+              :section="section"
+            >
+            </SectionsSlider>
+            <SectionsBlurbs
+              v-else-if="section.__component === 'sections.blurbs'"
+              :section="section"
+            >
+            </SectionsBlurbs>
+            <SectionsBios
+              v-else-if="section.__component === 'sections.bios'"
+              :section="section"
+            >
+            </SectionsBios>
+            <SectionsBlog
+              v-else-if="section.__component === 'sections.blog'"
+              :section="section"
+            >
+            </SectionsBlog>
+            <SectionsMasonry
+              v-else-if="section.__component === 'sections.masonry'"
+              :section="section"
+            >
+            </SectionsMasonry>
+            <SectionsCapabilities
+              v-else-if="section.__component === 'sections.capabilities'"
+              :section="section"
+            >
+            </SectionsCapabilities>
+            <SectionsTimeline
+              v-else-if="section.__component === 'sections.timeline'"
+              :section="section"
+            >
+            </SectionsTimeline>
+          </AppSection>
+        </div>
       </template>
-      
     </div>
   </div>
   <AppFooter :slug="slug"></AppFooter>
@@ -336,31 +367,30 @@ const columnsMore = {
   }
   .main-content > .section > .section-inner {
     background-size: 650px auto;
-    background-position: 75% bottom;    
+    background-position: 75% bottom;
 
-    &.bio-hero {      
+    &.bio-hero {
       @media (max-width: 767px) {
-        background-image: none!important;
+        background-image: none !important;
         height: auto !important;
         background-size: 100%;
         background-position: top center;
       }
     }
   }
-  .section-inner-index-0{
-    .section-hero-inner{
+  .section-inner-index-0 {
+    .section-hero-inner {
       padding-top: 200px;
     }
-
   }
   .section-hero-inner {
     background-color: inherit !important;
     width: 45%;
     height: 650px !important;
     @media (max-width: 767px) {
-        height: auto !important;        
-        padding-top: 140px;
-      }
+      height: auto !important;
+      padding-top: 140px;
+    }
   }
   .section-sections-hero {
     h1 {
@@ -371,5 +401,16 @@ const columnsMore = {
     }
   }
 
+  h6 {
+    color: #898989;
+    font-family: "PP Neue Montreal";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 27px */
+    letter-spacing: 0.18px;
+
+    margin-bottom: 21px;
+  }
 }
 </style>

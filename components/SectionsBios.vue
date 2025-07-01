@@ -65,6 +65,10 @@ onMounted(() => {
             v-if="section.title && section.titleHeading === 'h5'"
             v-html="section.title"
           ></h5>
+          <h6
+            v-if="section.title && section.titleHeading === 'h6'"
+            v-html="section.title"
+          ></h6>
           <p
             v-if="section.title && section.titleHeading === 'p'"
             v-html="section.title"
@@ -189,6 +193,10 @@ onMounted(() => {
             v-if="section.title && section.titleHeading === 'h5'"
             v-html="section.title"
           ></h5>
+          <h6
+            v-if="section.title && section.titleHeading === 'h6'"
+            v-html="section.title"
+          ></h6>
           <p
             v-if="section.title && section.titleHeading === 'p'"
             v-html="section.title"
@@ -213,6 +221,11 @@ onMounted(() => {
             v-if="section.subtitle && section.titleHeading === 'h4'"
             v-html="section.subtitle"
           ></h5>
+          <h6
+            class="mt-5"
+            v-if="section.subtitle && section.titleHeading === 'h5'"
+            v-html="section.subtitle"
+          ></h6>
           <p
             class="mt-5"
             v-if="section.subtitle && section.titleHeading === 'p'"

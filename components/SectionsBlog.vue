@@ -27,10 +27,12 @@ const toggleScope = async (scope: number) => {
   const resourcesSearched = await queryResources();
   if (resourcesSearched && (resourcesSearched as any).data) {
     resources.value = resourcesSearched;
-    props.section.blogPage = (resourcesSearched as any).data.map((resource: any) => ({
-      width: 'threethirds',
-      page: resource
-    }));
+    props.section.blogPage = (resourcesSearched as any).data.map(
+      (resource: any) => ({
+        width: "threethirds",
+        page: resource,
+      })
+    );
   }
 };
 
@@ -39,10 +41,12 @@ const toggleTypology = async (typology: number) => {
   const resourcesSearched = await queryResources();
   if (resourcesSearched && (resourcesSearched as any).data) {
     resources.value = resourcesSearched;
-    props.section.blogPage = (resourcesSearched as any).data.map((resource: any) => ({
-      width: 'threethirds',
-      page: resource
-    }));
+    props.section.blogPage = (resourcesSearched as any).data.map(
+      (resource: any) => ({
+        width: "threethirds",
+        page: resource,
+      })
+    );
   }
 };
 
@@ -51,10 +55,12 @@ const toggleYear = async (year: number) => {
   const resourcesSearched = await queryResources();
   if (resourcesSearched && (resourcesSearched as any).data) {
     resources.value = resourcesSearched;
-    props.section.blogPage = (resourcesSearched as any).data.map((resource: any) => ({
-      width: 'threethirds',
-      page: resource
-    }));
+    props.section.blogPage = (resourcesSearched as any).data.map(
+      (resource: any) => ({
+        width: "threethirds",
+        page: resource,
+      })
+    );
   }
 };
 
@@ -70,7 +76,7 @@ const queryResources = async () => {
     "pagination[page]": 1,
     "pagination[pageSize]": 25,
   };
-  
+
   if (selectedScope.value) {
     query["filters[scopes][$eq]"] = selectedScope.value;
   }
@@ -80,7 +86,7 @@ const queryResources = async () => {
   if (selectedYear.value) {
     query["filters[year][$eq]"] = selectedYear.value;
   }
-  
+
   const { data: resourcesInfo } = await useAPI("/api/pages", {
     query: query,
   });
@@ -96,10 +102,12 @@ const initializeResources = async () => {
   if (resourcesData && (resourcesData as any).data) {
     resources.value = resourcesData;
     // Update section blogPage with the initial resources
-    props.section.blogPage = (resourcesData as any).data.map((resource: any) => ({
-      width: 'onethird', // Default width, adjust as needed
-      page: resource
-    }));
+    props.section.blogPage = (resourcesData as any).data.map(
+      (resource: any) => ({
+        width: "threethirds", // Default width, adjust as needed
+        page: resource,
+      })
+    );
   }
 };
 
@@ -116,23 +124,23 @@ const loadMoreButtonIsVisible = computed(() => {
 
 const loadMore = async () => {
   if (isLoading.value) return;
-  
+
   isLoading.value = true;
   currentPage.value += 1;
-  
+
   try {
     const query: any = {
       locale: locale.value,
       "filters[type][$eq]": "resource",
       "populate[0]": "scopes",
-      "populate[1]": "year", 
+      "populate[1]": "year",
       "populate[2]": "typology",
       "populate[3]": "metadata",
       "populate[4]": "metadata.shareImage",
       "pagination[page]": currentPage.value,
       "pagination[pageSize]": 25,
     };
-    
+
     if (selectedScope.value) {
       query["filters[scopes][$eq]"] = selectedScope.value;
     }
@@ -142,24 +150,26 @@ const loadMore = async () => {
     if (selectedYear.value) {
       query["filters[year][$eq]"] = selectedYear.value;
     }
-    
+
     const { data: moreResources } = await useAPI("/api/pages", {
       query: query,
     });
-    
+
     if (moreResources.value && (moreResources.value as any).data) {
       // Append new resources to existing ones
       (resources.value as any).data.push(...(moreResources.value as any).data);
       (resources.value as any).meta = (moreResources.value as any).meta;
-      
+
       // Update section blogPage with all resources
-      props.section.blogPage = (resources.value as any).data.map((resource: any) => ({
-        width: 'onethird', // Default width, adjust as needed
-        page: resource
-      }));
+      props.section.blogPage = (resources.value as any).data.map(
+        (resource: any) => ({
+          width: "threethirds", // Default width, adjust as needed
+          page: resource,
+        })
+      );
     }
   } catch (error) {
-    console.error('Error loading more resources:', error);
+    console.error("Error loading more resources:", error);
   } finally {
     isLoading.value = false;
   }
@@ -170,7 +180,7 @@ onMounted(() => {
   if (props.section.filter) {
     initializeResources();
   }
-  
+
   setItemsHeight();
 
   window.addEventListener("resize", () => {
@@ -335,7 +345,7 @@ const setItemsHeight = () => {
         </div>
       </div>
 
-      <div class="row gx-blog zgx-5" :class="{ 'mt-5': !props.section.filter}">
+      <div class="row gx-blog zgx-5" :class="{ 'mt-5': !props.section.filter }">
         <div
           v-for="(blogPage, i) in section.blogPage"
           :key="i"
@@ -382,23 +392,29 @@ const setItemsHeight = () => {
                       <div class="typology-label">
                         {{ texts?.value?.data.tipology }}
                       </div>
-                      {{
-                        blogPage.page.typology
-                          ? blogPage.page.typology.name
-                          : ""
-                      }}
+                      <div class="typology-value">
+                        {{
+                          blogPage.page.typology
+                            ? blogPage.page.typology.name
+                            : ""
+                        }}
+                      </div>
                     </div>
                     <div class="typology w-100">
                       <div class="typology-label">
                         {{ texts?.value?.data.author }}
                       </div>
-                      {{ blogPage.page.author }}
+                      <div class="typology-value">
+                        {{ blogPage.page.author }}
+                      </div>
                     </div>
                     <div class="typology w-100">
                       <div class="typology-label">
                         {{ texts?.value?.data.year }}
                       </div>
-                      {{ blogPage.page.year ? blogPage.page.year.name : "" }}
+                      <div class="typology-value">
+                        {{ blogPage.page.year ? blogPage.page.year.name : "" }}
+                      </div>
                     </div>
                   </div>
                   <div class="main-info">
@@ -615,6 +631,9 @@ const setItemsHeight = () => {
     line-height: 120%; /* 18px */
     letter-spacing: 0.15px;
   }
+  .typology-value {
+    min-height: 32px;
+  }
   .info {
     height: 100%;
   }
@@ -659,7 +678,7 @@ const setItemsHeight = () => {
     border-bottom: none;
     padding-bottom: 0;
   }
-  
+
   .collapse-toogle {
     color: var(--Blanc, #fff);
     font-family: "PP Neue Montreal";
@@ -684,7 +703,7 @@ const setItemsHeight = () => {
       }
     }
   }
-  
+
   .filter-block {
     border-top: 1px solid #898989;
     padding-top: 20px;

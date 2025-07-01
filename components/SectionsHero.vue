@@ -234,7 +234,7 @@ onUnmounted(() => {
         <div class="row">
           <div class="col-12 col-md-6">
             <div class="scope-hero-caos" v-if="isArticle">
-              <b class="scope-title">
+              <b class="scope-title scope-title">
                 <MetaLink
                   :page="texts?.value.data.articlesPage"
                   :text="texts?.value.data.articles"
@@ -406,6 +406,9 @@ onUnmounted(() => {
   line-height: 70px; /* 437.5% */
   letter-spacing: 0.8px;
   text-transform: uppercase;
+  &:hover {
+      color: var(--Taronja, #f5825e)!important;
+    }
 }
 .article-image {
   width: 100%;

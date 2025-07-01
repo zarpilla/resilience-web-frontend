@@ -25,6 +25,10 @@ const props = defineProps<{
     v-if="section.title && section.titleHeading === 'h5'"
     v-html="section.title"
   ></h5>
+  <h6
+    v-if="section.title && section.titleHeading === 'h6'"
+    v-html="section.title"
+  ></h6>
   <p
     v-if="section.title && section.titleHeading === 'p'"
     v-html="section.title"

@@ -46,9 +46,9 @@ onMounted(() => {
             maxHeight = elHeight;
           }
         });
-        citems.forEach((el: any) => {
-          el.style.height = `${maxHeight + 50}px`;
-        });
+        // citems.forEach((el: any) => {
+        //   el.style.height = `${maxHeight + 50}px`;
+        // });
       });
 
       let items = document.querySelectorAll(
@@ -76,11 +76,10 @@ onMounted(() => {
       const boxes = $gsap.utils.toArray(
         `#carousel-${props.section.id} .a-carousel-item`
       );
-      
+
       loop.value = horizontalLoop($gsap, boxes, { paused: true });
 
-      const next = document
-      .querySelector(".a-carousel-next")
+      const next = document.querySelector(".a-carousel-next");
 
       if (next) {
         next.addEventListener("click", () =>
@@ -93,7 +92,6 @@ onMounted(() => {
           loop.value.previous({ duration: 0.4, ease: "power1.inOut" })
         );
       }
-
     } else {
       // var myCarousel = document.querySelector(`#carousel-${props.section.id}`);
       // const carousel = new $bs.Carousel(myCarousel);
@@ -142,7 +140,11 @@ onMounted(() => {
                     <div class="carousel-item-inner">
                       <div class="row">
                         <div class="col-12 col-md-7 py-0 px-0 pe-md-0">
-                          <MetaLink :page="item.page" css-class="hoverable" v-if="item?.page?.metadata">
+                          <MetaLink
+                            :page="item.page"
+                            css-class="hoverable"
+                            v-if="item?.page?.metadata"
+                          >
                             <NuxtImg
                               :src="
                                 runtimeConfig.public.apiBase +
@@ -166,7 +168,10 @@ onMounted(() => {
                                 css-class="hoverable"
                               ></MetaLink>
                             </h3>
-                            <div class="meta-description mt-4" v-if="item?.page?.metadata">
+                            <div
+                              class="meta-description mt-4"
+                              v-if="item?.page?.metadata"
+                            >
                               {{ item?.page?.metadata?.metaDescription }}
                             </div>
                             <div class="mt-4">
@@ -327,7 +332,10 @@ onMounted(() => {
                           </h3>
                         </div>
 
-                        <div class="meta-description mt-4" v-if="item?.page?.metadata">
+                        <div
+                          class="meta-description mt-4"
+                          v-if="item?.page?.metadata"
+                        >
                           <MetaLink
                             :page="item.page"
                             :text="item?.page?.metadata?.metaDescription"
@@ -416,7 +424,11 @@ onMounted(() => {
                       <div class="carousel-blog-item-media">
                         <MetaLink :page="item.page">
                           <MetaMedia
-                          v-if="item.page && item.page.metadata && item.page.metadata.shareImage"
+                            v-if="
+                              item.page &&
+                              item.page.metadata &&
+                              item.page.metadata.shareImage
+                            "
                             css="media"
                             :media="item.page?.metadata?.shareImage"
                           />
@@ -469,6 +481,9 @@ onMounted(() => {
                             v-if="item?.page.metadata?.metaDescriptionShort"
                           >
                             {{ item?.page?.metadata?.metaDescriptionShort }}
+                          </div>
+                          <div class="typology-name" v-if="item.page.typology">
+                            {{ item.page.typology?.name }}
                           </div>
                         </div>
                       </div>
@@ -635,14 +650,16 @@ img {
   border-bottom: 1px solid #000;
   padding-bottom: 82px;
 
-  h3, h3 a, h3 a span {
+  h3,
+  h3 a,
+  h3 a span {
     color: var(--negre, #000);
     font-family: "PP Neue Montreal";
-    font-size: 25px!important;
-    font-style: normal!important;
-    font-weight: 500!important;
-    line-height: 30px!important; /* 120% */
-    letter-spacing: 0.25px!important;
+    font-size: 25px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 30px !important; /* 120% */
+    letter-spacing: 0.25px !important;
   }
 }
 .a-fake-row {
@@ -658,6 +675,18 @@ img {
   @media screen and (min-width: 768px) {
     margin-top: 110px;
   }
+}
+
+.typology-name {
+  color: #898989;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-family: "PP Neue Montreal";
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%; /* 18px */
+  letter-spacing: 0.15px;
+  margin-top: 0.5rem;
 }
 </style>
 
@@ -834,13 +863,13 @@ img {
 
 .slider-three-black {
   h3 {
-    color: var(--Blanc, #fff)!important;
-    font-family: "PP Neue Montreal"!important;
-    font-size: 40px!important;
-    font-style: normal!important;
-    font-weight: 400!important;
-    line-height: 45px!important; /* 112.5% */
-    letter-spacing: 0.4px!important;
+    color: var(--Blanc, #fff) !important;
+    font-family: "PP Neue Montreal" !important;
+    font-size: 40px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 45px !important; /* 112.5% */
+    letter-spacing: 0.4px !important;
   }
   .carousel-blog-item {
     border-radius: 0.3125rem;
@@ -889,7 +918,7 @@ img {
     line-height: 45px !important; /* 112.5% */
     letter-spacing: 0.4px !important;
   }
-  .the-arrows{
+  .the-arrows {
     margin-top: -24px;
   }
   .carousel-blog-item-media {
@@ -910,6 +939,17 @@ img {
   }
   .arrow {
     display: none;
+  }
+
+  .carousel-blog-item h3 a{
+    color: var(--Blanc, #fff) !important;
+    font-variant-numeric: lining-nums tabular-nums;
+    font-family: "PP Neue Montreal" !important;
+    font-size: 20px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: 120% !important; /* 24px */
+    letter-spacing: 0.2px !important;
   }
 }
 </style>
