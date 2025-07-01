@@ -88,25 +88,43 @@ const footer = computed(() =>
             <div
               class="col-12 col-md-3 text-center text-md-start py-5 ps-5 pe-0 bl-white"
             >
-              <div>
-                <div class="text-title pb-4">
+              <div class="mb-3">
+                <div class="text-title pb-3">
                   {{ footer?.value.middle3Title }}
                 </div>
                 <div
-                  class="main-text d-flex flex-wrap media-logos-footer-wrapper"
+                  class="main-text d-flex flex-wrap media-logos-footer-wrapper mb-3 pb-3 bb-white"
                 >
                   <div
                     v-for="(logo, index) in footer?.value.middle3Logos"
                     :key="index"
-                    class="w-50 mb-5 pe-4 media-logos-footer"
+                    class="w-50 mb-1 pe-3 pb-40 media-logos-footer"
                   >
                     <a :href="logo.href" target="_blank" class="n-link">
                       <MetaMedia
                         :media="logo.icon"
-                        css="media-real"
+                        css="media-real hoverable"
                       ></MetaMedia>
                     </a>
                   </div>
+                </div>
+              </div>
+              <div class="mt-5 zpb-3 d-flex">
+                <div class="text-title pt-3 zme-3">
+                  {{ footer?.value.middle3BTitle }}
+                </div>
+                
+                  <div
+                    v-for="(logo, index) in footer?.value.middle3BLogos"
+                    :key="index"
+                    class="zw-50 zmb-5 zpe-3 media-logos-footer ms-5"
+                  >
+                    <a :href="logo.href" target="_blank" class="n-link">
+                      <MetaMedia
+                        :media="logo.icon"
+                        css="media-real hoverable"
+                      ></MetaMedia>
+                    </a>
                 </div>
               </div>
             </div>
@@ -213,6 +231,10 @@ footer {
     }
   }
 
+  .bt-white {
+    border-top: 1px solid #fff;    
+  }
+
   .secondary-menu {
     margin: 0;
     padding: 0;
@@ -250,6 +272,12 @@ footer {
     display: table-cell;
     vertical-align: middle;
   }
+  .social-link{
+    width: 20px;
+    img {
+      width: 20px;
+    }
+  }
 }
 </style>
 <style lang="scss">
@@ -266,21 +294,19 @@ footer {
 .media-logos-footer-wrapper {
   display: table-cell;
   vertical-align: middle;
-  height: 80px;
 }
 .media-logos-footer a img {
   display: table-cell;
   vertical-align: middle;
-  height: 80px;
+  height: 62px;
 }
 .media-logos-footer a {
   display: table-cell;
   vertical-align: middle;
-  height: 80px;
+  height: 62px;
 }
 .media-logos-footer {
   display: table-cell;
   vertical-align: middle;
-  height: 80px;
 }
 </style>
