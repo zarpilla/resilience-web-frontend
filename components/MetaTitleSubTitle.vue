@@ -79,6 +79,15 @@ const props = defineProps<{
       >
       </span>
     </h5>
+    <h6 v-if="block.type === 'heading' && block.level === 6">
+      <span
+        v-for="(child, childIndex) in block.children"
+        :key="childIndex"
+        :class="[{ bold: child.bold }, child.css]"
+        v-html="child.text"
+      >
+      </span>
+    </h6>
     <p v-if="block.type === 'paragraph'">
       <span
         v-for="(child, childIndex) in block.children"

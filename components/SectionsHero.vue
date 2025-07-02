@@ -290,9 +290,6 @@ onUnmounted(() => {
               <div id="home1" style="opacity: 0">{{ home1 }}</div>
               <span id="home2" style="opacity: 0">{{ home2 }}</span>
             </h1>
-            <!-- <span>{{texts?.value.data.home3}}</span>
-            <span>{{texts?.value.data.home4}}</span>
-            <span>{{texts?.value.data.home5}}</span> -->
           </template>
           <template v-else>
             <MetaTitleSubTitle :section="section" :type="type" />
@@ -407,8 +404,8 @@ onUnmounted(() => {
   letter-spacing: 0.8px;
   text-transform: uppercase;
   &:hover {
-      color: var(--Taronja, #f5825e)!important;
-    }
+    color: var(--Taronja, #f5825e) !important;
+  }
 }
 .article-image {
   width: 100%;
