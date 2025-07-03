@@ -7,8 +7,6 @@ const props = defineProps<{
 
 const populate = {
   populate: "*",
-  //"populate[mainImage]": "*",
-  //"populate[largeImage]": "*",
   status: "published",
   locale: locale.value,
 };
@@ -159,6 +157,7 @@ const columnsContent = {
       styles: {
         cssClass: "col-12 col-md-4 cite",
       },
+      listenAudioAfter: true,
     },
     {
       id: 3,
@@ -238,6 +237,7 @@ const columnsMore = {
           :section-index="1"
           type="bio"
           slug="bio-item"
+          :audio="page.audio"
         ></SectionsHero>
       </AppSection>
 
@@ -246,6 +246,7 @@ const columnsMore = {
           :section="columnsImage"
           type="bio"
           slug="bio-item"
+          :audio="page.audio"
         ></SectionsColumns>
       </AppSection>
 
@@ -254,6 +255,7 @@ const columnsMore = {
           :section="columnsContent"
           type="bio"
           slug="bio-item"
+          :audio="page.audio"
         ></SectionsColumns>
       </AppSection>
 
@@ -262,6 +264,7 @@ const columnsMore = {
           :section="columnsMedia"
           type="bio"
           slug="bio-item"
+          :audio="page.audio"
         ></SectionsColumns>
       </AppSection>
 
@@ -275,6 +278,7 @@ const columnsMore = {
           :section="columnsMore"
           type="bio"
           slug="bio-item"
+          :audio="page.audio"
         ></SectionsColumns>
       </AppSection>
 
@@ -299,6 +303,7 @@ const columnsMore = {
             <SectionsColumns
               v-else-if="section.__component === 'sections.columns'"
               :section="section"
+              :audio="page.audio"
             ></SectionsColumns>
             <SectionsMenu
               v-else-if="section.__component === 'sections.menu'"

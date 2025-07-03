@@ -46,9 +46,9 @@ onMounted(() => {
             maxHeight = elHeight;
           }
         });
-        // citems.forEach((el: any) => {
-        //   el.style.height = `${maxHeight + 50}px`;
-        // });
+        citems.forEach((el: any) => {
+          el.style.height = `${maxHeight + 50}px`;
+        });
       });
 
       let items = document.querySelectorAll(

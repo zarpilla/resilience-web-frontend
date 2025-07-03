@@ -7,6 +7,7 @@ const props = defineProps<{
   sectionIndex: number;
   type: string;
   slug: string;
+  audio?: any;
 }>();
 const { locale, setLocale } = useI18n();
 
@@ -208,6 +209,13 @@ onUnmounted(() => {
                 texts?.value.data.services
               }}</b>
               <MetaTitleSubTitle :section="section" :type="type" />
+
+              <div v-if="section.listenAudioAfter && audio" class="mt-5">
+                <MetaListen
+                  v-if="section.listenAudioAfter"
+                  :audio="audio"
+                ></MetaListen>
+              </div>
             </div>
           </div>
         </div>
@@ -242,6 +250,14 @@ onUnmounted(() => {
               </b>
             </div>
             <MetaTitleSubTitle :section="section" :type="type" />
+
+            <div v-if="section.listenAudioAfter && audio" class="mt-5">
+              <MetaListen
+                v-if="section.listenAudioAfter"
+                :audio="audio"
+                css="white"
+              ></MetaListen>
+            </div>
           </div>
           <div v-if="imageStyleArticle" class="col-12 col-md-1"></div>
           <div
@@ -293,6 +309,14 @@ onUnmounted(() => {
           </template>
           <template v-else>
             <MetaTitleSubTitle :section="section" :type="type" />
+
+            <div v-if="section.listenAudioAfter && audio" class="mt-5">
+              <MetaListen
+                v-if="section.listenAudioAfter"
+                :audio="audio"
+                css="white"
+              ></MetaListen>
+            </div>
           </template>
         </div>
       </div>

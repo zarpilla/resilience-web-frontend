@@ -3,6 +3,7 @@ const { $gsap, $ScrollTrigger, $Observer } = useNuxtApp();
 
 const props = defineProps<{
   section: any;
+  audio?: any;
 }>();
 
 const widthStyle = computed(() => ({
@@ -51,7 +52,6 @@ const createParallaxEffect = () => {
         },
       }
     );
-
   });
 };
 
@@ -185,6 +185,11 @@ onMounted(() => {
               : 'none',
           }"
         >
+          <MetaListen
+            v-if="column.listenAudioBefore"
+            :audio="audio"
+          ></MetaListen>
+
           <h1
             v-if="column.title && column.titleHeading === 'h1'"
             v-html="column.title"
@@ -274,6 +279,10 @@ onMounted(() => {
               />
             </div>
           </div>
+
+          <div v-if="column.listenAudioAfter" class="mt-5">
+            <MetaListen :audio="audio"></MetaListen>
+          </div>
         </div>
       </div>
 
@@ -303,7 +312,7 @@ onMounted(() => {
 
   > div {
     width: 240px;
-    @media screen and (max-width: 1550px) {      
+    @media screen and (max-width: 1550px) {
       width: calc(33.33% - 20px);
     }
   }

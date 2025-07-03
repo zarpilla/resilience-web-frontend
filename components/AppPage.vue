@@ -12,8 +12,6 @@ const populate = {
   populate: "*",
 };
 
-// console.log("Loading page with slug:", props.slug, "and type:", props.type);
-
 const { data: pages } = await useAPI("/api/pages", {
   query: {
     "filters[slug][$eq]": props.slug,
@@ -21,8 +19,6 @@ const { data: pages } = await useAPI("/api/pages", {
     ...populate,
   },
 });
-
-// console.log("Pages data:", pages.value);
 
 const documents = pages.value as any;
 
@@ -49,6 +45,7 @@ const { data: templateInfo } = await useAPI(
   }
 );
 
+// sectionInfo
 const sectionInfoIndex = props.type === "resource" ? 2 : 1;
 
 if (templateInfo.value && pageSections.length >= sectionInfoIndex) {
@@ -105,6 +102,50 @@ if (templateInfo.value && pageSections.length >= sectionInfoIndex) {
       pageSections[sectionInfoIndex].styles.container = "normal";
     }
   }
+}
+
+// listenElement
+
+switch (props.type) {
+  case "resource":
+    // get the 3rd section and last column
+    if (
+      pageSections.length > 2 &&
+      pageSections[2].__component === "sections.columns" &&
+      pageSections[2].columns.length
+    ) {
+      pageSections[2].columns[
+        pageSections[2].columns.length - 1
+      ].listenAudioBefore = true;
+    }
+    break;
+  case "scope":
+    // get the 2rd section and 1st column
+    if (
+      pageSections.length > 1 &&
+      pageSections[1].__component === "sections.columns" &&
+      pageSections[1].columns.length
+    ) {
+      pageSections[1].columns[0].listenAudioAfter = true;
+    }
+    break;
+  case "capability":
+    if (
+      pageSections.length > 1 &&
+      pageSections[1].__component === "sections.columns" &&
+      pageSections[1].columns.length
+    ) {
+      pageSections[1].columns[0].listenAudioBefore = true;
+    }
+    break;
+  case "article":
+  case "service":
+    // get the 1st section and 1st column
+    pageSections[0].listenAudioAfter = true;
+    break;
+  default:
+    // do nothing for other types
+    break;
 }
 
 page.sections = pageSections;
@@ -204,10 +245,12 @@ onBeforeUnmount(() => {
             :section-index="i"
             :type="props.type"
             :slug="slug"
+            :audio="page.audio"
           ></SectionsHero>
           <SectionsColumns
             v-else-if="section.__component === 'sections.columns'"
             :section="section"
+            :audio="page.audio"
           ></SectionsColumns>
           <SectionsTabs
             v-else-if="section.__component === 'sections.tabs'"
@@ -268,7 +311,6 @@ onBeforeUnmount(() => {
             :section="section"
           >
           </SectionsLeadForm>
-          
         </AppSection>
       </div>
     </template>
