@@ -8,15 +8,20 @@ const props = defineProps<{
   messageKo: string;
 }>();
 
+const textStore = useTextStore();
+const texts = computed(() =>
+  textStore.texts.find((h) => h.locale === locale.value)
+);
+
 const errorGprd = ref(false);
 const errorEmail = ref(false);
 const submitted = ref(false);
 const submittedOk = ref<boolean | null>(null);
+const isLoading = ref(false);
 
 const handleSubmit = async () => {
   errorGprd.value = false;
   errorEmail.value = false;
-  submitted.value = true;
 
   if (formModel.gprd === false) {
     errorGprd.value = true;
@@ -27,26 +32,34 @@ const handleSubmit = async () => {
   if (errorGprd.value || errorEmail.value) {
     return;
   }
+
+  isLoading.value = true;
   
-  const { data }: any = await useAPI("/api/subscriptions", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: {
-      data: {
-        email: formModel.email,
-        accept: formModel.gprd,
+  try {
+    const { data }: any = await useAPI("/api/subscriptions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    },
-  });
+      body: {
+        data: {
+          email: formModel.email,
+          accept: formModel.gprd,
+        },
+      },
+    });
 
-  // console.log('data', data.value.data.id);
-
-  if (data.value && data.value.data && data.value.data.id) {
-    submittedOk.value = true;
-  } else {
+    if (data.value && data.value.data && data.value.data.id) {
+      submittedOk.value = true;
+    } else {
+      submittedOk.value = false;
+    }
+  } catch (error) {
+    console.error("Error submitting subscription:", error);
     submittedOk.value = false;
+  } finally {
+    submitted.value = true;
+    isLoading.value = false;
   }
 };
 
@@ -118,24 +131,13 @@ const formModel = reactive({
     <button
       type="submit"
       class="btn mt-5 zbtn-with-arrow-right w-100 btn-dark btn-with-arrow-right btn-dark-hover d-flex px-4"
+      :disabled="isLoading"
     >
       <span class="me-auto">
-        {{ buttonText }}
+        <span v-if="!isLoading">{{ buttonText }}</span>
+        <span v-else>{{ texts?.value?.data?.sending || 'Sending...' }}</span>
       </span>
       <span class="button__label"></span>
-      <!-- <svg
-        class="valign"
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M-3.0598e-07 9L12.175 9L6.575 14.6L8 16L16 8L8 -3.49691e-07L6.575 1.4L12.175 7L-3.93402e-07 7L-3.0598e-07 9Z"
-          fill="black"
-        />
-      </svg> -->
     </button>
   </div>
   </form>

@@ -263,6 +263,12 @@ onBeforeUnmount(() => {
             :section="section"
           >
           </SectionsEcosystem>
+          <SectionsLeadForm
+            v-else-if="section.__component === 'sections.lead-form'"
+            :section="section"
+          >
+          </SectionsLeadForm>
+          
         </AppSection>
       </div>
     </template>
