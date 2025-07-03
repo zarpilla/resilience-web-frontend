@@ -297,6 +297,9 @@ onMounted(() => {
 .bold {
   font-weight: bold;
 }
+.italic {
+  font-style: italic;
+}
 .vertical-scroller {
   gap: 20px;
   width: 780px;

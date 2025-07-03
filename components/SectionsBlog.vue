@@ -400,14 +400,14 @@ const setItemsHeight = () => {
                         }}
                       </div>
                     </div>
-                    <div class="typology w-100">
+                    <!-- <div class="typology w-100">
                       <div class="typology-label">
                         {{ texts?.value?.data.author }}
                       </div>
                       <div class="typology-value">
                         {{ blogPage.page.author }}
                       </div>
-                    </div>
+                    </div> -->
                     <div class="typology w-100">
                       <div class="typology-label">
                         {{ texts?.value?.data.year }}

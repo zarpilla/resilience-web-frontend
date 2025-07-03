@@ -290,6 +290,11 @@ footer {
     width: 125px;
     max-width: 125px;
   }
+  .social-link{
+    img {
+      width: 20px;
+    }
+  }
 }
 .media-logos-footer-wrapper {
   display: table-cell;

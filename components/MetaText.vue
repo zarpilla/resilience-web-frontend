@@ -71,7 +71,7 @@ const runtimeConfig = useRuntimeConfig();
       <li
         v-for="(child, childIndex) in block.children"
         :key="childIndex"
-        :class="[{ bold: child.bold }, child.css]"
+        :class="[{ bold: child.bold, italic: text.italic }, child.css]"
         
       >
       <span v-for="(child2, childIndex2) in child.children" v-html="child2.text" :key="childIndex2"></span>
@@ -80,17 +80,17 @@ const runtimeConfig = useRuntimeConfig();
     <p v-if="block.type === 'paragraph'" :class="block.css" class="paragraph">
       <template v-for="(child, childIndex) in block.children">
         <div
-          :class="[{ bold: child.bold }, child.css]"
+          :class="[{ bold: child.bold, italic: child.italic }, child.css]"
           v-if="child.type === 'text' && child.text.startsWith('<h4')"
           v-html="child.text"
         ></div>
         <div
-          :class="[{ bold: child.bold }, child.css]"
+          :class="[{ bold: child.bold, italic: child.italic }, child.css]"
           v-else-if="child.type === 'text' && child.text.startsWith('<h5')"
           v-html="child.text"
         ></div>
         <span
-          :class="[{ bold: child.bold }, child.css]"
+          :class="[{ bold: child.bold, italic: child.italic }, child.css]"
           v-else-if="child.type === 'text' && child.text !== '<hr>'"
           v-html="child.text.replace(/\n/g, '<br>')"
         ></span>
@@ -98,14 +98,18 @@ const runtimeConfig = useRuntimeConfig();
           class="hr"
           v-if="child.type === 'text' && child.text === '<hr>'"          
         ></hr>
+        <p
+          class="new-line"
+          v-if="child.type === 'text' && child.text === ''"          
+        ></p>
         <template v-else-if="child.type === 'link'">
           <a :href="child.url" :class="child.css" class="link hoverable">
             <template
               v-for="(text, childIndex) in child.children"
               :key="childIndex"
             >
-              <span v-html="text.text" :class="[{ bold: text.bold }, text.css]">
-              </span>
+              <span v-html="text.text" :class="[{ bold: text.bold, italic: text.italic }, text.css]">
+              </span>              
             </template>
           </a>
         </template>
@@ -116,7 +120,7 @@ const runtimeConfig = useRuntimeConfig();
         v-for="(child, childIndex) in block.children"
         :key="childIndex"
         v-html="child.text"
-        :class="[{ bold: child.bold }, child.css]"
+        :class="[{ bold: child.bold, italic: text.italic }, child.css]"
       >
       </span>
     </a>
@@ -126,5 +130,8 @@ const runtimeConfig = useRuntimeConfig();
 .link{
   text-decoration: underline;
   color: #000;
+}
+p.new-line {
+  padding-bottom: 10px;
 }
 </style>

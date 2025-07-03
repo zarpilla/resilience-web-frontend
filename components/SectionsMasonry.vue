@@ -153,7 +153,6 @@ onMounted(() => {
   // starting from right to left, add items to the columns
   // console.log("props.section.pages", props.section.pages);
   //const articles = await queryArticles();
-  console.log("articles", articles.value);
   columns.value = splitArticlesOnColumns((articles.value as any).data);
 });
 </script>

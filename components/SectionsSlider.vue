@@ -47,7 +47,7 @@ onMounted(() => {
           }
         });
         citems.forEach((el: any) => {
-          el.style.height = `${maxHeight + 50}px`;
+          el.style.height = `${maxHeight + 80}px`;
         });
       });
 
@@ -874,6 +874,7 @@ img {
   .carousel-blog-item {
     border-radius: 0.3125rem;
     background: #1f1f1f;
+    position: relative;
 
     h3,
     h3 a {
@@ -905,6 +906,11 @@ img {
       font-weight: 400;
       line-height: 120%; /* 1.40625rem */
       letter-spacing: 0.01175rem;
+    }
+    .typology-name{
+      position: absolute;
+      bottom: 30px;
+      left: 30px;
     }
   }
 }
@@ -951,5 +957,10 @@ img {
     line-height: 120% !important; /* 24px */
     letter-spacing: 0.2px !important;
   }
+  .typology-name{
+      position: relative!important;
+      bottom: auto!important;
+      left: auto!important;
+    }
 }
 </style>

@@ -411,7 +411,7 @@ const columnsMore = {
     font-family: "PP Neue Montreal";
     font-size: 18px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 150%; /* 27px */
     letter-spacing: 0.18px;
 
