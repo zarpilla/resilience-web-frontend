@@ -110,6 +110,7 @@ const handleSubmit = async () => {
           subject: formModel.subject,
           message: formModel.message,
           accept: formModel.accept,
+          locale: locale.value,
         },
       },
     });

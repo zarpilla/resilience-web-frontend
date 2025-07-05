@@ -45,6 +45,7 @@ const handleSubmit = async () => {
         data: {
           email: formModel.email,
           accept: formModel.gprd,
+          locale: locale.value,
         },
       },
     });

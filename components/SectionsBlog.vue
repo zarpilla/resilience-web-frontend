@@ -11,7 +11,7 @@ const texts = computed(() =>
 );
 
 const filterStore = useFilterStore();
-const filter = computed(() => filterStore.filter);
+const filter = computed(() => filterStore.filterResources);
 
 const expanded = ref<boolean>(false);
 
@@ -75,6 +75,7 @@ const queryResources = async () => {
     "populate[4]": "metadata.shareImage",
     "pagination[page]": 1,
     "pagination[pageSize]": 25,
+    "sort[0]": "updatedAt:desc",
   };
 
   if (selectedScope.value) {

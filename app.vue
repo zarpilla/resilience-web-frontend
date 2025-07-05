@@ -12,7 +12,8 @@ availableLocales.forEach(async loc => {
   await headerStore.fetch(loc)  
   await footerStore.fetch(loc)
   await textStore.fetch(loc)
-  await filterStore.fetch(loc)
+  await filterStore.fetch(loc, "article")
+  await filterStore.fetch(loc, "resource")
 });
 
 

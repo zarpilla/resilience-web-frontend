@@ -12,7 +12,7 @@ const texts = computed(() =>
 );
 
 const filterStore = useFilterStore();
-const filter = computed(() => filterStore.filter);
+const filter = computed(() => filterStore.filterArticles);
 
 const columns = ref<any[]>([]);
 
