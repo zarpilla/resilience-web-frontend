@@ -189,34 +189,19 @@ onUnmounted(() => {
     </svg>
 
     <!-- Pause button when playing -->
+     
     <svg
       v-else
       class="audio-control hoverable playing"
       @click="togglePlay"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
+      width="6"
+      height="14"
+      viewBox="0 0 6 10"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       title="Pause audio"
     >
-      <mask
-        id="mask0_audio_pause"
-        style="mask-type: alpha"
-        maskUnits="userSpaceOnUse"
-        x="0"
-        y="0"
-        width="24"
-        height="24"
-      >
-        <rect width="24" height="24" :fill="props.css || '#1C1B1F'" />
-      </mask>
-      <g mask="url(#mask0_audio_pause)">
-        <path
-          d="M13 19V5H19V19H13ZM5 19V5H11V19H5ZM15 17H17V7H15V17ZM7 17H9V7H7V17Z"          
-         :fill="props.css || '#1C1B1F'"
-        />
-      </g>
+    <path d="M0.0634766 8.89795H2.06348V0.897949H0.0634766V8.89795ZM4.06348 8.89795H6.06348V0.897949H4.06348V8.89795Z" :fill="props.css || '#1C1B1F'"/>
     </svg>
 
     <span class="audio-label">{{

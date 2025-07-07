@@ -193,13 +193,11 @@ const columnsMedia = {
   ],
 };
 
-console.log("page", page.more2);
-
 const columnsMore = {
   id: 4,
   __component: "sections.columns",
   styles: {
-    cssClass: "pt-2 my-0",
+    cssClass: "pt-2 my-0 pb-0",
   },
   columns: [
     {
@@ -221,6 +219,23 @@ const columnsMore = {
       text: page.more2,
       styles: {
         cssClass: "col-12 col-md-5",
+      },
+    },
+  ],
+};
+
+const columnsMore3 = {
+  id: 5,
+  __component: "sections.columns",
+  styles: {
+    cssClass: "pt-0 my-0 columns-more-3",
+  },
+  columns: [
+    {
+      id: 10,
+      text: page.more3,
+      styles: {
+        cssClass: "col-12 col-md-12 pt-5",
       },
     },
   ],
@@ -276,6 +291,20 @@ const columnsMore = {
       >
         <SectionsColumns
           :section="columnsMore"
+          type="bio"
+          slug="bio-item"
+          :audio="page.audio"
+        ></SectionsColumns>
+      </AppSection>
+
+      <AppSection
+        :section="columnsMore3"
+        type="bio"
+        v-if="page.more3"
+        :index="5"
+      >
+        <SectionsColumns
+          :section="columnsMore3"
           type="bio"
           slug="bio-item"
           :audio="page.audio"
@@ -416,6 +445,10 @@ const columnsMore = {
     letter-spacing: 0.18px;
 
     margin-bottom: 21px;
+  }
+
+  .columns-more-3 .container {
+    border-top: 1px solid #000;
   }
 }
 </style>

@@ -406,6 +406,10 @@ onMounted(() => {
     font-weight: 500;
     line-height: 150%; /* 27px */
     letter-spacing: 0.36px;
+
+    img {
+      background-color: #ebebeb;
+    }
   }
   .rotate-180 {
     transform: rotate(180deg);

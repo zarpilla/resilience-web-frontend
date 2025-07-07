@@ -116,7 +116,8 @@ const playVideo = () => {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.25); /* Black with 0.25 opacity */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.80) 100%);
+
     z-index: 1;
     pointer-events: none; /* Allows clicks to pass through to the media element */
     border-radius: 20px; /* If your media has border-radius, this will match it */
