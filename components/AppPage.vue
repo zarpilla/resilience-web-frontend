@@ -31,7 +31,6 @@ if (pages.value && documents.data && documents.data.length === 0) {
   },
   });
   // throw new Error("Page not found!");
-  console.error("Page not found!", pages.value);
   documents.data = (pages.value as any).data;
 }
 
