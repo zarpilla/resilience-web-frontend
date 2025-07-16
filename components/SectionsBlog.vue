@@ -348,6 +348,16 @@ const setItemsHeight = () => {
 
       <div class="row gx-blog zgx-5" :class="{ 'mt-5': !props.section.filter }">
         <div
+          v-if="section.blogPage.length === 0"
+          class="col-12 text-center no-results-container"
+        >
+          <MetaMedia css="no-results-image" :media="section.noResultsImage" />
+
+          <div class="no-results">
+            <h3 v-html="texts?.value.data.noResults"></h3>
+          </div>
+        </div>
+        <div
           v-for="(blogPage, i) in section.blogPage"
           :key="i"
           class="blog-item-col col-12"
@@ -658,6 +668,23 @@ const setItemsHeight = () => {
       &:hover svg {
         transform: translateX(5px) translateY(-5px);
       }
+    }
+  }
+
+  .no-results-container {
+    margin-bottom: 159px;
+  }
+  .no-results {
+    h3 {
+      color: var(--Blanc, #fff);
+      text-align: center;
+      font-family: "PP Neue Montreal";
+      font-size: 33px !important;
+      font-style: normal !important;
+      font-weight: 500 !important;
+      line-height: 120% !important; /* 39.6px */
+      letter-spacing: 0.33px !important;
+      margin-top: -250px;
     }
   }
 }

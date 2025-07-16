@@ -23,7 +23,16 @@ const { data: pages } = await useAPI("/api/pages", {
 const documents = pages.value as any;
 
 if (pages.value && documents.data && documents.data.length === 0) {
-  throw new Error("Page not found!");
+  const { data: pages } = await useAPI("/api/pages", {
+  query: {
+    "filters[slug][$eq]": "page-not-found",
+    "filters[type][$eq]": "page",
+    ...populate,
+  },
+  });
+  // throw new Error("Page not found!");
+  console.error("Page not found!", pages.value);
+  documents.data = (pages.value as any).data;
 }
 
 const page = documents.data[0];

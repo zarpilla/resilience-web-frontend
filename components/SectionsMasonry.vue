@@ -25,21 +25,6 @@ const selectedYear = ref<number>(0);
 const currentPage = ref(1);
 const isLoading = ref(false);
 const pageSize = 16;
-const toggleScope = async (scope: number) => {
-  selectedScope.value = selectedScope.value === scope ? 0 : scope;
-  const articlesSearched = await queryArticles();
-  columns.value = splitArticlesOnColumns((articlesSearched as any).data);
-};
-const toggleTypology = async (typology: number) => {
-  selectedTypology.value = selectedTypology.value === typology ? 0 : typology;
-  const articlesSearched = await queryArticles();
-  columns.value = splitArticlesOnColumns((articlesSearched as any).data);
-};
-const toggleYear = async (year: number) => {
-  selectedYear.value = selectedYear.value === year ? 0 : year;
-  const articlesSearched = await queryArticles();
-  columns.value = splitArticlesOnColumns((articlesSearched as any).data);
-};
 
 const queryArticles = async () => {
   const query: any = {
@@ -76,6 +61,25 @@ const queryArticles = async () => {
 
 const articles = ref<any>(null);
 articles.value = await queryArticles();
+
+const toggleScope = async (scope: number) => {
+  selectedScope.value = selectedScope.value === scope ? 0 : scope;
+  const articlesSearched = await queryArticles();
+  articles.value = articlesSearched;
+  columns.value = splitArticlesOnColumns((articlesSearched as any).data);
+};
+const toggleTypology = async (typology: number) => {
+  selectedTypology.value = selectedTypology.value === typology ? 0 : typology;
+  const articlesSearched = await queryArticles();
+  articles.value = articlesSearched;
+  columns.value = splitArticlesOnColumns((articlesSearched as any).data);
+};
+const toggleYear = async (year: number) => {
+  selectedYear.value = selectedYear.value === year ? 0 : year;
+  const articlesSearched = await queryArticles();
+  articles.value = articlesSearched;
+  columns.value = splitArticlesOnColumns((articlesSearched as any).data);
+};
 
 const splitArticlesOnColumns = (articles: any[]) => {
   const columnCount =
@@ -276,6 +280,17 @@ onMounted(() => {
       </div>
 
       <div
+        v-if="articles.data.length === 0"
+        class="col-12 text-center no-results-container"
+      >
+        <MetaMedia css="no-results-image" :media="section.noResultsImage" />
+
+        <div class="no-results">
+          <h3 v-html="texts?.value.data.noResults"></h3>
+        </div>
+      </div>
+
+      <div
         class="row gx-blog masonry-row"
         :class="{ 'mt-5': !props.section.filter }"
       >
@@ -336,6 +351,23 @@ onMounted(() => {
     line-height: 4.375rem; /* 437.5% */
     letter-spacing: 0.05rem;
     text-transform: uppercase;
+  }
+
+  .no-results-container {
+    margin-bottom: 159px;
+  }
+  .no-results {
+    h3 {
+      color: var(--Blanc, #fff);
+      text-align: center;
+      font-family: "PP Neue Montreal";
+      font-size: 33px !important;
+      font-style: normal !important;
+      font-weight: 500 !important;
+      line-height: 120% !important; /* 39.6px */
+      letter-spacing: 0.33px !important;
+      margin-top: -250px;
+    }
   }
 }
 @media screen and (min-width: 768px) {
