@@ -400,9 +400,9 @@ body:not(.page-slug-home) {
     img {
         width: 100%;
 
-        @media screen and (max-width: 768px) {
-            margin-bottom: 1rem;
-        }
+        // @media screen and (max-width: 768px) {
+        //     margin-bottom: 1rem;
+        // }
     }
 }
 
