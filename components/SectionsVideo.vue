@@ -155,6 +155,16 @@ const playVideo = () => {
   border-radius: 50%;
   cursor: pointer;
 
+  @media screen and (max-width: 768px) {
+
+    top: 35%;
+    svg {
+      width: 50px!important;
+      height: 50px!important;
+    }
+    
+  }
+
   &:hover {
     .icon-bg {
       fill: #f1f1f1;      
@@ -178,6 +188,15 @@ h3.media-title {
   font-style: normal!important;
   font-weight: 500!important;
   line-height: 120%!important;
+  @media screen and (max-width: 768px) {
+    bottom: 20px;
+    left: 40px;
+    width: calc(100% - 80px);
+    font-size: 24px;
+    max-width: calc(100% - 40px);
+    font-size: 20px!important;
+    
+  }
 }
 
 .orange{

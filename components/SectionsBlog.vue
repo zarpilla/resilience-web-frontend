@@ -657,6 +657,15 @@ const setItemsHeight = () => {
     margin-right: 40px;
     width: calc(100% - 80px);
 
+    @media screen and (max-width: 768px) {
+      position: relative;
+      margin-bottom: 0;
+      margin-left: 0;
+      margin-right: 0;
+      width: 100%;
+      
+    }
+
     a {
       svg {
         transition: transform 0.15s ease-in-out;

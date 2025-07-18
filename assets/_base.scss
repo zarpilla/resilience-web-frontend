@@ -244,10 +244,18 @@ p {
 body.page-type-service .section-sections-hero.section-inner-index-0 {
     min-height: 650px;
     background-image: none !important;
+    @media screen and (max-width: 768px) {        
+        height: auto!important;
+        padding-bottom: 30px;
+        
+    }
 }
 
 body.page-type-service .section-sections-hero.section-inner-index-0 .section-hero-inner {
     min-height: 650px;
+    @media screen and (max-width: 768px) {
+        min-height: auto!important;
+    }
 }
 
 body.page-type-service .section-sections-hero.section-inner-index-0 .section-hero-inner-image {
@@ -267,8 +275,8 @@ body:not(.page-slug-home) {
         letter-spacing: 0.7px;
 
         @media screen and (max-width: 768px) {
-            font-size: 50px;
-            line-height: 50px;
+            font-size: 45px;
+            line-height: 45px;
         }
     }
 
@@ -282,6 +290,10 @@ body:not(.page-slug-home) {
             line-height: 110%;
             /* 66px */
             letter-spacing: 0.6px;
+            @media screen and (max-width: 768px) {
+                font-size: 40px;
+                line-height: 40px;
+            }
         }
     }
 
@@ -432,9 +444,23 @@ body:not(.page-slug-home) {
 
     &.color-text-dark {
         color: #000 !important;
-
         &.zone-color-stroke>* {
             stroke: #000;
+        }
+
+        @media screen and (max-width: 768px) {
+            color: #fff !important;
+            &.zone-color-stroke>* {
+                stroke: #fff;
+            }   
+        }
+    }
+    &.color-text-light {
+        @media screen and (max-width: 768px) {
+            color: #000 !important;
+            &.zone-color-stroke>* {
+                stroke: #000;
+            }   
         }
     }
 }
@@ -661,6 +687,13 @@ a.color-text-light {
     width: 125%;
     margin-top: -25%;
     margin-left: -30%;
+    @media screen and (max-width: 768px) {
+        max-width: 100%;
+        width: 100%;
+        margin-top: 0;
+        margin-left: 0;
+        
+    }
 }
 
 .carousel-blog-item {
@@ -749,7 +782,11 @@ a.color-text-light {
 
     @media screen and (max-width: 768px) {
         padding: 30px;
+
+        
     }
+
+    
 
     h2,
     h3 {
@@ -769,7 +806,12 @@ a.color-text-light {
     text-align: center;
 
     @media screen and (max-width: 768px) {
-        padding: 80px 0px;
+        padding: 80px 20px;
+        h1 {
+            font-size: 25px!important;
+            line-height: 25px!important;        
+            margin-bottom: 0;
+        }
     }
 }
 
@@ -873,6 +915,9 @@ img.active-image {
         height: 380px;
         width: 100%;
         object-fit: cover;
+        @media screen and (max-width: 768px) {
+            margin-bottom: 20px; 
+        }
     }
 }
 

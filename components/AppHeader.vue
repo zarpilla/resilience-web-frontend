@@ -44,8 +44,8 @@ const clickShowMenu = () => {
     //document.body.classList.remove("text-dark");
     const appMenu = document.querySelector(".app-menu");
     appMenu?.classList.remove("text-dark");
-    cursor?.classList.remove("cursor-text-dark");    
-    cursor?.classList.add(cursorCss.value);    
+    cursor?.classList.remove("cursor-text-dark");
+    cursor?.classList.add(cursorCss.value);
     revertToLines();
   }
 };
@@ -235,11 +235,39 @@ header {
   pointer-events: none;
   z-index: 10;
 
-  &.bg-light{
-    background-color: transparent!important;
+  &.bg-light {
+    background-color: transparent !important;
+    @media screen and (max-width: 768px) {
+      .hide-on-text-light.d-none {
+        display: block !important;
+      }
+      .hide-on-text-dark {
+        display: none !important;
+      }
+      .zone-color {
+        color: var(--Negre, #000) !important;
+      }
+      .text-light{
+        color: var(--Negre, #000) !important;
+      }
+    }
   }
-  &.bg-dark{
-      background-color: transparent!important;
+  &.bg-dark {
+    background-color: transparent !important;
+    @media screen and (max-width: 768px) {
+      .hide-on-text-dark.d-none {
+        display: block !important;
+      }
+      .hide-on-text-light {
+        display: none !important;
+      }
+      .zone-color {
+        color: var(--Blanc, #fff) !important;
+      }
+      .text-dark{
+        color: var(--Blanc, #fff) !important;
+      }
+    }
   }
 
   .clickable {
@@ -248,8 +276,12 @@ header {
 
   .menu {
     transform: rotate(0deg);
-
-    .menu-text a {
+    .menu-text {
+      @media screen and (max-width: 768px) {
+        color: var(--Blanc, #fff) !important;
+      }
+    }
+    .menu-text a.zone-color {
       color: var(--Negre, #000);
       text-align: right;
       font-family: "PP Neue Montreal";
@@ -259,6 +291,9 @@ header {
       line-height: 30px; /* 150% */
       letter-spacing: 0.4px;
       text-decoration: none;
+      @media screen and (max-width: 768px) {
+        color: var(--Blanc, #fff) !important;
+      }
     }
     svg line {
       stroke: #000;
@@ -274,16 +309,16 @@ header {
     background: #fff;
     bottom: 20px;
 
-    &.bg-light{
-      background-color: #fff!important;
+    &.bg-light {
+      background-color: #fff !important;
       background-blend-mode: multiply;
     }
-    &.bg-dark{
-        background-color: #000!important;
-        background-blend-mode: multiply;
+    &.bg-dark {
+      background-color: #000 !important;
+      background-blend-mode: multiply;
     }
 
-    .logo{
+    .logo {
       img {
         height: 47px;
       }

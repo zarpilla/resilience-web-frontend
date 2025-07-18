@@ -108,6 +108,11 @@ h2 {
     opacity: 1;
   }
 }
+.tab-content{
+  @media screen and (max-width: 768px) {
+    padding-top: 50px;    
+  }
+}
 </style>
 <style lang="scss">
 .section-tabs{

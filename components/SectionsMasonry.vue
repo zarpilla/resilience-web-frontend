@@ -376,19 +376,19 @@ onMounted(() => {
     margin: auto;
   }
 }
-
-.masonry-row {
-  > :first-child {
-    margin-top: 13rem;
-  }
-  > :nth-child(2) {
-    margin-top: 4rem;
-  }
-  > :nth-child(3) {
-    margin-top: 10rem;
+@media screen and (min-width: 768px) {
+  .masonry-row {
+    > :first-child {
+      margin-top: 13rem;
+    }
+    > :nth-child(2) {
+      margin-top: 4rem;
+    }
+    > :nth-child(3) {
+      margin-top: 10rem;
+    }
   }
 }
-
 .masonry-item {
   margin-bottom: 2.5rem;
   .media {

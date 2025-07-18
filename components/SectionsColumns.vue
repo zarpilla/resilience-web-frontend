@@ -139,7 +139,7 @@ onMounted(() => {
     });
   }
 
-  if (hasColumnsWithFixedOnScroll) {
+  if (hasColumnsWithFixedOnScroll && window.innerWidth > 1024) {
     $gsap.to(".fixed-when-scroll > div", {
       position: "fixed",
       ease: "none",
@@ -221,7 +221,7 @@ onMounted(() => {
 
           <MetaText :text="column.text" :styles="column.styles" />
 
-          <div v-if="hasColumnsWithFixedOnScroll && columnIndex === 0">
+          <div v-if="hasColumnsWithFixedOnScroll && columnIndex === 0" class="d-none d-lg-block">
             <img :src="`/images/frames/frame_${frameImage}.png`" alt="" />
           </div>
 
@@ -311,6 +311,8 @@ onMounted(() => {
     position: relative;
     left: inherit;
     width: 100%;
+    margin-top: 50px;
+    margin-bottom: 120px;
   }
 
   > div {
@@ -333,6 +335,10 @@ onMounted(() => {
   border-radius: 20px;
   margin-bottom: 0 !important;
   object-fit: cover;
+  @media screen and (max-width: 768px) {
+    width: 100% !important;
+    height: 120px !important;
+  }
 }
 .vertical-scroller-image-0 {
   margin-top: 120px;

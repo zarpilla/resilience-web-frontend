@@ -57,7 +57,7 @@ onMounted(() => {
           " .carousel .carousel-item"
       );
       items.forEach((el) => {
-        const minPerSlide = 3;
+        const minPerSlide = window.innerWidth > 1024 ? 3 : 1;
         let next = el.nextElementSibling;
         for (var i = 1; i < minPerSlide; i++) {
           if (!next) {
@@ -72,7 +72,7 @@ onMounted(() => {
 
       // var myCarousel = document.querySelector(`#carousel-${props.section.id}`);
       // const carousel = new $bs.Carousel(myCarousel);
-    } else if (props.section.preset === "services" && window.innerWidth > 768) {
+    } else if (props.section.preset === "services") {
       const boxes = $gsap.utils.toArray(
         `#carousel-${props.section.id} .a-carousel-item`
       );
@@ -228,7 +228,7 @@ onMounted(() => {
       <template v-else-if="section.preset === 'services'">
         <div class="container mb-5">
           <div class="row text-left">
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-lg-4">
               <h2
                 class="mb-3 text-left me-auto ms-0"
                 v-html="section.title"
@@ -365,12 +365,12 @@ onMounted(() => {
       </template>
       <template v-else>
         <div class="row text-left mb-0 mb-md-5">
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-8 col-lg-4">
             <div class="the-sub-title">
               <h3>{{ section.subTitle }}</h3>
             </div>
           </div>
-          <div class="col-12 col-md-8">
+          <div class="col-12 col-md-4 col-lg-8">
             <div
               class="d-flex w-100 justify-content-center justify-content-md-end the-arrows"
             >
@@ -637,7 +637,7 @@ img {
 }
 .blog-onethird {
   width: 33.3333%;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     width: 100%;
   }
 }
@@ -718,10 +718,10 @@ img {
 .carousel-control-next,
 .carousel-control-prev {
   opacity: 1;
-  width: 10%;
+  width: 85px;
   cursor: none !important;
   @media screen and (max-width: 768px) {
-    width: 30%;
+    //width: 30%;
     margin-top: 1rem;
     margin-bottom: 1rem;
   }

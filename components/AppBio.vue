@@ -403,6 +403,10 @@ const columnsMore3 = {
     background-size: 650px auto;
     background-position: 75% bottom;
 
+    @media (max-width: 767px) {
+      // background-color: #f2eeea!important;
+    }
+
     &.bio-hero {
       @media (max-width: 767px) {
         background-image: none !important;
@@ -415,6 +419,16 @@ const columnsMore3 = {
   .section-inner-index-0 {
     .section-hero-inner {
       padding-top: 200px;
+      @media (max-width: 767px) {
+        padding-top: 100px;
+      }
+    }
+  }
+  .section-inner-index-1{
+    @media (max-width: 767px) {
+      background-color: #f2eeea!important;
+      padding-top: 0;
+      padding-bottom: 0;
     }
   }
   .section-hero-inner {
@@ -424,6 +438,7 @@ const columnsMore3 = {
     @media (max-width: 767px) {
       height: auto !important;
       padding-top: 140px;
+      width: 100%;
     }
   }
   .section-sections-hero {

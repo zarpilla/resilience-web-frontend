@@ -44,8 +44,8 @@ export default class DarkLightMode {
             header && header.classList.add("bg-dark");
           } else {
             // Mobile-specific header styling (since it's at bottom)
-            header && header.classList.remove("bg-light");
-            header && header.classList.add("bg-dark");
+            header && header.classList.remove("bg-dark");
+            header && header.classList.add("bg-light");
           }
         },
         onEnterBack: () => {
@@ -63,8 +63,8 @@ export default class DarkLightMode {
             header && header.classList.remove("bg-light");
             header && header.classList.add("bg-dark");
           } else {
-            header && header.classList.remove("bg-light");
-            header && header.classList.add("bg-dark");
+            header && header.classList.remove("bg-dark");
+            header && header.classList.add("bg-light");
           }
         },
       });
@@ -78,10 +78,20 @@ export default class DarkLightMode {
         // markers: true,
         onEnter: () => {
           hideOnTextLightElements.forEach((element) => {
-            element.classList.remove("d-none");
+            if (!device.mobile()) {
+              element.classList.remove("d-none");
+            }
+            else {
+              element.classList.add("d-none");
+            }
           });
           hideOnTextDarkElements.forEach((element) => {
-            element.classList.add("d-none");
+            if (!device.mobile()) {
+              element.classList.add("d-none");
+            }
+            else {
+              element.classList.remove("d-none");
+            }
           });
           zoneColorElements.forEach((element) => {
             element.classList.remove("color-text-light");
@@ -89,10 +99,10 @@ export default class DarkLightMode {
           });
           if (!device.mobile()) {
             header && header.classList.remove("bg-dark");
-            header && header.classList.add("bg-light");
+            header && header.classList.add("bg-light");            
           } else {
-            header && header.classList.remove("bg-dark");
-            header && header.classList.add("bg-light");
+            header && header.classList.remove("bg-light");
+            header && header.classList.add("bg-dark");
           }
         },
         onEnterBack: () => {
@@ -110,8 +120,8 @@ export default class DarkLightMode {
             header && header.classList.remove("bg-dark");
             header && header.classList.add("bg-light");
           } else {
-            header && header.classList.remove("bg-dark");
-            header && header.classList.add("bg-light");
+            header && header.classList.remove("bg-light");
+            header && header.classList.add("bg-dark");
           }
         },
       });
