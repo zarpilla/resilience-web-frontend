@@ -470,7 +470,7 @@ body:not(.page-slug-home) {
 }
 
 .text-dark a.zone-color,
-.text-dark .zone-color {
+.text-dark.zone-color {
     color: #000 !important;
 
     &.zone-color-stroke>* {
@@ -483,15 +483,31 @@ body:not(.page-slug-home) {
         &.zone-color-stroke>* {
             stroke: #fff;
         }
+        @media screen and (max-width: 768px) {
+        color: #000 !important;
+
+        &.zone-color-stroke>* {
+            stroke: #000;
+        }
     }
+    }
+     
 }
 
-.zone-color.text-dark,
+.zone-color.text-dark.color-text-dark,
 .zone-color a.color-text-dark {
     color: #000 !important;
 
     &.zone-color-stroke>* {
         stroke: #000;
+    }
+    @media screen and (max-width: 768px) {
+        color: #fff !important;
+
+        &.zone-color-stroke>* {
+            stroke: #fff;
+        }
+        
     }
 }
 
