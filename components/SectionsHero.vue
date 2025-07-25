@@ -69,24 +69,21 @@ const homeTitleTransition = async () => {
     // Fade in home0 and home2 with GSAP
     await $gsap.to(home0El, { opacity: 1, duration: 1, delay: 0 });
     await $gsap.to(home1El, { opacity: 1, duration: 1, delay: 0.5 });
-    await $gsap.to(home2El, { opacity: 1, duration: 1, delay: 1 });
+    
+    await delay(2000);
 
-    // Wait for home2El animation to complete
-    // await $gsap.to(home2El, { duration: 1, delay: 3.5 });
+    await removeLetters("home1");
+    
+    await $gsap.to(home2El, { opacity: 1, duration: 1, delay: 0.5 });
+    
+    await addLetters((texts?.value as any).value.data.home2, "home1");
+
+    // await delay(2000);
 
     while (dowhile.value) {
       console.log("Starting loop...");
-
-      await delay(2000);
-      // Remove letters from home2El
-      await removeLetters("home2");
-      await delay(500);
-
-      // Fade in home1El
-      // await $gsap.to(home1El, { opacity: 1, duration: 1 });
-
       // Add letters for home3
-      await addLetters((texts?.value as any).value.data.home3);
+      await addLetters((texts?.value as any).value.data.home3, "home2");
 
       await delay(2000);
 
@@ -95,7 +92,7 @@ const homeTitleTransition = async () => {
       await delay(500);
 
       // Add letters for home4
-      await addLetters((texts?.value as any).value.data.home4);
+      await addLetters((texts?.value as any).value.data.home4, "home2");
 
       await delay(2000);
 
@@ -104,17 +101,13 @@ const homeTitleTransition = async () => {
       await delay(500);
 
       // Add letters for home5
-      // await addLetters((texts?.value as any).value.data.home5);
+      await addLetters((texts?.value as any).value.data.home5, "home2");
 
-      // await delay(2000);
+      await delay(2000);
 
-      // await removeLetters("home2");
+      await removeLetters("home2");
 
-      // await $gsap.to(home1El, { opacity: 0, duration: 1, delay: 0.5 });
-
-      await addLetters((texts?.value as any).value.data.home2);
-
-      // await delay(2000);
+      await delay(500);
     }
   }
 };
@@ -146,9 +139,9 @@ const removeLetters = (id: string): Promise<void> => {
   });
 };
 
-const addLetters = (word: string): Promise<void> => {
+const addLetters = (word: string, elementId: string): Promise<void> => {
   return new Promise((resolve) => {
-    const home2El = document.getElementById("home2");
+    const home2El = document.getElementById(elementId);
     if (!home2El) return resolve();
 
     const addNextLetter = () => {
@@ -180,7 +173,7 @@ const addLetters = (word: string): Promise<void> => {
 onMounted(() => {
   if (isHome && texts.value && props.sectionIndex === 0) {
     home1.value = (texts?.value as any).value.data.home1;
-    home2.value = (texts?.value as any).value.data.home2;
+    // home2.value = (texts?.value as any).value.data.home2;
     homeTitleTransition();
   }
 });
@@ -303,8 +296,10 @@ onUnmounted(() => {
               <div id="home0" style="opacity: 0">
                 {{ texts?.value.data.home0 }}
               </div>
-              <div id="home1" style="opacity: 0">{{ home1 }}</div>
-              <span id="home2" style="opacity: 0">{{ home2 }}</span>
+              <div>
+                <span id="home1" style="opacity: 0">{{ home1 }}</span>&nbsp;
+                <span id="home2" style="opacity: 0">{{ home2 }}</span>  
+              </div>
             </h1>
           </template>
           <template v-else>

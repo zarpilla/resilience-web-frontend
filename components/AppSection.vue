@@ -64,6 +64,11 @@ const paddingStyle = computed(() => ({
       ? props.section.styles?.padding
       : null,
 }));
+const backgroundVideoUrl = computed(() => {
+  return props.section.styles?.backgroundVideo?.url
+    ? runtimeConfig.public.apiBase + props.section.styles.backgroundVideo.url
+    : null;
+});
 </script>
 <template>
   <div
@@ -89,6 +94,16 @@ const paddingStyle = computed(() => ({
       paddingStyle,
     ]"
   >
+    <video
+      v-if="backgroundVideoUrl"
+      class="section-background-video"
+      :src="backgroundVideoUrl"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+    ></video>
     <div class="section-inner-2" :style="[backgroundImage2Style]">
       <slot></slot>
     </div>
@@ -99,6 +114,21 @@ const paddingStyle = computed(() => ({
   background-size: 102%;
   background-repeat: no-repeat;
   position: relative;
+  overflow: hidden;
+}
+.section-background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+}
+.section-inner > .section-inner-2 {
+  position: relative;
+  z-index: 1;
 }
 .section-inner-2 {
   background-size: 52%;
