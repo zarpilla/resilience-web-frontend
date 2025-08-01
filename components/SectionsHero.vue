@@ -55,6 +55,7 @@ const texts = computed(() =>
 const isHome = computed(() => props.slug === "home");
 const home1 = ref<string>("");
 const home2 = ref<string>("");
+const showEffects = ref<boolean>(true);
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -63,205 +64,186 @@ const dowhile = ref<boolean>(true);
 const homeTitleTransition = async () => {
   // Wait for DOM to be ready
   await nextTick();
-  
-  // Ensure elements exist before proceeding
-  const txt0El = document.querySelector(".txt0");
-  const txt1El = document.querySelector(".txt1");
-  const barEl = document.querySelector(".bar");
-  const bar2El = document.querySelector(".bar2");
-  
-  if (!txt0El || !txt1El || !barEl || !bar2El || !texts.value) {
-    console.warn("Required elements not found for GSAP animation");
-    return;
-  }
 
-  // Create a simple character split function as fallback for SplitText
-  const splitTextToChars = (element: Element) => {
-    const text = element.textContent || '';
-    element.innerHTML = '';
-    const chars: HTMLElement[] = [];
+  const runAnimation = () => {
+    // Get fresh references to DOM elements each time
+    const txt0El = document.querySelector(".txt0");
+    const txt1El = document.querySelector(".txt1");
+    const barEl = document.querySelector(".bar");
+    const bar2El = document.querySelector(".bar2");
     
-    for (let i = 0; i < text.length; i++) {
-      const char = document.createElement('span');
-      char.textContent = text[i] === ' ' ? '\u00A0' : text[i];
-      char.style.display = 'inline-block';
-      element.appendChild(char);
-      chars.push(char);
+    if (!txt0El || !txt1El || !barEl || !bar2El || !texts.value) {
+      console.warn("Required elements not found for GSAP animation");
+      return;
     }
+
+    // Reset all elements to initial state
+    const resetElements = () => {
+      // Re-split txt1 into characters for each loop
+      const splitTextToChars = (element: Element) => {
+        const text = element.textContent || '';
+        element.innerHTML = '';
+        const chars: HTMLElement[] = [];
+        
+        for (let i = 0; i < text.length; i++) {
+          const char = document.createElement('span');
+          char.textContent = text[i] === ' ' ? '\u00A0' : text[i];
+          char.style.display = 'inline-block';
+          element.appendChild(char);
+          chars.push(char);
+        }
+        
+        return chars;
+      };
+
+      // Reset txt1 content and split again
+      txt1El.textContent = (texts?.value as any).value.data.home1;
+      const t2 = splitTextToChars(txt1El);
+      
+      // Reset all elements to initial state
+      $gsap.set([".txt0", ".txt1", ".txt2", ".txt3", ".txt4", ".txt5"], {
+        opacity: 1,
+        color: "transparent"
+      });
+      
+      $gsap.set(".effects", { opacity: 1 });
+      $gsap.set([".bar", ".bar2"], { 
+        backgroundColor: "transparent", 
+        left: 0 
+      });
+
+      return t2;
+    };
+
+    const t2 = resetElements();
     
-    return chars;
-  };
-
-  // Split txt1 into characters using our custom function
-  const t2 = splitTextToChars(txt1El);
-  
-  const color2 = "#17c0fd";
-  const color1 = "#fff";
-  const moveBar = () => {
-    const txt0Width = Number($gsap.getProperty(".txt0", "width")) || 0;
-    $gsap.set(".bar", { backgroundColor: color1, left: txt0Width + 1 });
-  };
-
-  const moveBar2 = () => {
-    const txt2Width = Number($gsap.getProperty(".txt2", "width")) || 0;
-    $gsap.set(".bar2", { backgroundColor: color1, left: txt2Width + 1 });
-  };
-
-  const moveBar3 = () => {
-    const txt3Width = Number($gsap.getProperty(".txt3", "width")) || 0;
-    $gsap.set(".bar2", { backgroundColor: color1, left: txt3Width + 1 });
-  };
-
-  const moveBar4 = () => {
-    const txt4Width = Number($gsap.getProperty(".txt4", "width")) || 0;
-    $gsap.set(".bar2", { backgroundColor: color1, left: txt4Width + 1 });
-  };
-
-  const txt0Width = Number($gsap.getProperty(".txt0", "width")) || 0;
-
-  $gsap.set(".bar", { backgroundColor: color1, left: 0 });
-  $gsap.set(".bar2", { backgroundColor: color1, left: 0 });
-
-  $gsap
-    .timeline({ delay: 0.2 })
-    .set(".txt0", { color: color1, fontWeight: "regular" })
-    .set(".txt2", { color: color1, fontWeight: "regular" })
-    .set(".txt3", { color: color1, fontWeight: "regular" })    
-    .set(".txt1", {
-      color: color1,
-      opacity: 0,
-      x: 0,
-      immediateRender: true,
-    })
-    .from(
-      ".txt0",
-      {
-        duration: 1.0,
-        width: 0,
-        ease: "steps(" + (home1.value?.length || 10) + ")",
-        onUpdate: moveBar,
-      },
-      2.5
-    )
-    .to(".txt1", { duration: 0.9, opacity: 1 }, "-=0.1")
-    .from(
-      t2,
-      { duration: 0.8, opacity: 0, ease: "power3.inOut", stagger: 0.02 },
-      "-=0.5"
-    )
-    .to(t2[15], { duration: 0.1, x: 10, opacity: 0 }, "+=0.75")
-    .to(t2[14], { duration: 0.1, x: 10, opacity: 0 })
-    .to(t2[13], { duration: 0.1, x: 10, opacity: 0 })
-    .to(t2[12], { duration: 0.1, x: 10, opacity: 0 })
-
-    .to(t2[10], { duration: 0.1, x: 10, opacity: 0 }, "-=0.0") // "-=0.5"
-    .to(t2[9],  { duration: 0.1, x: 10, opacity: 0 })
-    .to(t2[8],  { duration: 0.1, x: 10, opacity: 0 })
-    .to(t2[7],  { duration: 0.1, x: 10, opacity: 0 })
-    .to(t2[6],  { duration: 0.1, x: 10, opacity: 0 })
-    .to(t2[5],  { duration: 0.1, x: 10, opacity: 0 })
-    .to(t2[4],  { duration: 0.1, x: 10, opacity: 0 })
-    .to(t2[3],  { duration: 0.1, x: 10, opacity: 0 })
-    .to(t2[2],  { duration: 0.1, x: 10, opacity: 0 })
-    .to(t2[1],  { duration: 0.1, x: 10, opacity: 0 })
-    // move the 11th letter to the right
-    .to(t2[11], { duration: 0.30, x: -364, opacity: 1 })
-
-    .from(
-      ".txt2",
-      {
-        duration: 0.4,
-        width: 0,
-        ease: "steps(" + (home2.value ? (home2.value.length + 1) : 10) + ")",
-        onUpdate: moveBar2,
-      },
-    )
-    .from(
-      ".txt3",
-      {
-        duration: 0.8,
-        width: 0,
-        ease: "steps(10)",
-        onUpdate: moveBar2,
-      },
-    )
-    .to(".txt3", { duration: 0.5, opacity: 0 }, "=1")
-
-    .set(".txt4", { color: color1, fontWeight: "regular" })
+    const color1 = "#fff";
     
-    .from(
-      ".txt4",
-      {
-        duration: 0.8,
-        width: 0,
-        ease: "steps(10)",
-        onUpdate: moveBar2,
-      },
-    )
-    .to(".txt4", { duration: 0.5, opacity: 0 }, "=1")
-    .set(".txt5", { color: color1, fontWeight: "regular" })
-    .from(
-      ".txt5",
-      {
-        duration: 0.8,
-        width: 0,
-        ease: "steps(10)",
-        onUpdate: moveBar2,
-      },
-    )
-    .to(".effects", { duration: 1.5, opacity: 0 }, "=1")
-    .timeScale(1);
+    const moveBar = () => {
+      const txt0Width = Number($gsap.getProperty(".txt0", "width")) || 0;
+      $gsap.set(".bar", { backgroundColor: color1, left: txt0Width + 1 });
+    };
 
-  return;
-  const home0El = document.getElementById("home0");
-  const home1El = document.getElementById("home1");
-  const home2El = document.getElementById("home2");
+    const moveBar2 = () => {
+      const txt2Width = Number($gsap.getProperty(".txt2", "width")) || 0;
+      $gsap.set(".bar2", { backgroundColor: color1, left: txt2Width + 1 });
+    };
 
-  if (home0El && home1El && home2El) {
-    // Fade in home0 and home2 with GSAP
-    await $gsap.to(home0El, { opacity: 1, duration: 1, delay: 0 });
-    await $gsap.to(home1El, { opacity: 1, duration: 1, delay: 0.5 });
+    const moveBar3 = () => {
+      const txt3Width = Number($gsap.getProperty(".txt3", "width")) || 0;
+      $gsap.set(".bar2", { backgroundColor: color1, left: txt3Width + 1 });
+    };
 
-    await delay(2000);
+    const moveBar4 = () => {
+      const txt4Width = Number($gsap.getProperty(".txt4", "width")) || 0;
+      $gsap.set(".bar2", { backgroundColor: color1, left: txt4Width + 1 });
+    };
 
-    await removeLetters("home1");
+    // Create the timeline
+    const tl = $gsap.timeline({ 
+      delay: 0.1,
+      onComplete: () => {
+        // Check if component is still mounted before repeating
+        if (dowhile.value) {
+          // Hide effects div to reset DOM
+          showEffects.value = false;
+          
+          // Wait 1 second, then show div and restart animation
+          setTimeout(() => {
+            showEffects.value = true;
+            setTimeout(runAnimation, 100); // Small delay to ensure DOM is ready
+          }, 500);
+        }
+      }
+    });
 
-    await $gsap.to(home2El, { opacity: 1, duration: 1, delay: 0.5 });
+    tl.set(".txt0", { color: color1, fontWeight: "regular" })
+      .set(".txt2", { color: color1, fontWeight: "regular" })
+      .set(".txt3", { color: color1, fontWeight: "regular" })    
+      .set(".txt1", {
+        color: color1,
+        opacity: 0,
+        x: 0,
+        immediateRender: true,
+      })
+      .from(
+        ".txt0",
+        {
+          duration: 1.0,
+          width: 0,
+          ease: "steps(" + (home1.value?.length || 10) + ")",
+          onUpdate: moveBar,
+        },
+        1.5
+      )
+      .to(".txt1", { duration: 0.9, opacity: 1 }, "-=0.1")
+      .to(".bar", { duration: 0.15, opacity: 0 })
+      .from(
+        t2,
+        { duration: 0.8, opacity: 0, ease: "power3.inOut", stagger: 0.02 },
+        "-=0.5"
+      )
+      .to(t2[15], { duration: 0.1, x: 10, opacity: 0 }, "+=0.75")
+      .to(t2[14], { duration: 0.1, x: 10, opacity: 0 })
+      .to(t2[13], { duration: 0.1, x: 10, opacity: 0 })
+      .to(t2[12], { duration: 0.1, x: 10, opacity: 0 })
+      .to(t2[10], { duration: 0.1, x: 10, opacity: 0 }, "-=0.0")
+      .to(t2[9],  { duration: 0.1, x: 10, opacity: 0 })
+      .to(t2[8],  { duration: 0.1, x: 10, opacity: 0 })
+      .to(t2[7],  { duration: 0.1, x: 10, opacity: 0 })
+      .to(t2[6],  { duration: 0.1, x: 10, opacity: 0 })
+      .to(t2[5],  { duration: 0.1, x: 10, opacity: 0 })
+      .to(t2[4],  { duration: 0.1, x: 10, opacity: 0 })
+      .to(t2[3],  { duration: 0.1, x: 10, opacity: 0 })
+      .to(t2[2],  { duration: 0.1, x: 10, opacity: 0 })
+      .to(t2[1],  { duration: 0.1, x: 10, opacity: 0 })
+      .to(t2[11], { duration: 0.30, x: -364, opacity: 1 })
+      .from(
+        ".txt2",
+        {
+          duration: 0.4,
+          width: 0,
+          ease: "steps(" + (home2.value ? (home2.value.length + 1) : 10) + ")",
+          onUpdate: moveBar2,
+        },
+      )
+      .from(
+        ".txt3",
+        {
+          duration: 0.5,
+          width: 0,
+          ease: "steps(10)",
+          onUpdate: moveBar3,
+        },
+      )
+      .to(".txt3", { duration: 0.5, opacity: 0 }, "+=1")
+      .set(".txt4", { color: color1, fontWeight: "regular" })
+      .from(
+        ".txt4",
+        {
+          duration: 0.5,
+          width: 0,
+          ease: "steps(10)",
+          onUpdate: moveBar4,
+        },
+      )
+      .to(".txt4", { duration: 0.5, opacity: 0 }, "+=1")
+      .set(".txt5", { color: color1, fontWeight: "regular" })
+      .from(
+        ".txt5",
+        {
+          duration: 0.5,
+          width: 0,
+          ease: "steps(10)",
+          onUpdate: moveBar2,
+        },
+      )
+      .to(".effects", { duration: 1, opacity: 0 }, "+=1")
+      .timeScale(0.8);
+  };
 
-    await addLetters((texts?.value as any).value.data.home2, "home1");
-
-    // await delay(2000);
-
-    while (dowhile.value) {
-      console.log("Starting loop...");
-      // Add letters for home3
-      await addLetters((texts?.value as any).value.data.home3, "home2");
-
-      await delay(2000);
-
-      await removeLetters("home2");
-
-      await delay(500);
-
-      // Add letters for home4
-      await addLetters((texts?.value as any).value.data.home4, "home2");
-
-      await delay(2000);
-
-      await removeLetters("home2");
-
-      await delay(500);
-
-      // Add letters for home5
-      await addLetters((texts?.value as any).value.data.home5, "home2");
-
-      await delay(2000);
-
-      await removeLetters("home2");
-
-      await delay(500);
-    }
-  }
+  // Start the first animation
+  runAnimation();
 };
 
 const removeLetters = (id: string): Promise<void> => {
@@ -448,7 +430,7 @@ onUnmounted(() => {
 
           <template v-if="isHome">
             <h1 class="home-h1">
-              <div class="effects">
+              <div v-if="showEffects" class="effects">
                 <div class="txt0" style="color: transparent">{{ texts?.value.data.home0 }}                                    
                 </div>
                 
