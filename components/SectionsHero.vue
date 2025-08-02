@@ -716,6 +716,28 @@ onUnmounted(() => {
     top: 0;
     left: 0;
     background-color: transparent;
+
+    /*
+    @media screen and (max-width: 1024px) {
+        font-size: 60px;
+        line-height: 70px;
+    }
+    @media screen and (max-width: 768px) {
+        font-size: 32px;
+        line-height: 40px;
+    }
+        */
+
+    @media screen and (max-width: 1024px) {
+      width: 4px;
+      height: 70px;
+    }
+
+    @media screen and (max-width: 768px) {
+      width: 3px;
+      height: 32px;
+      top: 6px;      
+    }
   }
 }
 </style>

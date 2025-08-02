@@ -267,6 +267,16 @@ body.page-type-service .section-sections-hero.section-inner-index-0 .section-her
 }
 
 body.page-slug-home .section-sections-hero.section-inner-index-0 {
+    @media screen and (max-width: 1024px) {
+        // 4 / 5 ratio aprox
+        height: calc(100vw / 0.8)!important;
+
+        .section-hero-inner {
+            height: calc(100vw / 0.8)!important;
+            padding-bottom: 200px;
+        }
+    }
+
     @media screen and (max-width: 768px) {
         // 4 / 5 ratio aprox
         height: calc(100vw / 0.8)!important;
