@@ -156,7 +156,7 @@ const homeTitleTransition = async () => {
         }
       }
     });
-
+      
     tl.set(".txt0", { color: color1, fontWeight: "regular" })
       .set(".txt2", { color: color1, fontWeight: "regular" })
       .set(".txt3", { color: color1, fontWeight: "regular" })    
@@ -197,7 +197,19 @@ const homeTitleTransition = async () => {
       .to(t2[3],  { duration: 0.1, x: 10, opacity: 0 })
       .to(t2[2],  { duration: 0.1, x: 10, opacity: 0 })
       .to(t2[1],  { duration: 0.1, x: 10, opacity: 0 })
-      .to(t2[11], { duration: 0.30, x: -364, opacity: 1 })
+      .to(t2[11], { 
+        duration: 0.30, 
+        x: () => {
+          let totalWidth = 0;
+          for (let i = 1; i <= 10; i++) {
+            if (t2[i]) {
+              totalWidth += t2[i].getBoundingClientRect().width;
+            }
+          }
+          return -1 * totalWidth;
+        }, 
+        opacity: 1 
+      })
       .from(
         ".txt2",
         {
@@ -207,6 +219,15 @@ const homeTitleTransition = async () => {
           onUpdate: moveBar2,
         },
       )
+      .set(".txt3", { 
+        left: () => {
+          const txt2Width = Number($gsap.getProperty(".txt2", "width")) || 0;
+          let remainingWidth = 0;
+          if (t2[0]) remainingWidth += t2[0].getBoundingClientRect().width;
+          if (t2[11]) remainingWidth += t2[11].getBoundingClientRect().width;
+          return remainingWidth + txt2Width;
+        }
+      })
       .from(
         ".txt3",
         {
@@ -217,6 +238,15 @@ const homeTitleTransition = async () => {
         },
       )
       .to(".txt3", { duration: 0.5, opacity: 0 }, "+=1")
+      .set(".txt4", { 
+        left: () => {
+          const txt2Width = Number($gsap.getProperty(".txt2", "width")) || 0;
+          let remainingWidth = 0;
+          if (t2[0]) remainingWidth += t2[0].getBoundingClientRect().width;
+          if (t2[11]) remainingWidth += t2[11].getBoundingClientRect().width;
+          return remainingWidth + txt2Width;
+        }
+      })
       .set(".txt4", { color: color1, fontWeight: "regular" })
       .from(
         ".txt4",
@@ -228,6 +258,15 @@ const homeTitleTransition = async () => {
         },
       )
       .to(".txt4", { duration: 0.5, opacity: 0 }, "+=1")
+      .set(".txt5", { 
+        left: () => {
+          const txt2Width = Number($gsap.getProperty(".txt2", "width")) || 0;
+          let remainingWidth = 0;
+          if (t2[0]) remainingWidth += t2[0].getBoundingClientRect().width;
+          if (t2[11]) remainingWidth += t2[11].getBoundingClientRect().width;
+          return remainingWidth + txt2Width;
+        }
+      })
       .set(".txt5", { color: color1, fontWeight: "regular" })
       .from(
         ".txt5",
@@ -239,7 +278,7 @@ const homeTitleTransition = async () => {
         },
       )
       .to(".effects", { duration: 1, opacity: 0 }, "+=1")
-      .timeScale(0.8);
+      .timeScale(0.95);
   };
 
   // Start the first animation
@@ -662,7 +701,7 @@ onUnmounted(() => {
 
   .txt3, .txt4, .txt5 {
     position: absolute;
-    left: 234px;
+    // left: 234px;
     top: 0;
   }
   

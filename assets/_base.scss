@@ -99,10 +99,14 @@ h1 {
     font-size: 90px;
     font-style: normal;
     font-weight: 500;
-    line-height: 90px;
+    line-height: 100px;
 
+    @media screen and (max-width: 1024px) {
+        font-size: 60px;
+        line-height: 70px;
+    }
     @media screen and (max-width: 768px) {
-        font-size: 40px;
+        font-size: 32px;
         line-height: 40px;
     }
 }
@@ -260,6 +264,18 @@ body.page-type-service .section-sections-hero.section-inner-index-0 .section-her
 
 body.page-type-service .section-sections-hero.section-inner-index-0 .section-hero-inner-image {
     min-height: 100%;
+}
+
+body.page-slug-home .section-sections-hero.section-inner-index-0 {
+    @media screen and (max-width: 768px) {
+        // 4 / 5 ratio aprox
+        height: calc(100vw / 0.8)!important;
+
+        .section-hero-inner {
+            height: calc(100vw / 0.8)!important;
+            padding-bottom: 100px;
+        }
+    }
 }
 
 body:not(.page-slug-home) {

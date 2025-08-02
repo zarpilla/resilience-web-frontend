@@ -69,6 +69,26 @@ const backgroundVideoUrl = computed(() => {
     ? runtimeConfig.public.apiBase + props.section.styles.backgroundVideo.url
     : null;
 });
+
+const backgroundVideoMobileUrl = computed(() => {
+  return props.section.styles?.backgroundVideoMobile?.url
+    ? runtimeConfig.public.apiBase + props.section.styles.backgroundVideoMobile.url
+    : null;
+});
+
+const isMobile = computed(() => {
+  if (process.client) {
+    return window.innerWidth <= 768;
+  }
+  return false;
+});
+
+const currentVideoUrl = computed(() => {
+  if (isMobile.value && backgroundVideoMobileUrl.value) {
+    return backgroundVideoMobileUrl.value;
+  }
+  return backgroundVideoUrl.value;
+});
 </script>
 <template>
   <div
@@ -95,9 +115,9 @@ const backgroundVideoUrl = computed(() => {
     ]"
   >
     <video
-      v-if="backgroundVideoUrl"
+      v-if="currentVideoUrl"
       class="section-background-video"
-      :src="backgroundVideoUrl"
+      :src="currentVideoUrl"
       autoplay
       muted
       loop
