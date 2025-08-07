@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useHeaderStore } from "~/stores/header";
+import { useLocalizedNavigation } from "~/composables/useLocalizedNavigation";
+
 const { locale, setLocale, availableLocales } = useI18n();
-const switchLocalePath = useSwitchLocalePath();
-const localePath = useLocalePath();
+const { getLanguageLinks } = useLocalizedNavigation();
 
 const headerStore = useHeaderStore();
 const header = computed<any>(() =>
@@ -26,13 +27,41 @@ const contact = computed(() => {
   return header.value.value?.contact?.replace(/\n/g, "<br>");
 });
 
+// Get language links for current page
+const languageLinks = ref<Array<{ locale: string; url: string }>>([]);
+
+// Function to update language links
+const updateLanguageLinks = async () => {
+  console.log('Updating language links in menu for route:', route.path);
+  try {
+    languageLinks.value = await getLanguageLinks();
+    console.log('Menu language links updated:', languageLinks.value);
+  } catch (error) {
+    console.warn('Error getting language links:', error);
+    // Fallback to basic locale links
+    languageLinks.value = availableLocales.map(loc => ({
+      locale: loc,
+      url: useSwitchLocalePath()(loc)
+    }));
+  }
+};
+
+// Watch route changes to update language links
+const route = useRoute();
+watch(() => route.params.slug, () => updateLanguageLinks(), { immediate: true });
+watch(() => route.name, () => updateLanguageLinks());
+
 const { $bs } = useNuxtApp() as any;
 
 const expanded = ref<boolean[]>(
   header?.value.value.mainMenu?.children.map(() => false)
 );
 
-onMounted(() => {
+onMounted(async () => {
+  // Update language links
+  await updateLanguageLinks();
+  
+  // Bootstrap initialization
   try {
     var collapseElementList = [].slice.call(
       document.querySelectorAll(".toogle-menu .collapse")
@@ -60,15 +89,15 @@ onMounted(() => {
         <div class="col-12">
           <ul class="languages d-flex">
             <li
-              v-for="(loc, i) in availableLocales"
-              :key="loc"
+              v-for="(link, i) in languageLinks"
+              :key="link.locale"
               class="language n-link"
-              :class="{ current: loc === locale }"
+              :class="{ current: link.locale === locale }"
             >
-              <nuxt-link :to="switchLocalePath(loc)" @click="emitClose">
-                {{ $t(loc) }}
+              <nuxt-link :to="link.url" @click="emitClose">
+                {{ $t(link.locale) }}
               </nuxt-link>
-              <span class="separator" v-if="i < availableLocales.length - 1">
+              <span class="separator" v-if="i < languageLinks.length - 1">
                 |
               </span>
             </li>
