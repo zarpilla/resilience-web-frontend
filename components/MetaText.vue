@@ -131,6 +131,9 @@ const runtimeConfig = useRuntimeConfig();
   text-decoration: underline;
   color: #000;
 }
+.text-light .link {
+  color: #fff;
+}
 p.new-line {
   padding-bottom: 10px;
 }

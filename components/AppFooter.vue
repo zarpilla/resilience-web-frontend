@@ -98,7 +98,7 @@ const footer = computed(() =>
                   <div
                     v-for="(logo, index) in footer?.value.middle3Logos"
                     :key="index"
-                    class="w-50 mb-1 pe-3 pb-40 media-logos-footer"
+                    class="w-50 mb-2 pe-3 pb-40 media-logos-footer"
                   >
                     <a :href="logo.href" target="_blank" class="n-link">
                       <MetaMedia
@@ -109,15 +109,17 @@ const footer = computed(() =>
                   </div>
                 </div>
               </div>
-              <div class="mt-5 zpb-3 d-flex">
-                <div class="text-title pt-3 zme-3">
+              <div class="mt-5">
+                <div class="text-title pb-3">
                   {{ footer?.value.middle3BTitle }}
                 </div>
-                
+                <div
+                  class="main-text d-flex flex-wrap media-logos-footer-wrapper mb-3 pb-3 bb-white"
+                >
                   <div
                     v-for="(logo, index) in footer?.value.middle3BLogos"
                     :key="index"
-                    class="zw-50 zmb-5 zpe-3 media-logos-footer ms-5"
+                    class="w-50 mb-2 pe-3 pb-40 media-logos-footer"
                   >
                     <a :href="logo.href" target="_blank" class="n-link">
                       <MetaMedia
@@ -125,6 +127,7 @@ const footer = computed(() =>
                         css="media-real hoverable"
                       ></MetaMedia>
                     </a>
+                  </div>
                 </div>
               </div>
             </div>
