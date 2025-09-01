@@ -11,12 +11,20 @@ const { $bs } = useNuxtApp() as any;
 
 const expanded = ref<boolean[]>(props.section.bios.map(() => false));
 
+
+
 const biosWithoutDuplicatesBySlug = computed(() => {
   const bios = props.section.bios;
   const biosWithoutDuplicates = bios.filter(
     (bio: any, index: number, self: any) =>
       index === self.findIndex((t: any) => t.slug === bio.slug)
   );
+  // sort by weight field, if no weight is present, set weight as 100
+  biosWithoutDuplicates.sort((a: any, b: any) => {
+    const weightA = a.weight || 100;
+    const weightB = b.weight || 100;
+    return weightA - weightB;
+  });
   return biosWithoutDuplicates;
 });
 

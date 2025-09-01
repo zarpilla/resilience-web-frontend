@@ -134,7 +134,7 @@ const currentVideoUrl = computed(() => {
   background-size: 102%;
   background-repeat: no-repeat;
   position: relative;
-  overflow: hidden;
+  // overflow: hidden;
 }
 .section-background-video {
   position: absolute;

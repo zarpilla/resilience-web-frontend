@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { locale } = useI18n();
+
 const props = defineProps<{
   section: any;
 }>();
@@ -39,6 +41,11 @@ const addCssIfNotExistsAsPromise = (href: string, id: string): Promise<any> => {
   });
 };
 
+const textStore = useTextStore();
+const texts = computed(() =>
+  textStore.texts.find((h) => h.locale === locale.value)
+);
+
 onMounted(() => {
   // console.log("onMounted section", props.section);
   const p1 = addScriptIfNotExistsAsPromise(
@@ -68,7 +75,9 @@ onUnmounted(() => {});
 <template>
   <div class="section-timeline" :id="`section-timeline-${section.id}`">
     <div class="container">
+      <h3>{{ texts?.value?.data?.timelineTitle }}</h3>
       <div
+        class="mt-5"
         :id="`re-timeline-embed-${section.id}`"
         style="width: 100%; height: 650px"
       ></div>
@@ -97,12 +106,15 @@ onUnmounted(() => {});
     color: #000 !important;
     text-shadow: none !important;
   }
-  .tl-slide.tl-full-image-background .tl-caption, .tl-slide.tl-full-color-background .tl-caption, .tl-slide.tl-full-image-background .tl-credit, .tl-slide.tl-full-color-background .tl-credit {
+  .tl-slide.tl-full-image-background .tl-caption,
+  .tl-slide.tl-full-color-background .tl-caption,
+  .tl-slide.tl-full-image-background .tl-credit,
+  .tl-slide.tl-full-color-background .tl-credit {
     color: #000 !important;
     text-shadow: none !important;
   }
-  
-  .tl-slide .tl-slide-content-container .tl-slide-content .tl-text{
+
+  .tl-slide .tl-slide-content-container .tl-slide-content .tl-text {
     padding: 0 40px 0 40px;
   }
 }

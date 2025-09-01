@@ -12,7 +12,7 @@ export const useLocalizedNavigation = () => {
     const routeName = route.name as string;
     const routePath = route.path;
     
-    console.log('Route name:', routeName, 'Route path:', routePath);
+    // console.log('Route name:', routeName, 'Route path:', routePath);
     
     if (!routeName || routeName === 'index') {
       return 'page';

@@ -60,7 +60,7 @@ const playVideo = () => {
       </div>
       
       <!-- Show video iframe when playing -->
-      <div class="video-container" :class="{ 'd-none': !showVideo }">
+      <div class="video-container" v-if="showVideo" :class="{ 'd-none': !showVideo }">
         <iframe 
           width="100%" 
           height="700" 

@@ -183,20 +183,20 @@ const homeTitleTransition = async () => {
         { duration: 0.8, opacity: 0, ease: "power3.inOut", stagger: 0.02 },
         "-=0.5"
       )
-      .to(t2[15], { duration: 0.1, x: 10, opacity: 0 }, "+=0.75")
-      .to(t2[14], { duration: 0.1, x: 10, opacity: 0 })
-      .to(t2[13], { duration: 0.1, x: 10, opacity: 0 })
-      .to(t2[12], { duration: 0.1, x: 10, opacity: 0 })
-      .to(t2[10], { duration: 0.1, x: 10, opacity: 0 }, "-=0.0")
-      .to(t2[9],  { duration: 0.1, x: 10, opacity: 0 })
-      .to(t2[8],  { duration: 0.1, x: 10, opacity: 0 })
-      .to(t2[7],  { duration: 0.1, x: 10, opacity: 0 })
-      .to(t2[6],  { duration: 0.1, x: 10, opacity: 0 })
-      .to(t2[5],  { duration: 0.1, x: 10, opacity: 0 })
-      .to(t2[4],  { duration: 0.1, x: 10, opacity: 0 })
-      .to(t2[3],  { duration: 0.1, x: 10, opacity: 0 })
-      .to(t2[2],  { duration: 0.1, x: 10, opacity: 0 })
-      .to(t2[1],  { duration: 0.1, x: 10, opacity: 0 })
+      .to(t2[15], { duration: 0.5, opacity: 0 }, "+=0.75")
+      .to(t2[14], { duration: 0.5, opacity: 0 }, "-=0.5")
+      .to(t2[13], { duration: 0.5, opacity: 0 }, "-=0.5")
+      .to(t2[12], { duration: 0.5, opacity: 0 }, "-=0.5")
+      .to(t2[10], { duration: 0.5, opacity: 0 }, "-=0.5")
+      .to(t2[9],  { duration: 0.5, opacity: 0 }, "-=0.5")
+      .to(t2[8],  { duration: 0.5, opacity: 0 }, "-=0.5")
+      .to(t2[7],  { duration: 0.5, opacity: 0 }, "-=0.5")
+      .to(t2[6],  { duration: 0.5, opacity: 0 }, "-=0.5")
+      .to(t2[5],  { duration: 0.5, opacity: 0 }, "-=0.5")
+      .to(t2[4],  { duration: 0.5, opacity: 0 }, "-=0.5")
+      .to(t2[3],  { duration: 0.5, opacity: 0 }, "-=0.5")
+      .to(t2[2],  { duration: 0.5, opacity: 0 }, "-=0.5")
+      .to(t2[1],  { duration: 0.5, opacity: 0 }, "-=0.5")
       .to(t2[11], { 
         duration: 0.30, 
         x: () => {
@@ -209,7 +209,7 @@ const homeTitleTransition = async () => {
           return -1 * totalWidth;
         }, 
         opacity: 1 
-      })
+      }, "+=0.25")
       .from(
         ".txt2",
         {

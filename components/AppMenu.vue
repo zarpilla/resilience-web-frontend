@@ -32,10 +32,10 @@ const languageLinks = ref<Array<{ locale: string; url: string }>>([]);
 
 // Function to update language links
 const updateLanguageLinks = async () => {
-  console.log('Updating language links in menu for route:', route.path);
+  // console.log('Updating language links in menu for route:', route.path);
   try {
     languageLinks.value = await getLanguageLinks();
-    console.log('Menu language links updated:', languageLinks.value);
+    // console.log('Menu language links updated:', languageLinks.value);
   } catch (error) {
     console.warn('Error getting language links:', error);
     // Fallback to basic locale links
