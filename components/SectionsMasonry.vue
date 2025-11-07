@@ -37,7 +37,7 @@ const queryArticles = async () => {
     "populate[4]": "metadata.shareImage",
     "pagination[page]": 1, // Always start with page 1 for filtering
     "pagination[pageSize]": pageSize, // Adjust page size as needed
-    "sort[0]": "updatedAt:desc",
+    "sort[0]": "sortDate:desc",
   };
   if (selectedScope.value) {
     query["filters[scopes][$eq]"] = selectedScope.value;
