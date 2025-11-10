@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onUnmounted } from "vue";
 
 const { locale, setLocale } = useI18n();
 const props = defineProps<{
@@ -55,8 +55,6 @@ const queryArticles = async () => {
   // Reset current page when filtering
   currentPage.value = 1;
 
-  // console.log("pagesInfo.value", pagesInfo.value);
-
   return pagesInfo.value;
 };
 
@@ -83,14 +81,24 @@ const toggleYear = async (year: number) => {
 };
 
 const splitArticlesOnColumns = (articles: any[]) => {
+  // Ensure we're on client side to access window, and handle edge cases
+  if (process.server || !articles || articles.length === 0) return [articles];
+  
   const columnCount =
     window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 4;
   const columns: any[] = Array.from({ length: columnCount }, () => []);
   let column = columnCount - 1;
+  
   for (let i = 0; i < articles.length; i++) {
     columns[column].push(articles[i]);
     column = (column - 1 + columnCount) % columnCount;
   }
+  
+  // Debug: log how many items are in each column
+  // columns.forEach((col, index) => {
+  //   console.log(`Column ${index}: ${col.length} items`);
+  // });
+  
   return columns;
 };
 
@@ -113,6 +121,7 @@ const loadMore = async () => {
     const query: any = {
       locale: locale.value,
       "filters[type][$eq]": "article",
+
       "populate[0]": "scopes",
       "populate[1]": "year",
       "populate[2]": "typology",
@@ -120,7 +129,7 @@ const loadMore = async () => {
       "populate[4]": "metadata.shareImage",
       "pagination[page]": currentPage.value,
       "pagination[pageSize]": pageSize, // Adjust page size as needed
-      "sort[0]": "updatedAt:desc",
+      "sort[0]": "sortDate:desc",      
     };
 
     if (selectedScope.value) {
@@ -138,6 +147,9 @@ const loadMore = async () => {
     });
 
     if (moreArticles.value && (moreArticles.value as any).data) {
+
+
+
       // Append new articles to existing ones
       (articles.value as any).data.push(...(moreArticles.value as any).data);
       (articles.value as any).meta = (moreArticles.value as any).meta;
@@ -160,6 +172,20 @@ onMounted(() => {
   // console.log("props.section.pages", props.section.pages);
   //const articles = await queryArticles();
   columns.value = splitArticlesOnColumns((articles.value as any).data);
+
+  // Add window resize handler to recalculate columns
+  const handleResize = () => {
+    if (articles.value && (articles.value as any).data) {
+      columns.value = splitArticlesOnColumns((articles.value as any).data);
+    }
+  };
+
+  window.addEventListener('resize', handleResize);
+  
+  // Clean up on unmount
+  onUnmounted(() => {
+    window.removeEventListener('resize', handleResize);
+  });
 });
 </script>
 <template>
@@ -282,7 +308,7 @@ onMounted(() => {
       </div>
 
       <div
-        v-if="articles.data.length === 0"
+        v-if="articles && articles.data && articles.data.length === 0"
         class="col-12 text-center no-results-container"
       >
         <MetaMedia css="no-results-image" :media="section.noResultsImage" />
@@ -295,10 +321,11 @@ onMounted(() => {
       <div
         class="row gx-blog masonry-row"
         :class="{ 'mt-5': !props.section.filter }"
+        v-if="columns && columns.length > 0"
       >
         <div
-          v-for="(column, i) in columns"
-          :key="i"
+          v-for="(column, columnIndex) in columns"
+          :key="columnIndex"
           class="col-12"
           :class="{
             'col-sm-6 col-md-12': columns.length === 1,
@@ -307,8 +334,8 @@ onMounted(() => {
           }"
         >
           <div
-            v-for="(blogPage, i) in column"
-            :key="i"
+            v-for="(blogPage, itemIndex) in column"
+            :key="`${columnIndex}-${itemIndex}-${blogPage.documentId}`"
             class="masonry-item-wrapper"
           >
             <div class="masonry-item">
