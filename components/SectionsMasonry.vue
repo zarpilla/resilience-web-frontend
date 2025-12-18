@@ -4,6 +4,7 @@ import { computed, onUnmounted } from "vue";
 const { locale, setLocale } = useI18n();
 const props = defineProps<{
   section: any;
+  pageSize?: number;
 }>();
 
 const textStore = useTextStore();
@@ -24,7 +25,7 @@ const selectedYear = ref<number>(0);
 
 const currentPage = ref(1);
 const isLoading = ref(false);
-const pageSize = 16;
+const pageSize = props.pageSize || 16;
 
 const queryArticles = async () => {
   const query: any = {

@@ -292,6 +292,7 @@ onBeforeUnmount(() => {
           <SectionsMasonry
             v-else-if="section.__component === 'sections.masonry'"
             :section="section"
+            :page-size="section.pageSize"
           >
           </SectionsMasonry>
           <SectionsCapabilities
