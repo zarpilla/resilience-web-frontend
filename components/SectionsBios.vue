@@ -11,8 +11,6 @@ const { $bs } = useNuxtApp() as any;
 
 const expanded = ref<boolean[]>(props.section.bios.map(() => false));
 
-
-
 const biosWithoutDuplicatesBySlug = computed(() => {
   const bios = props.section.bios;
   const biosWithoutDuplicates = bios.filter(
@@ -104,7 +102,7 @@ onMounted(() => {
                 }) lightgray 50% / cover no-repeat;`"
               >
                 <div class="bio-title">
-                  <span class='orange lh-min'>“</span>{{ bio.title }}
+                  <span class="orange lh-min">“</span>{{ bio.title }}
                 </div>
               </div>
             </nuxt-link>
@@ -314,6 +312,27 @@ onMounted(() => {
                   <div>
                     {{ bio.position }}
                   </div>
+                  <div class="row mt-3">
+                    <div class="col-12 col-md-6">
+                      <nuxt-link
+                        :to="
+                          localePath({
+                            name: 'bio-slug',
+                            params: { slug: bio.slug },
+                          })
+                        "
+                        class="bio-link hoverable"
+                      >
+                        <MetaMedia
+                          :media="bio.mainImage"
+                          :css-class="'bio-image'"
+                        ></MetaMedia>
+                      </nuxt-link>
+                    </div>
+                    <div class="col-12 col-md-6 mt-3 p-3">
+                      <h3><cite><span class="orange lh-min">“</span>{{ bio.title }}</cite></h3>
+                    </div>
+                  </div>
                   <div class="mt-3">
                     <nuxt-link
                       :to="
@@ -324,24 +343,8 @@ onMounted(() => {
                       "
                       class="bio-link hoverable"
                     >
-                      <MetaMedia
-                        :media="bio.mainImage"
-                        :css-class="'bio-image'"
-                      ></MetaMedia>
+                      {{ section.c2aText }}
                     </nuxt-link>
-                    <div class="mt-3">
-                      <nuxt-link
-                        :to="
-                          localePath({
-                            name: 'bio-slug',
-                            params: { slug: bio.slug },
-                          })
-                        "
-                        class="bio-link hoverable"
-                      >
-                        {{ section.c2aText }}
-                      </nuxt-link>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -434,7 +437,7 @@ onMounted(() => {
     }
     a .bio-title {
       color: var(--Negre, #000);
-      color: transparent;      
+      color: transparent;
       font-family: "Queens";
       font-size: 30px;
       font-style: normal;
@@ -458,8 +461,8 @@ onMounted(() => {
           fill: #f5825e;
         }
       }
-      .bio-image{
-        background: #fff!important;
+      .bio-image {
+        background: #fff !important;
       }
       a .bio-title {
         color: var(--Negre, #000);
