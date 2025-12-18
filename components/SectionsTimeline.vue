@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import { computed, ref, nextTick, watch } from "vue";
+
 const { locale } = useI18n();
 
 const props = defineProps<{
   section: any;
 }>();
-
-import { computed } from "vue";
 
 const addScriptIfNotExistsAsPromise = (
   src: string,
@@ -20,7 +20,7 @@ const addScriptIfNotExistsAsPromise = (
       script.onerror = reject;
       document.head.appendChild(script);
     } else {
-      resolve;
+      resolve(null); // Resolve immediately if script already exists
     }
   });
 };
@@ -36,7 +36,7 @@ const addCssIfNotExistsAsPromise = (href: string, id: string): Promise<any> => {
       link.onerror = reject;
       document.head.appendChild(link);
     } else {
-      resolve;
+      resolve(null); // Resolve immediately if CSS already exists
     }
   });
 };
@@ -46,31 +46,85 @@ const texts = computed(() =>
   textStore.texts.find((h) => h.locale === locale.value)
 );
 
-onMounted(() => {
-  // console.log("onMounted section", props.section);
-  const p1 = addScriptIfNotExistsAsPromise(
-    "https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js",
-    "timeline-js"
-  );
-  const p2 = addCssIfNotExistsAsPromise(
-    "https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css",
-    "timeline-css"
-  );
+const timelineInstance = ref<any>(null);
+const route = useRoute();
 
-  Promise.all([p1, p2]).then(() => {
-    var tl = (window as any)["TL"];
-    var timeline = new tl.Timeline(
-      "re-timeline-embed-" + props.section.id,
-      props.section.url,
-      {
-        font: "PP Neue Montreal",
-      }
+const initTimeline = async () => {
+  console.log("initTimeline section", props.section);
+  
+  try {
+    // Load scripts and CSS
+    const p1 = addScriptIfNotExistsAsPromise(
+      "https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js",
+      "timeline-js"
     );
-    // console.log("timeline", timeline);
+    const p2 = addCssIfNotExistsAsPromise(
+      "https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css",
+      "timeline-css"
+    );
+
+    await Promise.all([p1, p2]);
+    
+    // Wait for next tick to ensure DOM is ready
+    await nextTick();
+    
+    // Add a small delay to ensure DOM is fully rendered after navigation
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
+    const timelineElement = document.getElementById("re-timeline-embed-" + props.section.id);
+    
+    console.log("timelineElement", timelineElement);
+    console.log("TL available", !!(window as any)["TL"]);
+    
+    if (timelineElement && (window as any)["TL"]) {
+      // Clear any existing content
+      timelineElement.innerHTML = '';
+      
+      var tl = (window as any)["TL"];
+      timelineInstance.value = new tl.Timeline(
+        "re-timeline-embed-" + props.section.id,
+        props.section.url,
+        {
+          font: "PP Neue Montreal",
+        }
+      );
+      console.log("timeline created", timelineInstance.value);
+    } else {
+      console.error("Timeline element or TL library not found");
+    }
+  } catch (error) {
+    console.error("Error initializing timeline:", error);
+  }
+};
+
+onMounted(() => {
+  console.log("SectionsTimeline onMounted");
+  initTimeline();
+});
+
+// Watch for route changes to reinitialize timeline
+watch(() => route.fullPath, () => {
+  console.log("Route changed, reinitializing timeline");
+  nextTick(() => {
+    initTimeline();
   });
 });
 
-onUnmounted(() => {});
+// Watch for props changes
+watch(() => props.section, () => {
+  console.log("Section props changed, reinitializing timeline");
+  nextTick(() => {
+    initTimeline();
+  });
+}, { deep: true });
+
+onUnmounted(() => {
+  console.log("SectionsTimeline onUnmounted");
+  // Clean up timeline instance if it exists
+  if (timelineInstance.value) {
+    timelineInstance.value = null;
+  }
+});
 </script>
 <template>
   <div class="section-timeline" :id="`section-timeline-${section.id}`">
