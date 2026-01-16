@@ -185,14 +185,31 @@ if (header.value) {
         />
       </nuxt-link>
     </div>
-    <div class="menu d-flex mt-3">
-      <div class="menu-text me-5">
+    <div class="menu d-flex mt-3 me-5">
+       <div
+            class="zone-color d-none d-md-flex clickable me-2 social d-flex justify-content-start justify-content-md-end mt-5 mt-md-0"
+          >
+            <a
+              v-for="(social, index) in header?.value.social"
+              :key="index"
+              :href="social.href"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-link n-link pe-3 social-link-menu"
+            >
+              <img
+                :src="runtimeConfig.public.apiBase + social.icon.url"
+                :alt="social.name"
+              />
+            </a>
+          </div>
+      <!-- <div class="menu-text me-5">
         <a
           class="zone-color d-none d-md-flex clickable me-2"
           :href="header?.value?.emailLink.href"
           >{{ header?.value?.email }}</a
         >
-      </div>
+      </div> -->
     </div>
   </header>
   <svg
@@ -350,6 +367,17 @@ header {
         stroke: #fff;
       }
     }
+  }
+}
+
+.bg-light {
+  .social-link-menu img {
+    filter: invert(0%);    
+  }
+}
+.bg-dark {
+  .social-link-menu img {
+    filter: invert(100%);    
   }
 }
 </style>

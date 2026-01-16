@@ -30,7 +30,7 @@ const imageStyleArticle = computed(() => {
 });
 
 const imageStyleService = computed(() => {
-  return props.type === "service" && props.section.styles.backgroundImage?.url
+  return props.type === "zservice" && props.section.styles.backgroundImage?.url
     ? runtimeConfig.public.apiBase + props.section.styles.backgroundImage.url
     : null;
 });
@@ -56,6 +56,7 @@ const isHome = computed(() => props.slug === "home");
 const home1 = ref<string>("");
 const home2 = ref<string>("");
 const showEffects = ref<boolean>(true);
+const homeTexts = ref<string[]>([]); // Will hold home3, home4, home5, etc.
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -137,6 +138,12 @@ const homeTitleTransition = async () => {
     const moveBar4 = () => {
       const txt4Width = Number($gsap.getProperty(".txt4", "width")) || 0;
       $gsap.set(".bar2", { backgroundColor: color1, left: txt4Width + 1 });
+    };
+
+    // Dynamic moveBar functions for additional home texts
+    const moveBarN = (index: number) => {
+      const txtWidth = Number($gsap.getProperty(`.txt${index}`, "width")) || 0;
+      $gsap.set(".bar2", { backgroundColor: color1, left: txtWidth + 1 });
     };
 
     // Create the timeline
@@ -257,27 +264,34 @@ const homeTitleTransition = async () => {
           onUpdate: moveBar4,
         },
       )
-      .to(".txt4", { duration: 0.5, opacity: 0 }, "+=1")
-      .set(".txt5", { 
-        left: () => {
-          const txt2Width = Number($gsap.getProperty(".txt2", "width")) || 0;
-          let remainingWidth = 0;
-          if (t2[0]) remainingWidth += t2[0].getBoundingClientRect().width;
-          if (t2[11]) remainingWidth += t2[11].getBoundingClientRect().width;
-          return remainingWidth + txt2Width;
-        }
-      })
-      .set(".txt5", { color: color1, fontWeight: "regular" })
-      .from(
-        ".txt5",
-        {
-          duration: 0.5,
-          width: 0,
-          ease: "steps(10)",
-          onUpdate: moveBar2,
-        },
-      )
-      .to(".effects", { duration: 1, opacity: 0 }, "+=1")
+      .to(".txt4", { duration: 0.5, opacity: 0 }, "+=1");
+      
+      // Dynamically add animations for home5, home6, home7, home8, home9
+      for (let i = 5; i < 3 + homeTexts.value.length; i++) {
+        const txtClass = `.txt${i}`;
+        tl.set(txtClass, { 
+          left: () => {
+            const txt2Width = Number($gsap.getProperty(".txt2", "width")) || 0;
+            let remainingWidth = 0;
+            if (t2[0]) remainingWidth += t2[0].getBoundingClientRect().width;
+            if (t2[11]) remainingWidth += t2[11].getBoundingClientRect().width;
+            return remainingWidth + txt2Width;
+          }
+        })
+        .set(txtClass, { color: color1, fontWeight: "regular" })
+        .from(
+          txtClass,
+          {
+            duration: 0.5,
+            width: 0,
+            ease: "steps(10)",
+            onUpdate: () => moveBarN(i),
+          },
+        )
+        .to(txtClass, { duration: 0.5, opacity: 0 }, "+=1");
+      }
+      
+      tl.to(".effects", { duration: 1, opacity: 0 }, "+=1")
       .timeScale(0.95);
   };
 
@@ -346,6 +360,18 @@ const addLetters = (word: string, elementId: string): Promise<void> => {
 onMounted(async () => {
   if (isHome && texts.value && props.sectionIndex === 0) {
     home1.value = (texts?.value as any).value.data.home1;
+    
+    // Populate homeTexts array with home3 through home9 (stop at empty)
+    homeTexts.value = [];
+    for (let i = 3; i <= 9; i++) {
+      const homeText = (texts?.value as any).value.data[`home${i}`];
+      if (homeText && homeText.trim() !== '') {
+        homeTexts.value.push(homeText);
+      } else {
+        break; // Stop at first empty value
+      }
+    }
+    
     // Wait a bit for the DOM to be fully rendered
     await nextTick();
     setTimeout(() => {
@@ -366,7 +392,7 @@ onUnmounted(() => {
     }"
   >
     <div class="container">
-      <div class="row" v-if="isService">
+      <div class="row" v-if="isService || isScope">
         <div class="col-12 col-lg-4">
           <div
             class="section-hero-inner d-flex"
@@ -374,7 +400,7 @@ onUnmounted(() => {
             :style="[heightStyle, backgroundImageStyle, backgroundColorStyle]"
           >
             <div class="scope-hero">
-              <b class="scope-title" v-if="isService">{{
+              <b class="scope-title" v-if="isService || isScope">{{
                 texts?.value.data.services
               }}</b>
               <MetaTitleSubTitle :section="section" :type="type" />
@@ -450,7 +476,7 @@ onUnmounted(() => {
         :style="[heightStyle, backgroundImageStyle, backgroundColorStyle]"
       >
         <div>
-          <div class="scope-hero-capability" v-if="isCapability || isScope">
+          <div class="scope-hero-capability" v-if="isCapability">
             <b class="scope-title" v-if="isScope">{{
               texts?.value.data.scopes
             }}</b>
@@ -476,9 +502,15 @@ onUnmounted(() => {
                 <div class="text d-flex position-relative">
                   <div class="txt2" style="color: transparent">{{ texts?.value.data.home2 + '&nbsp;' }}</div>
                   <div class="txt1" style="color: transparent">{{ texts?.value.data.home1 }}</div>
-                  <div class="txt3 position-absolute" style="color: transparent">{{ texts?.value.data.home3 }}</div>
-                  <div class="txt4 position-absolute" style="color: transparent">{{ texts?.value.data.home4 }}</div>
-                  <div class="txt5 position-absolute" style="color: transparent">{{ texts?.value.data.home5 }}</div>
+                  <div 
+                    v-for="(homeText, index) in homeTexts" 
+                    :key="`home-${index + 3}`"
+                    :class="`txt${index + 3}`" 
+                    class="position-absolute" 
+                    style="color: transparent"
+                  >
+                    {{ homeText }}
+                  </div>
                 </div>
                 
                 <div class="bar" style="color: transparent"></div>
@@ -673,7 +705,8 @@ onUnmounted(() => {
     }
   }
 }
-.page-type-service {
+.page-type-service,
+.page-type-scope {
   .service-image {
     width: 100%;
     height: auto;
@@ -693,15 +726,18 @@ onUnmounted(() => {
     white-space: nowrap;
     overflow: hidden;
   }
-  .txt2, .txt3, .txt4, .txt5 {
+  .txt2 {
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
   }
 
-  .txt3, .txt4, .txt5 {
+  // Support dynamic txt3, txt4, txt5, txt6, txt7, txt8, txt9
+  [class^="txt"]:not(.txt0):not(.txt1):not(.txt2) {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
     position: absolute;
-    // left: 234px;
     top: 0;
   }
   

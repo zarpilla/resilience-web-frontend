@@ -245,7 +245,13 @@ p {
 //     max-height: 700px
 // }
 
-body.page-type-service .section-sections-hero.section-inner-index-0 {
+body.page-type-service .section-sections-hero {
+    background-size: cover !important;
+    background-position: 0 0 !important;
+    background-repeat: no-repeat !important;
+}
+
+body.zpage-type-service .section-sections-hero.section-inner-index-0 {
     min-height: 650px;
     background-image: none !important;
     @media screen and (max-width: 768px) {        
@@ -253,6 +259,10 @@ body.page-type-service .section-sections-hero.section-inner-index-0 {
         padding-bottom: 30px;
         
     }
+}
+
+body.page-type-service .section-sections-hero.section-inner-index-0 .section-hero-inner {
+    background-color: transparent !important;
 }
 
 body.page-type-service .section-sections-hero.section-inner-index-0 .section-hero-inner {
@@ -1037,50 +1047,88 @@ letter-spacing: 0.26px;
     .main-content .first-hero {
         .scope-hero {
             padding-right: 50px;
+
+            .scope-title {
+
+            }
         }
     }
 
-    &.page-slug-avaluacio {
-        .main-content .first-hero {
-            background: linear-gradient(to right, #d9c05d 41%, #fff0 41%);
+    .text-light {
+        .first-hero {
+            .scope-hero {
+                .scope-title {
+                    color: #fff !important;
+                }
+                h1 {
+                    color: #fff !important;
+                }
+
+                p {
+                    color: #fff !important;
+                }
+            }
         }
     }
 
-    &.page-slug-comunicacio-consultoria {
-        .main-content .first-hero {
-            background: linear-gradient(to right, #b06047 41%, #fff0 41%);
+    .text-dark {
+        .first-hero {
+            .scope-hero {
+                .scope-title {
+                    color: #000 !important;
+                }
+                h1 {
+                    color: #000 !important;
+                }
+
+                p {
+                    color: #000 !important;
+                }
+            }
         }
     }
 
-    &.page-slug-disseny {
-        .main-content .first-hero {
-            background: linear-gradient(to right, #9a5567 41%, #fff0 41%);
-        }
-    }
+    // &.page-slug-avaluacio {
+    //     .main-content .first-hero {
+    //         background: linear-gradient(to right, #d9c05d 41%, #fff0 41%);
+    //     }
+    // }
 
-    &.page-slug-estrategia {
-        .main-content .first-hero {
-            background: linear-gradient(to right, #bbc4c3 41%, #fff0 41%);
-        }
-    }
+    // &.page-slug-comunicacio-consultoria {
+    //     .main-content .first-hero {
+    //         background: linear-gradient(to right, #b06047 41%, #fff0 41%);
+    //     }
+    // }
 
-    &.page-slug-facilitacio {
-        .main-content .first-hero {
-            background: linear-gradient(to right, #999b65 41%, #fff0 41%);
-        }
-    }
+    // &.page-slug-disseny {
+    //     .main-content .first-hero {
+    //         background: linear-gradient(to right, #9a5567 41%, #fff0 41%);
+    //     }
+    // }
 
-    &.page-slug-participacio {
-        .main-content .first-hero {
-            background: linear-gradient(to right, #6e5655 41%, #fff0 41%);
-        }
-    }
+    // &.page-slug-estrategia {
+    //     .main-content .first-hero {
+    //         background: linear-gradient(to right, #bbc4c3 41%, #fff0 41%);
+    //     }
+    // }
 
-    &.page-slug-recerca {
-        .main-content .first-hero {
-            background: linear-gradient(to right, #b2896e 41%, #fff0 41%);
-        }
-    }
+    // &.page-slug-facilitacio {
+    //     .main-content .first-hero {
+    //         background: linear-gradient(to right, #999b65 41%, #fff0 41%);
+    //     }
+    // }
+
+    // &.page-slug-participacio {
+    //     .main-content .first-hero {
+    //         background: linear-gradient(to right, #6e5655 41%, #fff0 41%);
+    //     }
+    // }
+
+    // &.page-slug-recerca {
+    //     .main-content .first-hero {
+    //         background: linear-gradient(to right, #b2896e 41%, #fff0 41%);
+    //     }
+    // }
 
     /*
       .metacolor-0 {

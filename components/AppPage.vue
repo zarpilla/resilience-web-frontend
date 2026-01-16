@@ -127,7 +127,7 @@ switch (props.type) {
       ].listenAudioBefore = true;
     }
     break;
-  case "scope":
+  case "zscope":
     // get the 2rd section and 1st column
     if (
       pageSections.length > 1 &&
