@@ -178,6 +178,22 @@ if (templatesData && templatesData.sections) {
   }
 }
 
+// Load "all" template and merge with page sections
+const { data: allTemplates } = await useAPI("/api/pages/templates/all", {
+  query: {
+    locale: locale.value,
+  },
+});
+
+const allTemplatesData = allTemplates.value as any;
+
+if (allTemplatesData && allTemplatesData.sections) {
+  // contact allTemplatesData.sections to page sections
+  for (const section of allTemplatesData.sections) {
+    page.sections.push(section);
+  }
+}
+
 const headerStore = useHeaderStore();
 const header = computed<any>(() =>
   headerStore.headers.find((h) => h.locale === locale.value)
@@ -320,6 +336,11 @@ onBeforeUnmount(() => {
             :section="section"
           >
           </SectionsLeadForm>
+          <SectionsModal
+            v-else-if="section.__component === 'sections.modal'"
+            :section="section"
+          >
+          </SectionsModal>
         </AppSection>
       </div>
     </template>
