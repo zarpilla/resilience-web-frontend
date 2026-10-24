@@ -12,9 +12,11 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     apiBase: process.env.API_BASE_URL,
+    // Server-only: never exposed to the browser. Overridable at runtime with NUXT_API_TOKEN.
+    // The public Strapi role can read everything the site needs, so this is optional.
+    apiToken: process.env.API_TOKEN,
     public: {
       apiBase: process.env.API_BASE_URL || "http://localhost:1337",
-      apiToken: process.env.API_TOKEN,
     },
   },
   vite: {

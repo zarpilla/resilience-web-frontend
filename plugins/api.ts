@@ -5,9 +5,11 @@ export default defineNuxtPlugin((nuxtApp) => {
     const api = $fetch.create({
       baseURL: config.public.apiBase,
       onRequest({ request, options, error }) {
-        if (config.public.apiToken) {
+        // The token is only sent from the server (SSR). Browser requests use the
+        // public Strapi role, so no credential ever reaches the client.
+        if (import.meta.server && config.apiToken) {
           // note that this relies on ofetch >= 1.4.0 - you may need to refresh your lockfile
-          options.headers.set('Authorization', `Bearer ${config.public.apiToken}`)
+          options.headers.set('Authorization', `Bearer ${config.apiToken}`)
         }
       },
       async onResponseError({ response }) {
