@@ -64,6 +64,10 @@ const toggleYear = async (year: number) => {
   }
 };
 
+// useAPI (useFetch) only works during setup; these run after mount (initial
+// automatic list, filters, load more), so they call $api directly.
+const { $api } = useNuxtApp() as any;
+
 const queryResources = async () => {
   const query: any = {
     locale: locale.value,
@@ -90,13 +94,11 @@ const queryResources = async () => {
     query["filters[year][$eq]"] = selectedYear.value;
   }
 
-  const { data: resourcesInfo } = await useAPI("/api/pages", {
-    query: query,
-  });
+  const resourcesInfo = await $api("/api/pages", { query: query });
 
   currentPage.value = 1;
 
-  return resourcesInfo.value;
+  return resourcesInfo;
 };
 
 // Initialize resources data on component load
@@ -157,9 +159,7 @@ const loadMore = async () => {
       query["filters[year][$eq]"] = selectedYear.value;
     }
 
-    const { data: moreResources } = await useAPI("/api/pages", {
-      query: query,
-    });
+    const moreResources = { value: await $api("/api/pages", { query: query }) };
 
     if (moreResources.value && (moreResources.value as any).data) {
       // Append new resources to existing ones

@@ -27,7 +27,11 @@ const currentPage = ref(1);
 const isLoading = ref(false);
 const pageSize = props.pageSize || 16;
 
-const queryArticles = async () => {
+// useAPI (useFetch) only works during setup; after mount (filters, load more) it
+// returns null without fetching, so those calls go through $api directly.
+const { $api } = useNuxtApp() as any;
+
+const queryArticles = async (duringSetup = false) => {
   const query: any = {
     locale: locale.value,
     "filters[type][$eq]": "article",
@@ -49,18 +53,22 @@ const queryArticles = async () => {
   if (selectedYear.value) {
     query["filters[year][$eq]"] = selectedYear.value;
   }
-  const { data: pagesInfo } = await useAPI("/api/pages", {
-    query: query,
-  });
+  let pagesInfo: any;
+  if (duringSetup) {
+    const { data } = await useAPI("/api/pages", { query: query });
+    pagesInfo = data.value;
+  } else {
+    pagesInfo = await $api("/api/pages", { query: query });
+  }
 
   // Reset current page when filtering
   currentPage.value = 1;
 
-  return pagesInfo.value;
+  return pagesInfo;
 };
 
 const articles = ref<any>(null);
-articles.value = await queryArticles();
+articles.value = await queryArticles(true);
 
 const toggleScope = async (scope: number) => {
   selectedScope.value = selectedScope.value === scope ? 0 : scope;
@@ -143,9 +151,7 @@ const loadMore = async () => {
       query["filters[year][$eq]"] = selectedYear.value;
     }
 
-    const { data: moreArticles } = await useAPI("/api/pages", {
-      query: query,
-    });
+    const moreArticles = { value: await $api("/api/pages", { query: query }) };
 
     if (moreArticles.value && (moreArticles.value as any).data) {
 
