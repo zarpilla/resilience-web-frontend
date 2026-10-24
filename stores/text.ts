@@ -19,7 +19,8 @@ export const useTextStore = defineStore("textStore", {
   },
   getters: {
     text(): Text {
-      const { locale } = useI18n();
+      // useI18n() only works at the top of setup(); getters run anywhere
+      const locale = useNuxtApp().$i18n.locale;
       return this.texts.find((h: Text) => h.locale === locale.value)?.value;
     },
   },

@@ -93,13 +93,15 @@ export const useFilterStore = defineStore("filterStore", {
   },
   getters: {
     filterArticles(): Filter["value"] | undefined {
-      const { locale } = useI18n();
+      // useI18n() only works at the top of setup(); getters run anywhere
+      const locale = useNuxtApp().$i18n.locale;
       return this.filters.find(
         (h: Filter) => h.locale === locale.value && h.type === "article"
       )?.value;
     },
     filterResources(): Filter["value"] | undefined {
-      const { locale } = useI18n();
+      // useI18n() only works at the top of setup(); getters run anywhere
+      const locale = useNuxtApp().$i18n.locale;
       return this.filters.find(
         (h: Filter) => h.locale === locale.value && h.type === "resource"
       )?.value;

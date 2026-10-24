@@ -16,7 +16,8 @@ export const useFooterStore = defineStore('footerStore', {
     },
     getters: {
         header(): Header  {
-            const { locale } = useI18n()
+            // useI18n() only works at the top of setup(); getters run anywhere
+      const locale = useNuxtApp().$i18n.locale;
             return this.footers.find((h: Header) => h.locale === locale.value)?.value
         }
     }
