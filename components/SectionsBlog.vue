@@ -75,7 +75,9 @@ const queryResources = async () => {
     "populate[4]": "metadata.shareImage",
     "pagination[page]": 1,
     "pagination[pageSize]": 25,
-    "sort[0]": "updatedAt:desc",
+    // editors control the order with "sortDate" (newest first), like Caos Creatiu
+    "sort[0]": "sortDate:desc",
+    "sort[1]": "createdAt:desc",
   };
 
   if (selectedScope.value) {
@@ -140,6 +142,9 @@ const loadMore = async () => {
       "populate[4]": "metadata.shareImage",
       "pagination[page]": currentPage.value,
       "pagination[pageSize]": 25,
+      // same order as the first batch (queryResources), so "load more" is consistent
+      "sort[0]": "sortDate:desc",
+      "sort[1]": "createdAt:desc",
     };
 
     if (selectedScope.value) {
