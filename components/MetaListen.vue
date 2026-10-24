@@ -205,7 +205,7 @@ onUnmounted(() => {
     </svg>
 
     <span class="audio-label">{{
-      texts?.value?.data?.listen || "Sending..."
+      texts?.value?.data?.listen || ({ ca: "Escolta", es: "Escucha", en: "Listen" } as any)[locale.value] || "Listen"
     }}</span>
     <!-- Hidden audio element for accessibility -->
     <audio

@@ -104,7 +104,9 @@ const currentVideoUrl = computed(() => {
       sectionIsScroller ? 'background-attachment-fixed' : ''
     } section-inner-type-${props.type} ${
       section.styles?.borderBottom ? 'border-bottom-black-50' : ''
-    } section-inner-index-${props.index}`"
+    } section-inner-index-${props.index} ${
+      section.__component === 'sections.modal' ? 'py-0' : ''
+    }`"
     :style="[
       backgroundStyle,
       backgroundImageStyle,

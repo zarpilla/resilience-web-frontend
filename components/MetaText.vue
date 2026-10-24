@@ -67,16 +67,31 @@ const runtimeConfig = useRuntimeConfig();
       >
       </span>
     </h6>
-    <ul v-if="block.type === 'list'" :class="block.css">
+    <component
+      :is="block.format === 'ordered' ? 'ol' : 'ul'"
+      v-if="block.type === 'list'"
+      :class="block.css"
+    >
       <li
         v-for="(child, childIndex) in block.children"
         :key="childIndex"
         :class="[{ bold: child.bold, italic: text.italic }, child.css]"
-        
       >
-      <span v-for="(child2, childIndex2) in child.children" v-html="child2.text" :key="childIndex2"></span>
-    </li>
-    </ul>
+        <template v-for="(child2, childIndex2) in child.children" :key="childIndex2">
+          <a
+            v-if="child2.type === 'link'"
+            :href="child2.url"
+            class="link hoverable"
+            ><span
+              v-for="(link2, linkIndex2) in child2.children"
+              :key="linkIndex2"
+              v-html="link2.text"
+            ></span
+          ></a>
+          <span v-else v-html="child2.text"></span>
+        </template>
+      </li>
+    </component>
     <p v-if="block.type === 'paragraph'" :class="block.css" class="paragraph">
       <template v-for="(child, childIndex) in block.children">
         <div

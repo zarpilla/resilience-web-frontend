@@ -205,6 +205,7 @@ useHead({
   title: (page.metadata?.metaTitle || page.name) + seoTitleSufix,
   meta: [
     { name: "description", content: page.metadata?.metaDescription || "" },
+    ...(page.metadata?.noIndex ? [{ name: "robots", content: "noindex" }] : []),
   ],
   bodyAttrs: {
     class: `page-type-${props.type} page-slug-${props.slug}`,

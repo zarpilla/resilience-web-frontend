@@ -24,6 +24,8 @@ if (pages.value && documents.data && documents.data.length === 0) {
 }
 
 const page = documents.data[0];
+// Bio.metadata is a repeatable component in Strapi: use its first entry.
+const metadata = Array.isArray(page.metadata) ? page.metadata[0] : page.metadata;
 
 const { data: templates } = await useAPI("/api/pages/templates/bio", {
   query: {
@@ -41,24 +43,24 @@ const header = computed<any>(() =>
 const seoTitleSufix = header.value.value?.seoTitleSufix;
 
 useHead({
-  title: (page.metadata?.metaTitle || page.name) + seoTitleSufix,
+  title: (metadata?.metaTitle || page.name) + seoTitleSufix,
   meta: [
-    { name: "description", content: page.metadata?.metaDescription || "" },
+    { name: "description", content: metadata?.metaDescription || "" },
   ],
   bodyAttrs: {
     class: `page-type-bio`,
   },
 });
 
-const shareImage = page.metadata?.shareImage?.url
-  ? `${process.env.API_BASE_URL}${page.metadata?.shareImage?.url}`
+const shareImage = metadata?.shareImage?.url
+  ? `${process.env.API_BASE_URL}${metadata?.shareImage?.url}`
   : null;
 
 useSeoMeta({
-  title: (page.metadata?.metaTitle || page.name) + seoTitleSufix,
-  ogTitle: (page.metadata?.metaTitle || page.name) + seoTitleSufix,
-  description: page.metadata?.metaDescription || "",
-  ogDescription: page.metadata?.metaDescription || "",
+  title: (metadata?.metaTitle || page.name) + seoTitleSufix,
+  ogTitle: (metadata?.metaTitle || page.name) + seoTitleSufix,
+  description: metadata?.metaDescription || "",
+  ogDescription: metadata?.metaDescription || "",
   ogImage: shareImage,
   twitterCard: "summary_large_image",
 });

@@ -332,7 +332,7 @@ onUnmounted(() => {
           >
             <MetaLink
               :page="menu.page"
-              :text="menu.title"
+              :text="menu.title || menu.page?.name"
               :target="menu.target"
               :href="menu.href"
               css-class="item"

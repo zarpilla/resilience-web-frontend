@@ -146,7 +146,6 @@ onUnmounted(() => {
             :src="runtimeConfig.public.apiBase + item?.image.url"
             :alt="item?.image.alternativeText"
           />
-          />
         </div>
       </div>
     </div>

@@ -205,7 +205,7 @@ onMounted(() => {
                   <MetaLink
                     :page="item.page"                    
                     css-class="hoverable black-link">
-                    <span v-if="section.c2aText" v-html="section.c2aText || 'More'"></span>
+                    <span v-html="section.c2aText || item.page?.name || 'More'"></span>
                   </MetaLink>
                 </div>                
               </div>
