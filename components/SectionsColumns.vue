@@ -237,6 +237,20 @@ onMounted(() => {
             <MetaC2A :c2a="column.c2a" :section="section" />
           </div>
           <div
+            v-if="column.buttons?.length"
+            class="c2a-list"
+            :class="{ 'has-c2a': column.c2a }"
+            :style="`padding: ${column?.styles?.padding ?? '0'};
+          ${column?.styles?.margin ? 'margin:' + column?.styles?.margin : ''}`"
+          >
+            <MetaC2A
+              v-for="(button, i) in column.buttons"
+              :key="i"
+              :c2a="button"
+              :section="section"
+            />
+          </div>
+          <div
             v-if="column.verticalScroller"
             class="vertical-scroller d-flex flex-wrap"
           >

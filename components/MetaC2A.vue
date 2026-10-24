@@ -16,3 +16,10 @@ const props = defineProps<{
     />
   </div>
 </template>
+<style lang="scss">
+// Column "buttons" list: one under the other, same spacing as the old one-button-per-block layout.
+.c2a-list > .cta + .cta,
+.c2a-list.has-c2a > .cta:first-child {
+  margin-top: 24px;
+}
+</style>
