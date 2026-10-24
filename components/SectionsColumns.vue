@@ -159,6 +159,17 @@ onMounted(() => {
     });
   }
 });
+
+// Column width fields (Strapi) -> Bootstrap grid classes. Every column already has
+// "col-12 col-md" (full width on mobile, equal shares otherwise); these refine it.
+const columnGrid = (column: any) =>
+  [
+    column.width ? `col-md-${column.width}` : "",
+    column.offsetLeft ? `offset-md-${column.offsetLeft}` : "",
+    column.widthLarge ? `col-lg-${column.widthLarge}` : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 </script>
 <template>
   <div
@@ -175,7 +186,7 @@ onMounted(() => {
           v-for="(column, columnIndex) in section.columns"
           :key="columnIndex"
           class="col-12 col-md"
-          :class="column.styles?.cssClass ?? 'col-12 col-md'"
+          :class="[columnGrid(column), column.styles?.cssClass]"
           :style="{
             backgroundImage: column.styles?.backgroundImage
               ? `url(${

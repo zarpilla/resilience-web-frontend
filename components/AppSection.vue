@@ -15,6 +15,14 @@ const backgroundStyle = computed(() => ({
     : "cover no-repeat",
 }));
 
+// Block spacing: spaceTop/spaceBottom (cap 0 · petit 24px · mitja 48px · normal 120px),
+// falling back to the old paddingTop/paddingBottom booleans (false = no space).
+const SPACE: Record<string, string> = { cap: "0", petit: "4", mitja: "5" };
+const spaceClass = (side: "t" | "b", space?: string | null, legacy?: boolean | null) => {
+  if (space) return SPACE[space] ? `p${side}-${SPACE[space]}` : `p${side}-z`;
+  return legacy === false ? `p${side}-0` : `p${side}-z`;
+};
+
 const sectionIsScroller = computed(() => {
   return props.section.__component === "sections.scroller";
 });
@@ -98,8 +106,8 @@ const currentVideoUrl = computed(() => {
       props.section.styles?.textColor ?? 'dark'
     } width-container-${props.section.styles?.container ?? 'null'} ${
       section.styles?.cssClass ?? 'css-z'
-    } ${section.styles?.paddingTop === false ? 'pt-0' : 'pt-z'} ${
-      section.styles?.paddingBottom === false ? 'pb-0' : 'pb-z'
+    } ${spaceClass('t', section.styles?.spaceTop, section.styles?.paddingTop)} ${
+      spaceClass('b', section.styles?.spaceBottom, section.styles?.paddingBottom)
     } ${
       sectionIsScroller ? 'background-attachment-fixed' : ''
     } section-inner-type-${props.type} ${
