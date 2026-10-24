@@ -22,5 +22,8 @@ availableLocales.forEach(async loc => {
   <div>
     <NuxtRouteAnnouncer />
     <NuxtPage />
+    <ClientOnly>
+      <AppCookies />
+    </ClientOnly>
   </div>
 </template>

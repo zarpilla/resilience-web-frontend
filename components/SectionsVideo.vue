@@ -19,16 +19,19 @@ const videoUrl = computed(() => {
     // Extract the video ID from a standard YouTube URL
     const videoId = new URL(url).searchParams.get('v');
     if (videoId) {
-      url = `https://www.youtube.com/embed/${videoId}`;
+      url = `https://www.youtube-nocookie.com/embed/${videoId}`;
     }
   } else if (url.includes('youtu.be/')) {
     // Extract the video ID from a youtu.be short URL
     const videoId = url.split('youtu.be/')[1]?.split('?')[0];
     if (videoId) {
-      url = `https://www.youtube.com/embed/${videoId}`;
+      url = `https://www.youtube-nocookie.com/embed/${videoId}`;
     }
   }
   
+  // Privacy-enhanced mode (youtube-nocookie.com): no YouTube tracking cookies.
+  url = url.replace(/^https?:\/\/(www\.)?youtube\.com\/embed\//, 'https://www.youtube-nocookie.com/embed/');
+
   // Ensure we're using an embed URL which avoids the X-Frame-Options issues
   if (!url.includes('/embed/') && url.includes('youtube.com')) {
     console.warn('YouTube URL should be an embed URL to avoid security issues');

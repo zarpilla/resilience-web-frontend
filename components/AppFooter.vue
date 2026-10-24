@@ -12,6 +12,22 @@ const footerStore = useFooterStore();
 const footer = computed(() =>
   footerStore.footers.find((h) => h.locale === locale.value)
 );
+
+// "Cookie settings" link: only when a GTM id is set (otherwise the site uses no cookies).
+const headerStore = useHeaderStore();
+const { reopen } = useConsent();
+const hasGtm = computed(() =>
+  headerStore.headers.some((h) => isValidGtmId(h.value?.gtmId))
+);
+const cookieSettingsText = computed(() => {
+  const h = headerStore.headers.find((h) => h.locale === locale.value)?.value;
+  const d: Record<string, string> = {
+    ca: "Configuració de galetes",
+    es: "Configuración de cookies",
+    en: "Cookie settings",
+  };
+  return h?.cookieSettings || d[locale.value] || d.ca;
+});
 </script>
 <template>
   <footer id="footer">
@@ -154,6 +170,14 @@ const footer = computed(() =>
                   css-class="menu-item"
                 />
               </li>
+              <li
+                v-if="hasGtm"
+                class="secondary-menu-item text-center pe-0 pe-md-5"
+              >
+                <button type="button" class="menu-item cookie-settings" @click="reopen()">
+                  {{ cookieSettingsText }}
+                </button>
+              </li>
             </ul>
           </div>
           <div class="col-12 col-md-3">
@@ -242,6 +266,13 @@ footer {
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  .cookie-settings {
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
   }
 
   .menu-item {
