@@ -5,7 +5,7 @@ const props = defineProps<{
   index: number;
 }>();
 
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 const runtimeConfig = useRuntimeConfig();
 
@@ -84,14 +84,19 @@ const backgroundVideoMobileUrl = computed(() => {
     : null;
 });
 
-const isMobile = computed(() => {
-  if (process.client) {
-    return window.innerWidth <= 1024;
-  }
-  return false;
+// The video is chosen on the client only: the server can't know the screen size, and an
+// SSR'd <video src> would make phones start downloading the desktop file before hydration.
+const isMounted = ref(false);
+const isMobile = ref(false);
+const reducedMotion = ref(false);
+onMounted(() => {
+  isMobile.value = window.innerWidth <= 1024;
+  reducedMotion.value = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  isMounted.value = true;
 });
 
 const currentVideoUrl = computed(() => {
+  if (!isMounted.value || reducedMotion.value) return null;
   if (isMobile.value && backgroundVideoMobileUrl.value) {
     return backgroundVideoMobileUrl.value;
   }
@@ -132,7 +137,7 @@ const currentVideoUrl = computed(() => {
       muted
       loop
       playsinline
-      preload="auto"
+      preload="metadata"
     ></video>
     <div class="section-inner-2" :style="[backgroundImage2Style]">
       <slot></slot>
